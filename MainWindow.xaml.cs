@@ -107,10 +107,11 @@ namespace FontMaker
         // 初始化字体渲染器
         private void InitializeFontRenderer()
         {
+            string initialFontFamily = fontFamily?.Source ?? "Microsoft Sans Serif"; // 使用系统默认字体
             _fontRenderer = new BitmapFontRenderer(
                 (int)PixelSizeWidth, 
                 (int)PixelSizeHeight, 
-                "Arial", 
+                initialFontFamily, 
                 FontSize, 
                 System.Drawing.FontStyle.Regular);
         }
@@ -475,7 +476,11 @@ namespace FontMaker
                 // 转换WPF FontStyle到GDI+ FontStyle
                 var gdiFontStyle = ConvertToGdiFontStyle();
                 
-                string fontFamilyName = fontFamily?.Source ?? "Arial";
+                // 如果没有选择字体，则抛出异常
+                if (fontFamily == null)
+                    throw new InvalidOperationException("未选择字体，无法进行渲染");
+                
+                string fontFamilyName = fontFamily.Source;
                 
                 _fontRenderer.UpdateRenderParameters(
                     (int)PixelSizeWidth,
@@ -765,27 +770,71 @@ namespace FontMaker
             }
         }
 
+
         // TODO 最终生成字库
         private void generateButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.ExportVM.ExecuteExport();
         }
 
-        // 字符输入框文本变化事件处理
+        // 字符输入框文本变化事件处理（输入过程中不处理，避免干扰IME）
         private void CharacterInputTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // 输入过程中不处理，让IME能够正常工作
+            // 实际处理在LostFocus和KeyDown事件中进行
+        }
+
+        // 字符输入框失去焦点时处理（截断为一个字符并查找）
+        private void CharacterInputTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            ProcessCharacterInput(sender as Wpf.Ui.Controls.TextBox);
+        }
+
+        // 字符输入框按键处理（按回车时处理输入）
+        private void CharacterInputTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return || e.Key == Key.Enter)
+            {
+                ProcessCharacterInput(sender as Wpf.Ui.Controls.TextBox);
+                // 移除焦点，避免继续输入
+                Keyboard.ClearFocus();
+                e.Handled = true;
+            }
+        }
+
+        // 处理字符输入的核心逻辑
+        private void ProcessCharacterInput(Wpf.Ui.Controls.TextBox? textBox)
         {
             // 如果是程序内部更新，忽略此事件
             if (_isUpdatingCharacterInput)
                 return;
 
-            if (charsetManager == null || totalCharCount == 0)
+            if (textBox == null || charsetManager == null || totalCharCount == 0)
                 return;
 
-            var textBox = sender as Wpf.Ui.Controls.TextBox;
-            if (textBox == null || string.IsNullOrEmpty(textBox.Text))
+            // 如果输入为空，恢复到当前字符
+            if (string.IsNullOrEmpty(textBox.Text))
+            {
+                if (currentCharIndex >= 0 && currentCharIndex < totalCharCount)
+                {
+                    _isUpdatingCharacterInput = true;
+                    textBox.Text = charsetManager.GetChar(currentCharIndex).ToString();
+                    _isUpdatingCharacterInput = false;
+                }
                 return;
+            }
 
-            char inputChar = textBox.Text[0];
+            // 截断为一个字符（支持中文等多字节字符）
+            string inputText = textBox.Text;
+            char inputChar = inputText[0];
+
+            // 更新文本框为单个字符
+            if (inputText.Length > 1)
+            {
+                _isUpdatingCharacterInput = true;
+                textBox.Text = inputChar.ToString();
+                _isUpdatingCharacterInput = false;
+            }
 
             // 在当前字符集中查找输入的字符
             for (int i = 0; i < totalCharCount; i++)

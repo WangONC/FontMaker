@@ -24,12 +24,12 @@ namespace FontMaker
         public int Width { get; private set; }
         public int Height { get; private set; }
         public int FontSize { get; private set; }
-        public string FontFamily { get; private set; }
+        public System.Drawing.FontFamily FontFamily { get; private set; }
         public System.Drawing.FontStyle FontStyle { get; private set; }
         public int HorizontalOffset { get; set; } = 0;
         public int VerticalOffset { get; set; } = 0;
 
-        public CharacterRenderer(int width, int height, string fontFamily, int fontSize, System.Drawing.FontStyle fontStyle = System.Drawing.FontStyle.Regular)
+        public CharacterRenderer(int width, int height, System.Drawing.FontFamily fontFamily, int fontSize, System.Drawing.FontStyle fontStyle = System.Drawing.FontStyle.Regular)
         {
             Width = width;
             Height = height;
@@ -46,26 +46,38 @@ namespace FontMaker
             _bitmap = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
             _graphics = Graphics.FromImage(_bitmap);
 
-            // 设置高质量渲染参数
-            _graphics.SmoothingMode = SmoothingMode.None; // 点阵字体不需要平滑
-            _graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
-            _graphics.PixelOffsetMode = PixelOffsetMode.Half;
-            _graphics.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+            // 根据像素字体模式配置渲染参数
+            ConfigureGraphicsSettings();
 
             // 创建字体
-            try
-            {
-                _font = new System.Drawing.Font(FontFamily, FontSize, FontStyle, GraphicsUnit.Pixel);
-            }
-            catch (Exception)
-            {
-                // 如果指定字体不可用，使用默认字体
-                _font = new System.Drawing.Font("Arial", FontSize, FontStyle, GraphicsUnit.Pixel);
-            }
+            CreateOptimalFont();
 
             // 创建画刷
             _textBrush = new SolidBrush(Color.White);     // 白色文字
             _backgroundBrush = new SolidBrush(Color.Black); // 黑色背景
+        }
+
+        /// <summary>
+        /// 配置Graphics渲染设置
+        /// </summary>
+        private void ConfigureGraphicsSettings()
+        {
+            // 统一的渲染设置，适用于所有字体类型
+            _graphics.SmoothingMode = SmoothingMode.None;
+            _graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+            _graphics.PixelOffsetMode = PixelOffsetMode.None;
+            _graphics.CompositingQuality = CompositingQuality.HighSpeed;
+            _graphics.TextRenderingHint = TextRenderingHint.SingleBitPerPixel;
+            _graphics.TextContrast = 0;
+        }
+
+        /// <summary>
+        /// 创建字体对象
+        /// </summary>
+        private void CreateOptimalFont()
+        {
+            // 使用Pixel单位确保精确尺寸
+            _font = new System.Drawing.Font(FontFamily, FontSize, FontStyle, GraphicsUnit.Pixel);
         }
 
         /// <summary>
@@ -108,8 +120,9 @@ namespace FontMaker
                 // 清除背景
                 _graphics.Clear(Color.Black);
 
-                // 对于灰度渲染，临时启用抗锯齿以产生灰度像素
-                if (bitsPerPixel > 1)
+                // 对于灰度渲染，启用抗锯齿以产生灰度像素
+                bool useAntiAlias = bitsPerPixel > 1;
+                if (useAntiAlias)
                 {
                     _graphics.SmoothingMode = SmoothingMode.AntiAlias;
                     _graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
@@ -126,10 +139,9 @@ namespace FontMaker
                 _graphics.DrawString(character.ToString(), _font, _textBrush, x, y);
 
                 // 恢复原始设置
-                if (bitsPerPixel > 1)
+                if (useAntiAlias)
                 {
-                    _graphics.SmoothingMode = SmoothingMode.None;
-                    _graphics.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+                    ConfigureGraphicsSettings();
                 }
 
                 // 如果是1位深度，直接返回原图
@@ -191,7 +203,7 @@ namespace FontMaker
         /// <summary>
         /// 更新渲染参数
         /// </summary>
-        public void UpdateParameters(int width, int height, string fontFamily, int fontSize, System.Drawing.FontStyle fontStyle)
+        public void UpdateParameters(int width, int height, System.Drawing.FontFamily fontFamily, int fontSize, System.Drawing.FontStyle fontStyle)
         {
             lock (_lockObject)
             {
@@ -212,23 +224,13 @@ namespace FontMaker
                     _bitmap = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
                     _graphics = Graphics.FromImage(_bitmap);
                     
-                    // 重新设置渲染参数
-                    _graphics.SmoothingMode = SmoothingMode.None;
-                    _graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
-                    _graphics.PixelOffsetMode = PixelOffsetMode.Half;
-                    _graphics.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+                    // 重新配置渲染参数
+                    ConfigureGraphicsSettings();
                 }
 
                 // 更新字体
                 _font?.Dispose();
-                try
-                {
-                    _font = new System.Drawing.Font(fontFamily, fontSize, fontStyle, GraphicsUnit.Pixel);
-                }
-                catch (Exception)
-                {
-                    _font = new System.Drawing.Font("Arial", fontSize, fontStyle, GraphicsUnit.Pixel);
-                }
+                CreateOptimalFont();
             }
         }
 

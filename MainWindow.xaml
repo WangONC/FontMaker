@@ -121,15 +121,17 @@
                             <!-- 字符输入 -->
                             <DockPanel Grid.Row="0" Margin="0,0,0,8">
                                 <TextBlock DockPanel.Dock="Left" Text="字符：" VerticalAlignment="Center" Width="50"/>
-                                <ui:TextBox x:Name="characterInputTextBox" Text="A" Height="33" 
-                                       MaxLength="1" TextAlignment="Center" FontSize="16"
-                                       TextChanged="CharacterInputTextBox_TextChanged"/>
+                                <ui:TextBox x:Name="characterInputTextBox" Text="A" Height="33"  MaxLines="1" MinLines="1"
+                                       TextAlignment="Center" FontSize="16"
+                                       TextChanged="CharacterInputTextBox_TextChanged"
+                                       LostFocus="CharacterInputTextBox_LostFocus"
+                                       KeyDown="CharacterInputTextBox_KeyDown"/>
                             </DockPanel>
 
                             <!-- 当前字符信息 -->
                             <DockPanel Grid.Row="1" Margin="0,0,0,8">
                                 <TextBlock DockPanel.Dock="Left" Text="当前：" VerticalAlignment="Center" Width="50"/>
-                                <ui:TextBox x:Name="currentCharInfoTextBox" Text="U+0000 (0/0)" Height="33" MouseWheel="currentCharInfoTextBox_MouseWheel"
+                                <ui:TextBox x:Name="currentCharInfoTextBox" Text="U+0000 (0/0)" Height="33" MaxLines="1" MouseWheel="currentCharInfoTextBox_MouseWheel"
                                            IsReadOnly="True" TextAlignment="Center" FontSize="12"/>
                             </DockPanel>
 
@@ -163,15 +165,13 @@
                 <StackPanel>
 
                     <!-- 字体设置 -->
-                    <ui:Card Margin="0,0,0,12" Padding="15" Height="138">
+                    <ui:Card Margin="0,0,0,12" Padding="15">
                         <StackPanel>
                             <TextBlock Text="字体设置" FontSize="14" FontWeight="SemiBold" 
                                   Margin="0,0,0,12"/>
 
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
@@ -215,8 +215,9 @@
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
-                                    <ui:NumberBox x:Name="fontSize" Value="16" Height="35" TextChanged="fontSize_TextChanged"/>
+                                    <ui:NumberBox x:Name="fontSize" Value="16" Height="35" Minimum="0" TextChanged="fontSize_TextChanged"/>
                                 </DockPanel>
+
                             </Grid>
                         </StackPanel>
                     </ui:Card>
@@ -322,10 +323,10 @@
                                 <StackPanel Orientation="Horizontal">
                                     <RadioButton x:Name="highBitFirstRadio" Content="高位在前" IsChecked="True" FontSize="12" Margin="0,0,12,0" 
                                                  Checked="FirstRadioCheckedChanged"
-                                                 Unchecked="FirstRadioCheckedChanged"/>
+                                                 Unchecked="FirstRadioCheckedChanged" Width="34"/>
                                     <RadioButton x:Name="lowBitFirstRadio" Content="高位在后" FontSize="12"
                                                  Checked="FirstRadioCheckedChanged"
-                                                 Unchecked="FirstRadioCheckedChanged"/>
+                                                 Unchecked="FirstRadioCheckedChanged" Width="49"/>
                                 </StackPanel>
                             </DockPanel>
 
