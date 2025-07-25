@@ -45,8 +45,8 @@ namespace FontMaker
         private int verticalSpace { get; set; } = 0; // 垂直间距
 
         private bool isShorizontalScan { get; set; } = true; // 是否水平扫描
-        private bool isHighBitFirst { get; set; } = false; // 是否高位在前
-        private bool isFixedWidth { get; set; } = false; // 是否固定宽度
+        private bool isHighBitFirst { get; set; } = true; // 是否从左到右排列位（true=从左到右，false=从右到左）
+        private bool isFixedWidth { get; set; } = true; // 是否固定宽度
 
         private int grayLeve { get; set; } = 1; // 灰度级别，默认1级
 
@@ -733,20 +733,20 @@ namespace FontMaker
         private void FirstRadioCheckedChanged(object sender, RoutedEventArgs e)
         {
             if(lowBitFirstRadio == null || highBitFirstRadio == null) return;
-            bool isHighBitChecked = highBitFirstRadio.IsChecked == true;
-            bool isLowBitChecked = lowBitFirstRadio.IsChecked == true;
+            bool isLeftToRightChecked = highBitFirstRadio.IsChecked == true;
+            bool isRightToLeftChecked = lowBitFirstRadio.IsChecked == true;
 
-            if (isHighBitChecked && !isLowBitChecked)
+            if (isLeftToRightChecked && !isRightToLeftChecked)
             {
-                isHighBitFirst = true;
+                isHighBitFirst = true; // 从左到右
             }
-            else if (!isHighBitChecked && isLowBitChecked)
+            else if (!isLeftToRightChecked && isRightToLeftChecked)
             {
-                isHighBitFirst = false;
+                isHighBitFirst = false; // 从右到左
             }
             else
             {
-                isHighBitFirst = true; // 默认高位在前
+                isHighBitFirst = true; // 默认从左到右
             }
         }
 
@@ -754,19 +754,19 @@ namespace FontMaker
         {
             if(fixedWidthRadio == null || variableWidthRadio == null) return;
             bool fixedWidthChecked = fixedWidthRadio.IsChecked == true;
-            bool isLowBitChecked = variableWidthRadio.IsChecked == true;
+            bool variableWidthChecked = variableWidthRadio.IsChecked == true;
 
-            if (fixedWidthChecked && !isLowBitChecked)
+            if (fixedWidthChecked && !variableWidthChecked)
             {
-                fixedWidthChecked = true;
+                isFixedWidth = true;
             }
-            else if (!fixedWidthChecked && isLowBitChecked)
+            else if (!fixedWidthChecked && variableWidthChecked)
             {
-                fixedWidthChecked = false;
+                isFixedWidth = false;
             }
             else
             {
-                fixedWidthChecked = true; // 默认高位在前
+                isFixedWidth = true; // 默认固定宽度
             }
         }
 
@@ -774,7 +774,27 @@ namespace FontMaker
         // TODO 最终生成字库
         private void generateButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.ExportVM.ExecuteExport();
+            if (_fontRenderer == null || charsetManager == null)
+            {
+                NotificationUtils.showErrorNotification(this.SnackbarPresenter, "导出失败", "请先选择字体和字符集", 3000, null);
+                return;
+            }
+
+            try
+            {
+                // 更新渲染器参数
+                UpdateFontRendererParameters();
+                
+                // 获取字体名称
+                string fontName = fontFamily?.Source ?? "UnknownFont";
+                
+                // 执行导出
+                ViewModel.ExportVM.ExecuteExport(_fontRenderer, charsetManager, fontName);
+            }
+            catch (Exception ex)
+            {
+                NotificationUtils.showErrorNotification(this.SnackbarPresenter, "导出失败", ex.Message, 5000, null);
+            }
         }
 
         // 字符输入框文本变化事件处理（输入过程中不处理，避免干扰IME）

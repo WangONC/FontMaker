@@ -28,7 +28,7 @@ namespace FontMaker
 
         // 扫描和编码参数
         public bool IsHorizontalScan { get; set; } = true;
-        public bool IsHighBitFirst { get; set; } = true;
+        public bool IsHighBitFirst { get; set; } = true; // true=从左到右，false=从右到左
         public bool IsFixedWidth { get; set; } = true;
 
         public BitmapFontRenderer(int width, int height, string fontFamily, int fontSize, System.Drawing.FontStyle fontStyle = System.Drawing.FontStyle.Regular)
@@ -42,6 +42,44 @@ namespace FontMaker
             // 创建 System.Drawing.FontFamily 对象
             var gdiFontFamily = CreateGdiFontFamily(fontFamily);
             _renderer = new CharacterRenderer(width, height, gdiFontFamily, fontSize, fontStyle);
+            
+            // 创建对应的 WPF Typeface 用于字符支持检查
+            var wpfTypeface = CreateWpfTypeface(fontFamily, fontStyle);
+            if (wpfTypeface != null)
+            {
+                _renderer.SetWpfTypeface(wpfTypeface);
+            }
+        }
+
+        /// <summary>
+        /// 创建对应的 WPF Typeface 用于字符支持检查
+        /// </summary>
+        /// <param name="fontFamilyName">字体名称</param>
+        /// <param name="fontStyle">字体样式</param>
+        /// <returns>WPF Typeface对象</returns>
+        private System.Windows.Media.Typeface? CreateWpfTypeface(string fontFamilyName, System.Drawing.FontStyle fontStyle)
+        {
+            try
+            {
+                // 创建 WPF FontFamily
+                var wpfFontFamily = new System.Windows.Media.FontFamily(fontFamilyName);
+                
+                // 转换 GDI+ FontStyle 到 WPF 样式
+                var wpfFontStyle = (fontStyle & System.Drawing.FontStyle.Italic) != 0 
+                    ? System.Windows.FontStyles.Italic 
+                    : System.Windows.FontStyles.Normal;
+                    
+                var wpfFontWeight = (fontStyle & System.Drawing.FontStyle.Bold) != 0 
+                    ? System.Windows.FontWeights.Bold 
+                    : System.Windows.FontWeights.Normal;
+                
+                return new System.Windows.Media.Typeface(wpfFontFamily, wpfFontStyle, wpfFontWeight, System.Windows.FontStretches.Normal);
+            }
+            catch (Exception)
+            {
+                // 如果创建失败，返回 null
+                return null;
+            }
         }
 
         /// <summary>
@@ -171,10 +209,22 @@ namespace FontMaker
             }
 
             // 计算需要的字节数
-            fontData.Metadata.MaxCharacterWidth = maxWidth;
-            fontData.Metadata.MaxCharacterHeight = maxHeight;
-            fontData.Metadata.WidthBytesCount = GetRequiredBytes(maxWidth);
-            fontData.Metadata.HeightBytesCount = GetRequiredBytes(maxHeight);
+            if (IsFixedWidth)
+            {
+                // 固定宽度模式：使用画布尺寸
+                fontData.Metadata.MaxCharacterWidth = Width;
+                fontData.Metadata.MaxCharacterHeight = Height;
+                fontData.Metadata.WidthBytesCount = GetRequiredBytes(Width);
+                fontData.Metadata.HeightBytesCount = GetRequiredBytes(Height);
+            }
+            else
+            {
+                // 可变宽度模式：使用实际最大尺寸
+                fontData.Metadata.MaxCharacterWidth = maxWidth;
+                fontData.Metadata.MaxCharacterHeight = maxHeight;
+                fontData.Metadata.WidthBytesCount = GetRequiredBytes(maxWidth);
+                fontData.Metadata.HeightBytesCount = GetRequiredBytes(maxHeight);
+            }
 
             // 第二次遍历：生成最终数据
             var completeBitStream = new List<bool>();
@@ -190,14 +240,35 @@ namespace FontMaker
                     CanvasHeight = Height
                 };
 
-                // 处理扫描方式
-                var processedData = IsHorizontalScan ? rawData : ConvertToVerticalScan(rawData, actualWidth, actualHeight, BitsPerPixel);
+                // 根据是否固定宽度决定使用的数据和尺寸
+                byte[] dataToProcess;
+                int dataWidth, dataHeight;
                 
-                // 处理位序
-                if (!IsHighBitFirst)
+                if (IsFixedWidth)
                 {
+                    // 固定宽度模式：使用原始画布数据和尺寸
+                    dataToProcess = _renderer.GetCharacterPixelData(character, BitsPerPixel);
+                    dataWidth = Width;
+                    dataHeight = Height;
+                }
+                else
+                {
+                    // 可变宽度模式：使用裁剪后的数据和尺寸
+                    dataToProcess = rawData;
+                    dataWidth = actualWidth;
+                    dataHeight = actualHeight;
+                }
+
+                // 处理扫描方式
+                var processedData = IsHorizontalScan ? dataToProcess : ConvertToVerticalScan(dataToProcess, dataWidth, dataHeight, BitsPerPixel);
+                
+                // 处理位序（修正逻辑：让界面描述与实际行为一致）
+                if (IsHighBitFirst)
+                {
+                    // 从左到右：需要反转默认的MSB存储格式
                     processedData = ReverseBitOrder(processedData);
                 }
+                // 从右到左：保持默认存储格式（原始MSB实际表现为从右到左）
 
                 // 转换为BitArray
                 charResult.BitmapData = new BitArray(processedData.Length * 8);
@@ -404,6 +475,13 @@ namespace FontMaker
             // 创建 System.Drawing.FontFamily 对象
             var gdiFontFamily = CreateGdiFontFamily(fontFamily);
             _renderer.UpdateParameters(width, height, gdiFontFamily, fontSize, fontStyle);
+            
+            // 更新对应的 WPF Typeface 用于字符支持检查
+            var wpfTypeface = CreateWpfTypeface(fontFamily, fontStyle);
+            if (wpfTypeface != null)
+            {
+                _renderer.SetWpfTypeface(wpfTypeface);
+            }
         }
 
         /// <summary>

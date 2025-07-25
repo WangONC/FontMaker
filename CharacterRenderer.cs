@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.IO;
 using System.Windows.Media.Imaging;
+using FontMaker.Utils;
 
 namespace FontMaker
 {
@@ -19,6 +20,7 @@ namespace FontMaker
         private SolidBrush _textBrush;
         private SolidBrush _backgroundBrush;
         private readonly object _lockObject = new object();
+        private FontUtils? _fontUtils; // 用于检查字符支持的工具类
 
         // 渲染参数
         public int Width { get; private set; }
@@ -81,6 +83,35 @@ namespace FontMaker
         }
 
         /// <summary>
+        /// 设置WPF Typeface用于字符支持检查
+        /// </summary>
+        /// <param name="typeface">WPF Typeface对象</param>
+        public void SetWpfTypeface(System.Windows.Media.Typeface typeface)
+        {
+            if (typeface != null)
+            {
+                _fontUtils = new FontUtils(typeface);
+            }
+        }
+
+        /// <summary>
+        /// 检查字体是否支持指定字符
+        /// </summary>
+        /// <param name="character">要检查的字符</param>
+        /// <returns>如果字体支持该字符返回true，否则返回false</returns>
+        private bool IsSupportedByFont(char character)
+        {
+            // 如果有 FontUtils 实例，使用它来检查字符支持
+            if (_fontUtils != null)
+            {
+                return _fontUtils.SupportsCharacter(character);
+            }
+
+            // 如果没有 FontUtils，默认返回 true（保持原有行为）
+            return true;
+        }
+
+        /// <summary>
         /// 渲染字符到位图
         /// </summary>
         /// <param name="character">要渲染的字符</param>
@@ -91,6 +122,13 @@ namespace FontMaker
             {
                 // 清除背景
                 _graphics.Clear(Color.Black);
+
+                // 检查字体是否支持该字符
+                if (!IsSupportedByFont(character))
+                {
+                    // 字体不支持该字符，返回空白位图
+                    return ConvertToBitmapSource(_bitmap);
+                }
 
                 // 测量字符尺寸
                 SizeF charSize = _graphics.MeasureString(character.ToString(), _font);
@@ -119,6 +157,13 @@ namespace FontMaker
             {
                 // 清除背景
                 _graphics.Clear(Color.Black);
+
+                // 检查字体是否支持该字符
+                if (!IsSupportedByFont(character))
+                {
+                    // 字体不支持该字符，返回空白位图
+                    return ConvertToBitmapSource(_bitmap);
+                }
 
                 // 对于灰度渲染，启用抗锯齿以产生灰度像素
                 bool useAntiAlias = bitsPerPixel > 1;

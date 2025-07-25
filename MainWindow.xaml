@@ -317,16 +317,16 @@
                             <TextBlock Text="输出设置" FontSize="14" FontWeight="SemiBold" 
                                   Margin="0,0,0,12"/>
 
-                            <!-- 比较顺序 -->
+                            <!-- 位序排列 -->
                             <DockPanel Margin="0,0,0,8">
-                                <TextBlock DockPanel.Dock="Left" Text="比较顺序" VerticalAlignment="Center" Width="70" FontSize="12"/>
+                                <TextBlock DockPanel.Dock="Left" Text="位序排列" VerticalAlignment="Center" Width="70" FontSize="12"/>
                                 <StackPanel Orientation="Horizontal">
-                                    <RadioButton x:Name="highBitFirstRadio" Content="高位在前" IsChecked="True" FontSize="12" Margin="0,0,12,0" 
+                                    <RadioButton x:Name="highBitFirstRadio" Content="从左到右" IsChecked="True" FontSize="12" Margin="0,0,12,0" 
                                                  Checked="FirstRadioCheckedChanged"
-                                                 Unchecked="FirstRadioCheckedChanged" Width="34"/>
-                                    <RadioButton x:Name="lowBitFirstRadio" Content="高位在后" FontSize="12"
+                                                 Unchecked="FirstRadioCheckedChanged" Width="60"/>
+                                    <RadioButton x:Name="lowBitFirstRadio" Content="从右到左" FontSize="12"
                                                  Checked="FirstRadioCheckedChanged"
-                                                 Unchecked="FirstRadioCheckedChanged" Width="49"/>
+                                                 Unchecked="FirstRadioCheckedChanged" Width="60"/>
                                 </StackPanel>
                             </DockPanel>
 
