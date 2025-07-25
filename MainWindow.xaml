@@ -5,6 +5,7 @@
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:local="clr-namespace:FontMaker"
             xmlns:converters="clr-namespace:FontMaker.Converters"
+            xmlns:data="clr-namespace:FontMaker.Data"
             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
             mc:Ignorable="d"
             Title="点阵字库生成器" Height="1012" Width="1200" MinHeight="600" MinWidth="900"
@@ -92,14 +93,14 @@
                             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
                                 <ui:Button x:Name="zoomOutButton" Width="36" Height="36" 
                                           Appearance="Secondary" FontSize="14" Margin="0,0,2,0"
-                                          Icon="{ui:SymbolIcon Subtract20, Filled=True}"
+                                          Icon="{ui:SymbolIcon ZoomOut24}"
                                           Click="ZoomOutButton_Click" ToolTip="缩小"/>
-                                <Slider x:Name="zoomSlider" Width="60" Minimum="0.1" Maximum="10.0" Value="1.0" 
+                                <Slider x:Name="zoomSlider" Width="60" Minimum="{x:Static data:Config.MinZoomScale}" Maximum="{x:Static data:Config.MaxZoomScale}" Value="{x:Static data:Config.DefaultPreviewZoom}" 
                                        VerticalAlignment="Center" Margin="0,0,2,0"
                                        ValueChanged="ZoomSlider_ValueChanged"/>
                                 <ui:Button x:Name="zoomInButton" Width="36" Height="36" 
                                           Appearance="Secondary" FontSize="14" Margin="0,0,2,0"
-                                          Icon="{ui:SymbolIcon Add20, Filled=True}"
+                                          Icon="{ui:SymbolIcon Zoomin24}"
                                           Click="ZoomInButton_Click" ToolTip="放大"/>
                                 <ui:Button x:Name="zoomResetButton" Width="36" Height="36" 
                                           Icon="{ui:SymbolIcon ArrowReset32, Filled=True}"
@@ -180,10 +181,10 @@
                                 <DockPanel Grid.Row="0" Margin="0,0,0,8">
                                     <TextBlock DockPanel.Dock="Left" Text="字体：" VerticalAlignment="Center" Width="50"/>
                                     <ui:Button DockPanel.Dock="Right" x:Name="importFontButton" 
-                                          Content="导入" Width="77" Height="33" Margin="8,0,0,0"
+                                          Content="导入" Width="77" Height="35" Margin="8,0,0,0"
                                           Appearance="Secondary" FontSize="12" 
                                           Icon="{ui:SymbolIcon DocumentAdd24}" Click="importFontButton_Click"/>
-                                    <ComboBox  x:Name="fontComboBox" Height="33"
+                                    <ComboBox  x:Name="fontComboBox" Height="35"
                                                SelectedItem="{Binding FontVM.SelectedFont}"
                                          ItemsSource="{Binding FontVM.AllFonts}" IsEditable="False" SelectedIndex="0"
                                          SelectionChanged="FontComboBox_SelectionChanged">
@@ -357,7 +358,7 @@ Unchecked="FixedRadioCheckedChanged"/>
                                 <DockPanel Margin="0,0,0,4">
                                     <TextBlock DockPanel.Dock="Left" Text="灰度级别" VerticalAlignment="Center" Width="70" FontSize="12"/>
                                     <TextBlock DockPanel.Dock="Right" x:Name="grayLevelText" Text="1位" FontSize="12" VerticalAlignment="Center" Width="30"/>
-                                    <Slider x:Name="grayLevelSlider" Minimum="0" Maximum="7" Value="0" 
+                                    <Slider x:Name="grayLevelSlider" Minimum="0" Maximum="3" Value="0" 
                                            TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True"
                                            ValueChanged="GrayLevelSlider_ValueChanged" Height="24"/>
                                 </DockPanel>
@@ -367,15 +368,45 @@ Unchecked="FixedRadioCheckedChanged"/>
 
                     <!-- 操作按钮 -->
                     <Grid Margin="0,8,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="8"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <ui:Button Grid.Column="0" x:Name="previewButton" Content="预览" Height="36" 
-                              Appearance="Secondary" Icon="{ui:SymbolIcon Eye24}" Width="146"/>
-                        <ui:Button Grid.Column="2" x:Name="generateButton" Content="生成字库" Height="36" 
-                              Appearance="Primary" Icon="{ui:SymbolIcon Save24}" Width="146" Click="generateButton_Click"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="8"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <!-- 设置按钮 -->
+                        <ui:Button Grid.Row="0" x:Name="settingsButton" Content="设置" Height="30" 
+                                  Appearance="Secondary" Icon="{ui:SymbolIcon Options48}" 
+                                  ToolTip="高级设置" HorizontalAlignment="Stretch" Click="SettingsButton_Click"/>
+                        
+                        <!-- 主要操作按钮 -->
+                        <Grid Grid.Row="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            
+                            <!-- 进度条 -->
+                            <ProgressBar x:Name="generateProgressBar" Grid.Row="0" Height="4" 
+                                        Visibility="Collapsed" IsIndeterminate="False"/>
+                            <TextBlock x:Name="progressText" Grid.Row="0" Text="" 
+                                      FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      Visibility="Collapsed" Foreground="Gray"/>
+                            
+                            <!-- 按钮 -->
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <ui:Button Grid.Column="0" x:Name="previewButton" Content="预览" Height="36" 
+                                          Appearance="Secondary" Icon="{ui:SymbolIcon Eye24}" Width="146" Click="previewButton_Click"/>
+                                <ui:Button Grid.Column="2" x:Name="generateButton" Content="生成字库" Height="36" 
+                                          Appearance="Primary" Icon="{ui:SymbolIcon Save24}" Width="146" Click="generateButton_Click"/>
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                 </StackPanel>

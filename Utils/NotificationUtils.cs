@@ -30,27 +30,43 @@ namespace FontMaker
             return result == System.Windows.MessageBoxResult.OK;
         }
 
-        public static void showMessageWPF(string title, string message,string? primary,string? second,string? close)
+        public static Task<Wpf.Ui.Controls.MessageBoxResult> showMessageWPF(string title, 
+            string message,
+            string? primary=null,
+            string? second = null,
+            string? close = null)
         {
-            // 根据 MessageBox 类型签名，正确设置按钮文本属性
             Wpf.Ui.Controls.MessageBox messageBox = new Wpf.Ui.Controls.MessageBox();
             if(primary != null)
             {
                 messageBox.PrimaryButtonText = primary;
             }
+            else
+            {
+                messageBox.IsPrimaryButtonEnabled = false;
+            }
             if (second != null)
             {
                 messageBox.SecondaryButtonText = second;
+            }
+            else
+            {
+                messageBox.IsPrimaryButtonEnabled = false;
             }
             if (close != null)
             {
                 messageBox.CloseButtonText = close;
             }
-            // 显示消息框，使用参数 title 和 message
-            messageBox.ShowTitle = true;
+            else
+            {
+                messageBox.IsCloseButtonEnabled = false;
+            }
+
+                // 显示消息框，使用参数 title 和 message
+                messageBox.ShowTitle = true;
             messageBox.Title = title;
             messageBox.Content = message;
-            messageBox.ShowDialogAsync();
+            return messageBox.ShowDialogAsync();
         }
 
         public static void showNotification(

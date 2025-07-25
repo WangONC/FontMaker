@@ -7,16 +7,6 @@ namespace FontMaker.Data.Models
 {
     /// <summary>
     /// 字体点阵数据模型 - 存储完整的字体渲染信息和二进制数据
-    /// 
-    /// 数据结构说明：
-    /// - 固定宽度模式：[字符1数据][字符2数据]...
-    /// - 可变宽度模式：[宽度字节][高度字节][字符1数据][宽度字节][高度字节][字符2数据]...
-    /// 
-    /// 宽度/高度字节数由整个字符集的最大尺寸决定：
-    /// - 最大尺寸 ≤ 255: 1字节
-    /// - 最大尺寸 ≤ 65535: 2字节  
-    /// - 最大尺寸 ≤ 16777215: 3字节
-    /// - 最大尺寸 > 16777215: 4字节
     /// </summary>
     public class FontBitmapData
     {
@@ -103,29 +93,6 @@ namespace FontMaker.Data.Models
             return (offset, length);
         }
 
-        /// <summary>
-        /// 创建数据读取指南
-        /// </summary>
-        public FontDataReadGuide CreateReadGuide()
-        {
-            return new FontDataReadGuide
-            {
-                IsFixedWidth = Metadata.IsFixedWidth,
-                WidthBytesCount = Metadata.WidthBytesCount,
-                HeightBytesCount = Metadata.HeightBytesCount,
-                BitsPerPixel = Metadata.BitsPerPixel,
-                IsHorizontalScan = Metadata.IsHorizontalScan,
-                IsHighBitFirst = Metadata.IsHighBitFirst,
-                TotalCharacters = Characters.Count,
-                CharacterInfos = Characters.Select(c => new CharacterInfo
-                {
-                    Character = c.Character,
-                    UnicodeValue = c.UnicodeValue,
-                    ActualWidth = c.ActualWidth,
-                    ActualHeight = c.ActualHeight
-                }).ToList()
-            };
-        }
 
         private int GetAverageBytesPerCharacter()
         {
@@ -318,111 +285,4 @@ namespace FontMaker.Data.Models
         public int BytesPerCharacter { get; set; }
     }
 
-    /// <summary>
-    /// 字体数据读取指南 - 用于解析二进制数据
-    /// </summary>
-    public class FontDataReadGuide
-    {
-        /// <summary>
-        /// 是否固定宽度
-        /// </summary>
-        public bool IsFixedWidth { get; set; }
-
-        /// <summary>
-        /// 宽度信息字节数
-        /// </summary>
-        public int WidthBytesCount { get; set; }
-
-        /// <summary>
-        /// 高度信息字节数
-        /// </summary>
-        public int HeightBytesCount { get; set; }
-
-        /// <summary>
-        /// 每像素位数
-        /// </summary>
-        public int BitsPerPixel { get; set; }
-
-        /// <summary>
-        /// 是否水平扫描
-        /// </summary>
-        public bool IsHorizontalScan { get; set; }
-
-        /// <summary>
-        /// 是否高位在前 (MSB)
-        /// </summary>
-        public bool IsHighBitFirst { get; set; }
-
-        /// <summary>
-        /// 总字符数
-        /// </summary>
-        public int TotalCharacters { get; set; }
-
-        /// <summary>
-        /// 字符信息列表（按在数据流中的顺序）
-        /// </summary>
-        public List<CharacterInfo> CharacterInfos { get; set; } = new List<CharacterInfo>();
-
-        /// <summary>
-        /// 生成读取说明文档
-        /// </summary>
-        public string GenerateReadInstructions()
-        {
-            var instructions = new System.Text.StringBuilder();
-            instructions.AppendLine("# 字体数据读取说明");
-            instructions.AppendLine();
-            instructions.AppendLine($"- 数据格式: {(IsFixedWidth ? "固定宽度" : "可变宽度")}");
-            instructions.AppendLine($"- 每像素位数: {BitsPerPixel} ({(1 << BitsPerPixel)} 级灰度)");
-            instructions.AppendLine($"- 扫描方式: {(IsHorizontalScan ? "水平扫描" : "垂直扫描")}");
-            instructions.AppendLine($"- 位序: {(IsHighBitFirst ? "MSB优先" : "LSB优先")}");
-            instructions.AppendLine($"- 总字符数: {TotalCharacters}");
-            instructions.AppendLine();
-
-            if (!IsFixedWidth)
-            {
-                instructions.AppendLine("## 可变宽度数据结构:");
-                instructions.AppendLine($"每个字符数据格式: [宽度({WidthBytesCount}字节)] [高度({HeightBytesCount}字节)] [点阵数据]");
-                instructions.AppendLine();
-                instructions.AppendLine("### 读取步骤:");
-                instructions.AppendLine("1. 读取宽度字节，计算实际宽度");
-                instructions.AppendLine("2. 读取高度字节，计算实际高度");
-                instructions.AppendLine("3. 根据宽高计算点阵数据长度");
-                instructions.AppendLine("4. 读取对应长度的点阵数据");
-                instructions.AppendLine("5. 重复上述步骤读取下一个字符");
-            }
-            else
-            {
-                instructions.AppendLine("## 固定宽度数据结构:");
-                instructions.AppendLine("所有字符使用相同的数据长度，连续存储");
-            }
-
-            return instructions.ToString();
-        }
-    }
-
-    /// <summary>
-    /// 字符信息
-    /// </summary>
-    public class CharacterInfo
-    {
-        /// <summary>
-        /// 字符
-        /// </summary>
-        public char Character { get; set; }
-
-        /// <summary>
-        /// Unicode值
-        /// </summary>
-        public int UnicodeValue { get; set; }
-
-        /// <summary>
-        /// 实际宽度
-        /// </summary>
-        public int ActualWidth { get; set; }
-
-        /// <summary>
-        /// 实际高度
-        /// </summary>
-        public int ActualHeight { get; set; }
-    }
 }

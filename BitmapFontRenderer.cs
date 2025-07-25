@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Media.Imaging;
+using FontMaker.Data;
 using FontMaker.Data.Models;
 using FontRenderStatistics = FontMaker.Data.Models.FontRenderStatistics;
 
@@ -188,6 +189,11 @@ namespace FontMaker
 
             foreach (char character in charset.Characters)
             {
+                if(Config.IsRemoveUnsupportChar && !_renderer.IsSupportedByFont(character))
+                {
+                    // 如果不支持该字符，跳过
+                    continue;
+                }
                 try
                 {
                     var rawData = _renderer.GetCharacterPixelData(character, BitsPerPixel);

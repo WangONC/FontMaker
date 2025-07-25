@@ -99,7 +99,7 @@ namespace FontMaker
         /// </summary>
         /// <param name="character">要检查的字符</param>
         /// <returns>如果字体支持该字符返回true，否则返回false</returns>
-        private bool IsSupportedByFont(char character)
+        public bool IsSupportedByFont(char character)
         {
             // 如果有 FontUtils 实例，使用它来检查字符支持
             if (_fontUtils != null)

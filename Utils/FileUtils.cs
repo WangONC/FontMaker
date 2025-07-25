@@ -102,5 +102,21 @@ namespace FontMaker.Utils
             // 读取文件内容
             return File.ReadAllBytes(filePath);
         }
+
+
+        /// <summary>
+        /// 获取保存文件路径
+        /// </summary>
+        public static string GetSaveFilePath(string filter, string defaultFileName)
+        {
+            var saveDialog = new Microsoft.Win32.SaveFileDialog
+            {
+                Filter = filter,
+                FileName = defaultFileName,
+                DefaultExt = System.IO.Path.GetExtension(defaultFileName)
+            };
+
+            return saveDialog.ShowDialog() == true ? saveDialog.FileName : string.Empty;
+        }
     }
 }

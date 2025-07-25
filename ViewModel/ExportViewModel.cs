@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FontMaker.Data;
 using FontMaker.Data.Models;
+using FontMaker.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,7 +23,7 @@ namespace FontMaker.ViewModel
         private string _selectedFormat = string.Empty;
 
         // 导出处理器映射字典
-        private readonly Dictionary<string, Action> _exportHandlers = new();
+        private readonly Dictionary<string, Func<FontBitmapData, string, string, BitmapFontRenderer, CharsetManager, string?, bool>> _exportHandlers = new();
         
         // 当前导出数据（供导出方法使用）
         private FontBitmapData? _currentFontData;
@@ -60,13 +62,13 @@ namespace FontMaker.ViewModel
 
         private void InitializeExportHandlers()
         {
-            _exportHandlers["C文件 (.c/.h)"] = () => ExportToCFile(_currentFontData!, _currentFontName!, _currentExportPath);
-            _exportHandlers["BIN文件 (.bin)"] = () => ExportToBinFile(_currentFontData!, _currentFontName!, _currentExportPath);
-            _exportHandlers["TXT文件 (.txt)"] = () => ExportToTXTFile(_currentFontData!, _currentFontName!, _currentExportPath);
-            _exportHandlers["JSON文件 (.json)"] = () => ExportToJSONFile(_currentFontData!, _currentFontName!, _currentExportPath);
-            _exportHandlers["XML文件 (.xml)"] = () => ExportToXMLFile(_currentFontData!, _currentFontName!, _currentExportPath);
-            _exportHandlers["HEX文件 (.hex)"] = () => ExportToHEXFile(_currentFontData!, _currentFontName!, _currentExportPath);
-            _exportHandlers["Arduino代码 (.ino)"] = () => ExportToINOFile(_currentFontData!, _currentFontName!, _currentExportPath);
+            _exportHandlers["C文件 (.c/.h)"] = ExportToCFile;
+            _exportHandlers["BIN文件 (.bin)"] = ExportToBinFile;
+            _exportHandlers["TXT文件 (.txt)"] = ExportToTXTFile;
+            _exportHandlers["JSON文件 (.json)"] = ExportToJSONFile;
+            _exportHandlers["XML文件 (.xml)"] = ExportToXMLFile;
+            _exportHandlers["HEX文件 (.hex)"] = ExportToHEXFile;
+            _exportHandlers["Arduino代码 (.ino)"] = ExportToINOFile;
         }
 
         /// <summary>
@@ -76,7 +78,8 @@ namespace FontMaker.ViewModel
         /// <param name="charsetManager">字符集管理器</param>
         /// <param name="fontName">字体名称</param>
         /// <param name="exportPath">导出路径（可选，如果为空则弹出保存对话框）</param>
-        public void ExecuteExport(BitmapFontRenderer fontRenderer, CharsetManager charsetManager, string fontName, string? exportPath = null)
+        /// <returns>导出是否成功</returns>
+        public bool ExecuteExport(BitmapFontRenderer fontRenderer, CharsetManager charsetManager, string fontName, string? exportPath = null)
         {
             if (string.IsNullOrEmpty(SelectedFormat))
             {
@@ -101,70 +104,88 @@ namespace FontMaker.ViewModel
                 throw new NotSupportedException($"不支持的导出格式: {SelectedFormat}");
             }
 
-            // 调用对应的导出处理器，传递数据
-            InvokeExportHandler(handler, fontData, fontName, exportPath);
+            // 调用对应的导出处理器
+            return handler(fontData, fontName, charsetManager.Name ?? "Unknown", fontRenderer, charsetManager, exportPath);
         }
 
-        /// <summary>
-        /// 调用导出处理器的内部方法
-        /// </summary>
-        private void InvokeExportHandler(Action handler, FontBitmapData fontData, string fontName, string? exportPath)
+        private bool ExportToCFile(FontBitmapData fontData, string fontName, string charsetName, BitmapFontRenderer fontRenderer, CharsetManager charsetManager, string? exportPath)
         {
-            // 将当前导出数据临时存储，供各个导出方法使用
-            _currentFontData = fontData;
-            _currentFontName = fontName;
-            _currentExportPath = exportPath;
-            
-            try
-            {
-                handler.Invoke();
-            }
-            finally
-            {
-                _currentFontData = null;
-                _currentFontName = null;
-                _currentExportPath = null;
-            }
-        }
+            // 使用Config的文件名模板
+            string defaultFileName = Config.ReplaceFileNameVariables(
+                Config.DefaultExportFileName,
+                fontName: fontName,
+                charsetName: charsetName,
+                fontSize: fontRenderer.FontSize,
+                width: fontRenderer.Width,
+                height: fontRenderer.Height,
+                bitsPerPixel: fontRenderer.BitsPerPixel,
+                isHorizontalScan: fontRenderer.IsHorizontalScan,
+                isHighBitFirst: fontRenderer.IsHighBitFirst,
+                isFixedWidth: fontRenderer.IsFixedWidth,
+                charCount: charsetManager.CharCount
+            ) + ".h";
 
-        private void ExportToCFile(FontBitmapData fontData, string fontName, string? exportPath)
+            string outputPath = exportPath ?? FileUtils.GetSaveFilePath("C头文件 (*.h)|*.h", defaultFileName);
+            if (string.IsNullOrEmpty(outputPath))
+                return false;
+
+            var exporter = new FontMaker.Exporters.CExporter(outputPath);
+            return exporter.Export(fontData, fontName);
+        }
+        
+        private bool ExportToBinFile(FontBitmapData fontData, string fontName, string charsetName, BitmapFontRenderer fontRenderer, CharsetManager charsetManager, string? exportPath) 
+        { 
+            // TODO: 实现BIN文件导出逻辑
+            return false; // 暂未实现
+        }
+        
+        private bool ExportToTXTFile(FontBitmapData fontData, string fontName, string charsetName, BitmapFontRenderer fontRenderer, CharsetManager charsetManager, string? exportPath) 
+        { 
+            // TODO: 实现TXT文件导出逻辑
+            return false; // 暂未实现
+        }
+        
+        private bool ExportToJSONFile(FontBitmapData fontData, string fontName, string charsetName, BitmapFontRenderer fontRenderer, CharsetManager charsetManager, string? exportPath) 
+        { 
+            // TODO: 实现JSON文件导出逻辑
+            return false; // 暂未实现
+        }
+        
+        private bool ExportToXMLFile(FontBitmapData fontData, string fontName, string charsetName, BitmapFontRenderer fontRenderer, CharsetManager charsetManager, string? exportPath) 
+        { 
+            // TODO: 实现XML文件导出逻辑
+            return false; // 暂未实现
+        }
+        
+        private bool ExportToHEXFile(FontBitmapData fontData, string fontName, string charsetName, BitmapFontRenderer fontRenderer, CharsetManager charsetManager, string? exportPath) 
+        { 
+            // TODO: 实现HEX文件导出逻辑
+            return false; // 暂未实现
+        }
+        
+        private bool ExportToINOFile(FontBitmapData fontData, string fontName, string charsetName, BitmapFontRenderer fontRenderer, CharsetManager charsetManager, string? exportPath) 
         {
-            fontData.CreateReadGuide().GenerateReadInstructions();
-            var (offset, length) = fontData.GetCharacterDataPosition(52);
-            var a = fontData.Metadata;
-            var b = fontData.Characters[52];
-            byte[] aa = b.GetBitmapBytes(); // 修复：使用 GetBitmapBytes() 获取 byte[]
-            NotificationUtils.showMessage("成功", "已导出为.c");
-        }
-        
-        private void ExportToBinFile(FontBitmapData fontData, string fontName, string? exportPath) 
-        { 
-            NotificationUtils.showMessage("成功", "已导出为.bin"); 
-        }
-        
-        private void ExportToTXTFile(FontBitmapData fontData, string fontName, string? exportPath) 
-        { 
-            NotificationUtils.showMessage("成功", "已导出为.txt"); 
-        }
-        
-        private void ExportToJSONFile(FontBitmapData fontData, string fontName, string? exportPath) 
-        { 
-            NotificationUtils.showMessage("成功", "已导出为.json"); 
-        }
-        
-        private void ExportToXMLFile(FontBitmapData fontData, string fontName, string? exportPath) 
-        { 
-            NotificationUtils.showMessage("成功", "已导出为.xml"); 
-        }
-        
-        private void ExportToHEXFile(FontBitmapData fontData, string fontName, string? exportPath) 
-        { 
-            NotificationUtils.showMessage("成功", "已导出为.hex"); 
-        }
-        
-        private void ExportToINOFile(FontBitmapData fontData, string fontName, string? exportPath) 
-        { 
-            NotificationUtils.showMessage("成功", "已导出为.ino"); 
+            // 使用Config的文件名模板
+            string defaultFileName = Config.ReplaceFileNameVariables(
+                Config.DefaultExportFileName,
+                fontName: fontName,
+                charsetName: charsetName,
+                fontSize: fontRenderer.FontSize,
+                width: fontRenderer.Width,
+                height: fontRenderer.Height,
+                bitsPerPixel: fontRenderer.BitsPerPixel,
+                isHorizontalScan: fontRenderer.IsHorizontalScan,
+                isHighBitFirst: fontRenderer.IsHighBitFirst,
+                isFixedWidth: fontRenderer.IsFixedWidth,
+                charCount: charsetManager.CharCount
+            ) + ".ino";
+
+            string outputPath = exportPath ?? FileUtils.GetSaveFilePath("Arduino文件 (*.ino)|*.ino", defaultFileName);
+            if (string.IsNullOrEmpty(outputPath))
+                return false;
+
+            var exporter = new FontMaker.Exporters.CExporter(outputPath);
+            return exporter.Export(fontData, fontName);
         }
 
     }

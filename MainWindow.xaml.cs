@@ -1,9 +1,12 @@
-﻿using FontMaker.Data.Models;
+﻿using FontMaker.Data;
+using FontMaker.Data.Models;
+using FontMaker.Utils;
 using FontMaker.ViewModel;
 using FontMaker.ViewModels;
 using System.Collections.ObjectModel;
 using System.Drawing.Text;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -56,8 +59,7 @@ namespace FontMaker
         private DateTime _mouseDownTime;
         private bool _isLongPressing = false;
         private string _longPressDirection = ""; // "prev" 或 "next"
-        private const int LONG_PRESS_THRESHOLD_MS = 600; // 长按阈值，600毫秒
-        private const int FAST_SCROLL_INTERVAL_MS = 25; // 快速滚动间隔，25毫秒
+        // 长按参数现在使用全局配置
 
         // 拖动预览相关字段
         private bool _isDragging = false;
@@ -71,6 +73,9 @@ namespace FontMaker
 
         public MainWindow()
         {
+            // 程序启动时加载配置
+            SettingsWindow.InitializeAppConfig();
+            
             ViewModel = new MainViewModel();
             InitializeComponent();
             this.DataContext = ViewModel;
@@ -86,6 +91,10 @@ namespace FontMaker
                     true
                 );
             };
+            
+            // 从Config设置默认值
+            InitializeControlsFromConfig();
+            
             // 初始化像素网格预览（预留）
             InitializePixelGrid();
 
@@ -94,6 +103,57 @@ namespace FontMaker
 
             // 初始化预览交互功能
             InitializePreviewInteraction();
+        }
+
+        // 从Config初始化控件默认值
+        private void InitializeControlsFromConfig()
+        {
+            // 设置像素尺寸默认值
+            widthNumberBox.Value = Config.DefaultPixelWidth;
+            heightNumberBox.Value = Config.DefaultPixelHeight;
+            PixelSizeWidth = (uint)Config.DefaultPixelWidth;
+            PixelSizeHeight = (uint)Config.DefaultPixelHeight;
+            
+            // 设置偏移量默认值
+            horizontalSpaceNumberBox.Value = Config.DefaultHorizontalOffset;
+            verticalSpaceNumberBox.Value = Config.DefaultVerticalOffset;
+            horizontalSpace = Config.DefaultHorizontalOffset;
+            verticalSpace = Config.DefaultVerticalOffset;
+            
+            // 设置字体大小默认值
+            fontSize.Value = Config.DefaultFontSize;
+            FontSize = Config.DefaultFontSize;
+            
+            // 设置扫描方式默认值
+            horizontalScanRadio.IsChecked = Config.DefaultIsHorizontalScan;
+            verticalScanRadio.IsChecked = !Config.DefaultIsHorizontalScan;
+            isShorizontalScan = Config.DefaultIsHorizontalScan;
+            
+            // 设置位序默认值
+            highBitFirstRadio.IsChecked = Config.DefaultIsHighBitFirst;
+            lowBitFirstRadio.IsChecked = !Config.DefaultIsHighBitFirst;
+            isHighBitFirst = Config.DefaultIsHighBitFirst;
+            
+            // 设置宽度模式默认值
+            fixedWidthRadio.IsChecked = Config.DefaultIsFixedWidth;
+            variableWidthRadio.IsChecked = !Config.DefaultIsFixedWidth;
+            isFixedWidth = Config.DefaultIsFixedWidth;
+            
+            // 设置灰度级别默认值（位数转换为滑块值）
+            int sliderValue;
+            switch (Config.DefaultBitsPerPixel)
+            {
+                case 1: sliderValue = 0; break;
+                case 2: sliderValue = 1; break;
+                case 4: sliderValue = 2; break;
+                case 8: sliderValue = 3; break;
+                default: sliderValue = 0; break; // 默认1位
+            }
+            grayLevelSlider.Value = sliderValue;
+            grayLeve = Config.DefaultBitsPerPixel;
+            
+            // 设置缩放默认值
+            zoomSlider.Value = Config.DefaultPreviewZoom;
         }
 
         // 初始化长按定时器
@@ -233,18 +293,18 @@ namespace FontMaker
 
         private void ZoomOutButton_Click(object sender, RoutedEventArgs e)
         {
-            zoomSlider.Value = Math.Max(zoomSlider.Minimum, zoomSlider.Value - 0.1);
+            zoomSlider.Value = Math.Max(Config.MinZoomScale, zoomSlider.Value - Config.ZoomStep);
         }
 
         private void ZoomInButton_Click(object sender, RoutedEventArgs e)
         {
-            zoomSlider.Value = Math.Min(zoomSlider.Maximum, zoomSlider.Value + 0.1);
+            zoomSlider.Value = Math.Min(Config.MaxZoomScale, zoomSlider.Value + Config.ZoomStep);
         }
 
         private void ZoomResetButton_Click(object sender, RoutedEventArgs e)
         {
             // 重置缩放倍数
-            zoomSlider.Value = 1.0;
+            zoomSlider.Value = Config.DefaultPreviewZoom;
             
             // 重置位置到正中央
             _previewOffsetX = 0;
@@ -294,45 +354,29 @@ namespace FontMaker
         {
             if(grayLevelText == null) return;
             
-            // 将滑块值转换为位深度和显示文本
+            // 将滑块值转换为位深度和显示文本，只支持标准位深度
             int sliderValue = (int)e.NewValue;
             switch (sliderValue)
             {
                 case 0:
                     grayLeve = 1;  // 1位深度 = 2级 (黑白)
-                    grayLevelText.Text = "2级";
+                    grayLevelText.Text = "1位";
                     break;
                 case 1:
                     grayLeve = 2;  // 2位深度 = 4级灰度
-                    grayLevelText.Text = "4级";
+                    grayLevelText.Text = "2位";
                     break;
                 case 2:
-                    grayLeve = 3;  // 3位深度 = 8级灰度
-                    grayLevelText.Text = "8级";
+                    grayLeve = 4;  // 4位深度 = 16级灰度
+                    grayLevelText.Text = "4位";
                     break;
                 case 3:
-                    grayLeve = 4;  // 4位深度 = 16级灰度
-                    grayLevelText.Text = "16级";
-                    break;
-                case 4:
-                    grayLeve = 5;  // 5位深度 = 32级灰度
-                    grayLevelText.Text = "32级";
-                    break;
-                case 5:
-                    grayLeve = 6;  // 6位深度 = 64级灰度
-                    grayLevelText.Text = "64级";
-                    break;
-                case 6:
-                    grayLeve = 7;  // 7位深度 = 128级灰度
-                    grayLevelText.Text = "128级";
-                    break;
-                case 7:
                     grayLeve = 8;  // 8位深度 = 256级灰度
-                    grayLevelText.Text = "256级";
+                    grayLevelText.Text = "8位";
                     break;
                 default:
                     grayLeve = 1;
-                    grayLevelText.Text = "2级";
+                    grayLevelText.Text = "1位";
                     break;
             }
             
@@ -346,6 +390,15 @@ namespace FontMaker
             if (fontComboBox.SelectedItem is FontFamily selectedFont)
             {
                 fontFamily = selectedFont;
+                
+                // 立即更新typeface以获得正确的字体信息
+                if (fontFamily != null)
+                {
+                    var currentStyle = fontStyle ?? System.Windows.FontStyles.Normal;
+                    var currentWeight = fontWeight ?? System.Windows.FontWeights.Normal;
+                    var currentStretch = fontStretch ?? System.Windows.FontStretches.Normal;
+                    typeface = new Typeface(fontFamily, currentStyle, currentWeight, currentStretch);
+                }
             }
 
             // 更新字体渲染样式
@@ -624,14 +677,14 @@ namespace FontMaker
 
             var elapsed = DateTime.Now - _mouseDownTime;
 
-            if (elapsed.TotalMilliseconds >= LONG_PRESS_THRESHOLD_MS)
+            if (elapsed.TotalMilliseconds >= Config.LongPressThreshold)
             {
                 if (!_isLongPressing)
                 {
                     // 首次进入长按状态
                     _isLongPressing = true;
                     // 调整定时器间隔为快速滚动间隔
-                    _longPressTimer.Interval = TimeSpan.FromMilliseconds(FAST_SCROLL_INTERVAL_MS);
+                    _longPressTimer.Interval = TimeSpan.FromMilliseconds(Config.FastScrollInterval);
                 }
 
                 // 执行快速滚动
@@ -771,8 +824,34 @@ namespace FontMaker
         }
 
 
+        // 文本预览按钮点击事件
+        private void previewButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_fontRenderer == null || charsetManager == null)
+            {
+                NotificationUtils.showErrorNotification(this.SnackbarPresenter, "预览失败", "请先选择字体和字符集", 3000, null);
+                return;
+            }
+
+            try
+            {
+                // 更新渲染器参数
+                UpdateFontRendererParameters();
+                
+                // 创建并显示预览窗口
+                var previewWindow = new TextPreviewWindow();
+                previewWindow.SetFontRenderer(_fontRenderer, charsetManager);
+                previewWindow.Owner = this;
+                previewWindow.Show();
+            }
+            catch (Exception ex)
+            {
+                NotificationUtils.showErrorNotification(this.SnackbarPresenter, "预览失败", ex.Message, 5000, null);
+            }
+        }
+
         // TODO 最终生成字库
-        private void generateButton_Click(object sender, RoutedEventArgs e)
+        private async void generateButton_Click(object sender, RoutedEventArgs e)
         {
             if (_fontRenderer == null || charsetManager == null)
             {
@@ -782,17 +861,78 @@ namespace FontMaker
 
             try
             {
+                // 禁用按钮，显示进度条
+                generateButton.IsEnabled = false;
+                generateProgressBar.Visibility = Visibility.Visible;
+                progressText.Visibility = Visibility.Visible;
+                generateProgressBar.IsIndeterminate = true;
+                progressText.Text = "正在生成字库...";
+
                 // 更新渲染器参数
                 UpdateFontRendererParameters();
                 
                 // 获取字体名称
-                string fontName = fontFamily?.Source ?? "UnknownFont";
+                string fontName = "UnknownFont";
+                try
+                {
+                    if (fontFamily != null)
+                    {
+                        // 确保typeface是最新的
+                        var currentTypeface = typeface ?? new Typeface(fontFamily, 
+                            fontStyle ?? System.Windows.FontStyles.Normal,
+                            fontWeight ?? System.Windows.FontWeights.Normal,
+                            fontStretch ?? System.Windows.FontStretches.Normal);
+                            
+                        var fontInfo = new FontUtils(currentTypeface);
+                        fontName = fontInfo.GetFamilyName();
+                        
+                        // 如果获取失败，使用备用方案
+                        if (string.IsNullOrEmpty(fontName))
+                        {
+                            string source = fontFamily.Source;
+                            if (source.Contains("#"))
+                            {
+                                fontName = source.Split('#')[1]; // 提取URI中的字体名
+                            }
+                            else
+                            {
+                                fontName = source;
+                            }
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    fontName = fontFamily?.Source ?? "UnknownFont";
+                }
                 
-                // 执行导出
-                ViewModel.ExportVM.ExecuteExport(_fontRenderer, charsetManager, fontName);
+                // 异步执行导出
+                bool result = await Task.Run(() => 
+                {
+                    return ViewModel.ExportVM.ExecuteExport(_fontRenderer, charsetManager, fontName);
+                });
+
+                // 隐藏进度条，恢复按钮
+                generateProgressBar.Visibility = Visibility.Collapsed;
+                progressText.Visibility = Visibility.Collapsed;
+                generateButton.IsEnabled = true;
+
+                if (!result)
+                {
+                    NotificationUtils.showErrorNotification(this.SnackbarPresenter, "导出失败", "未选择有效输出文件", 5000, null);
+                }
+                else
+                {
+                    NotificationUtils.showSuccessNotification(this.SnackbarPresenter, "导出成功", "字库已成功生成", 3000, null);
+                }
             }
             catch (Exception ex)
             {
+                // 出错时也要恢复UI状态
+                generateProgressBar.Visibility = Visibility.Collapsed;
+                progressText.Visibility = Visibility.Collapsed;
+                generateButton.IsEnabled = true;
+                
                 NotificationUtils.showErrorNotification(this.SnackbarPresenter, "导出失败", ex.Message, 5000, null);
             }
         }
@@ -923,9 +1063,9 @@ namespace FontMaker
             // 滚轮缩放
             if (zoomSlider != null)
             {
-                double delta = e.Delta > 0 ? 0.1 : -0.1;
-                double newValue = Math.Max(zoomSlider.Minimum, 
-                                  Math.Min(zoomSlider.Maximum, zoomSlider.Value + delta));
+                double delta = e.Delta > 0 ? Config.ZoomStep : -Config.ZoomStep;
+                double newValue = Math.Max(Config.MinZoomScale, 
+                                  Math.Min(Config.MaxZoomScale, zoomSlider.Value + delta));
                 zoomSlider.Value = newValue;
             }
         }
@@ -941,5 +1081,33 @@ namespace FontMaker
         }
 
         #endregion
+
+        // 设置按钮点击事件
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var settingsWindow = new SettingsWindow();
+                settingsWindow.Owner = this;
+                
+                if (settingsWindow.ShowDialog() == true)
+                {
+                    // 设置已保存，重新初始化控件以应用新设置
+                    InitializeControlsFromConfig();
+                    
+                    // 更新字体渲染器参数
+                    UpdateFontRendererParameters();
+                    
+                    // 更新预览
+                    UpdateCharacterPreview();
+                    
+                    NotificationUtils.showSuccessNotification(this.SnackbarPresenter, "设置已更新", "新的设置已应用到界面", 3000, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                NotificationUtils.showErrorNotification(this.SnackbarPresenter, "打开设置窗口失败", ex.Message, 5000, null);
+            }
+        }
     }
 }
