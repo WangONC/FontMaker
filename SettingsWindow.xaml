@@ -262,27 +262,27 @@
 
                 <!-- 左侧功能按钮 -->
                 <ui:Button Grid.Column="0" x:Name="loadSettingsButton" Content="{x:Static properties:Languages.LoadSettings}" 
-                          Height="36" Width="103"
+                          Height="36" Width="160"
                           Appearance="Secondary" Icon="{ui:SymbolIcon FolderOpen24}"
                           Click="LoadSettingsButton_Click"/>
 
                 <ui:Button Grid.Column="1" x:Name="exportSettingsButton" Content="{x:Static properties:Languages.ExportSettings}" 
-                          Height="36" Width="103"
+                          Height="36" Width="160"
                           Appearance="Secondary" Icon="{ui:SymbolIcon Save24}"
                           Click="ExportSettingsButton_Click"/>
 
                 <ui:Button Grid.Column="2" x:Name="resetToDefaultsButton" Content="{x:Static properties:Languages.RestoreDefaults}" 
-                          Height="36" Width="103"
+                          Height="36" Width="160"
                           Appearance="Secondary" Icon="{ui:SymbolIcon ArrowReset32}"
                           Click="ResetToDefaultsButton_Click" HorizontalAlignment="Center"/>
 
                 <!-- 右侧主要按钮 -->
                 <ui:Button Grid.Column="4" x:Name="cancelButton" Content="{x:Static properties:Languages.Cancel}" 
-                          Height="36" Width="100" Margin="0,0,8,0"
-                          Appearance="Secondary" Click="CancelButton_Click"/>
+                          Height="36" Width="90"
+                          Appearance="Secondary" Click="CancelButton_Click" HorizontalAlignment="Center"/>
 
                 <ui:Button Grid.Column="5" x:Name="saveButton" Content="{x:Static properties:Languages.Save}" 
-                          Height="36" Width="100"
+                          Height="36" Width="90"
                           Appearance="Primary" Icon="{ui:SymbolIcon Checkmark24}"
                           Click="SaveButton_Click"/>
             </Grid>

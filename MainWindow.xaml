@@ -115,7 +115,7 @@
 
                             <!-- 字符输入 -->
                             <DockPanel Grid.Row="0" Margin="0,0,0,8">
-                                <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.Char}" VerticalAlignment="Center" Width="50"/>
+                                <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.Char}" VerticalAlignment="Center" Width="80"/>
                                 <ui:TextBox x:Name="characterInputTextBox" Text="A" Height="33"  MaxLines="1" MinLines="1"
                                        TextAlignment="Center" FontSize="16"
                                        TextChanged="CharacterInputTextBox_TextChanged"
@@ -125,14 +125,14 @@
 
                             <!-- 当前字符信息 -->
                             <DockPanel Grid.Row="1" Margin="0,0,0,8">
-                                <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.Current}" VerticalAlignment="Center" Width="50"/>
+                                <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.Current}" VerticalAlignment="Center" Width="80"/>
                                 <ui:TextBox x:Name="currentCharInfoTextBox" Text="U+0000 (0/0)" Height="33" MaxLines="1" MouseWheel="currentCharInfoTextBox_MouseWheel"
                                            IsReadOnly="True" TextAlignment="Center" FontSize="12"/>
                             </DockPanel>
 
                             <!-- 字符导航 -->
                             <DockPanel Grid.Row="2" Margin="0,0,0,0">
-                                <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.Navigation}" VerticalAlignment="Center" Width="50"/>
+                                <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.Navigation}" VerticalAlignment="Center" Width="80"/>
                                 <StackPanel Orientation="Horizontal">
                                     <ui:Button x:Name="firstCharButton" Content="⫷" Width="44" Height="29" Margin="0,0,2,0"
                                               Appearance="Secondary" ToolTip="{x:Static properties:Languages.FirstChar}" FontSize="12"
@@ -175,7 +175,7 @@
                                 <DockPanel Grid.Row="0" Margin="0,0,0,8">
                                     <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.Font}" VerticalAlignment="Center" Width="50"/>
                                     <ui:Button DockPanel.Dock="Right" x:Name="importFontButton" 
-                                          Content="{x:Static properties:Languages.Import}" Width="77" Height="35" Margin="8,0,0,0"
+                                          Content="{x:Static properties:Languages.Import}" Width="90" Height="35" Margin="8,0,0,0"
                                           Appearance="Secondary" FontSize="12" 
                                           Icon="{ui:SymbolIcon DocumentAdd24}" Click="importFontButton_Click"/>
                                     <ComboBox  x:Name="fontComboBox" Height="35"
