@@ -1,0 +1,730 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="charView" xml:space="preserve">
+    <value>字符预览</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>点阵字库生成器</value>
+    <comment>应用名称</comment>
+  </data>
+  <data name="ViewResize" xml:space="preserve">
+    <value>预览缩放</value>
+  </data>
+  <data name="CurrentChar" xml:space="preserve">
+    <value>当前字符</value>
+  </data>
+  <data name="Char" xml:space="preserve">
+    <value>字符：</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>当前：</value>
+  </data>
+  <data name="Navigation" xml:space="preserve">
+    <value>导航：</value>
+  </data>
+  <data name="FirstChar" xml:space="preserve">
+    <value>第一个字符</value>
+  </data>
+  <data name="LastChar" xml:space="preserve">
+    <value>最后一个字符</value>
+  </data>
+  <data name="NextChar" xml:space="preserve">
+    <value>下一个字符</value>
+  </data>
+  <data name="PreviousChar" xml:space="preserve">
+    <value>上一个字符</value>
+  </data>
+  <data name="FontSetting" xml:space="preserve">
+    <value>字体设置</value>
+  </data>
+  <data name="Font" xml:space="preserve">
+    <value>字体：</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>导入</value>
+  </data>
+  <data name="FontSize" xml:space="preserve">
+    <value>字号：</value>
+  </data>
+  <data name="CharSet" xml:space="preserve">
+    <value>字符集</value>
+  </data>
+  <data name="StandardCharSet" xml:space="preserve">
+    <value>标准字符集</value>
+  </data>
+  <data name="CustomCharSet" xml:space="preserve">
+    <value>自定义字符集</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="PointSize" xml:space="preserve">
+    <value>点阵大小</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>宽度</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>高度</value>
+  </data>
+  <data name="HorizontalOffset" xml:space="preserve">
+    <value>水平偏移</value>
+  </data>
+  <data name="VerticalOffset" xml:space="preserve">
+    <value>垂直偏移</value>
+  </data>
+  <data name="ScanMethod" xml:space="preserve">
+    <value>扫描方式</value>
+  </data>
+  <data name="HorizontalScan" xml:space="preserve">
+    <value>水平扫描</value>
+  </data>
+  <data name="VerticalScan" xml:space="preserve">
+    <value>垂直扫描</value>
+  </data>
+  <data name="OutputSetting" xml:space="preserve">
+    <value>输出设置</value>
+  </data>
+  <data name="BitOrderLabel" xml:space="preserve">
+    <value>位序排列</value>
+  </data>
+  <data name="LeftToRightLabel" xml:space="preserve">
+    <value>从左到右</value>
+  </data>
+  <data name="RightToLeftLabel" xml:space="preserve">
+    <value>从右到左</value>
+  </data>
+  <data name="ByteWidthLabel" xml:space="preserve">
+    <value>字节宽度</value>
+  </data>
+  <data name="FixedWidthLabel" xml:space="preserve">
+    <value>固定宽度</value>
+  </data>
+  <data name="VariableWidthLabel" xml:space="preserve">
+    <value>可变宽度</value>
+  </data>
+  <data name="FileFormatLabel" xml:space="preserve">
+    <value>文件格式</value>
+  </data>
+  <data name="GrayLevelLabel" xml:space="preserve">
+    <value>灰度级别</value>
+  </data>
+  <data name="AdvanceSetting" xml:space="preserve">
+    <value>高级设置</value>
+  </data>
+  <data name="GenerateFontLibrary" xml:space="preserve">
+    <value>生成字库</value>
+  </data>
+  <data name="SelectCharSetFile" xml:space="preserve">
+    <value>选择字符集文件</value>
+  </data>
+  <data name="CharSetFilter" xml:space="preserve">
+    <value>字符集文件 (*.cst)|*.cst|所有文件 (*.*)|*.*</value>
+  </data>
+  <data name="PreviewFail" xml:space="preserve">
+    <value>预览失败</value>
+  </data>
+  <data name="OutputFail" xml:space="preserve">
+    <value>导出失败</value>
+  </data>
+  <data name="OutputFontLibing" xml:space="preserve">
+    <value>正在生成字库...</value>
+  </data>
+  <data name="OutputSuccess" xml:space="preserve">
+    <value>导出成功</value>
+  </data>
+  <data name="SetingUpdated" xml:space="preserve">
+    <value>设置已更新</value>
+  </data>
+  <data name="OpenSettingWinFail" xml:space="preserve">
+    <value>打开设置窗口失败</value>
+  </data>
+  <data name="NewSettingUpdate2UI" xml:space="preserve">
+    <value>新的设置已应用到界面，语言变更需要重启后生效</value>
+  </data>
+  <data name="NeedSelectFontCharset" xml:space="preserve">
+    <value>请先选择字体和字符集</value>
+  </data>
+  <data name="ImportCharSetSuccess" xml:space="preserve">
+    <value>导入字符集成功</value>
+  </data>
+  <data name="ImportCharSetFail" xml:space="preserve">
+    <value>导入字符集失败</value>
+  </data>
+  <data name="SelectFontFile" xml:space="preserve">
+    <value>选择字体文件</value>
+  </data>
+  <data name="importFontSuccess" xml:space="preserve">
+    <value>导入字体成功</value>
+  </data>
+  <data name="PartialCharSetImportFail" xml:space="preserve">
+    <value>部分字符集导入失败</value>
+  </data>
+  <data name="NoCharSetImported" xml:space="preserve">
+    <value>没有成功导入任何字符集文件</value>
+  </data>
+  <data name="InvalidCharSetOrExists" xml:space="preserve">
+    <value>无效的字符集文件或已存在同名字符集</value>
+  </data>
+  <data name="ImportedCharSetSingle" xml:space="preserve">
+    <value>已导入字符集: {0}</value>
+  </data>
+  <data name="ImportedCharSetMultiple" xml:space="preserve">
+    <value>成功导入 {0} 个字符集</value>
+  </data>
+  <data name="ImportFailedFilesList" xml:space="preserve">
+    <value>以下文件导入失败:\n{0}</value>
+  </data>
+  <data name="FontFileFilter" xml:space="preserve">
+    <value>字体文件 (*.ttf;*.otf)|*.ttf;*.otf|所有文件 (*.*)|*.*</value>
+  </data>
+  <data name="PartialFontImportFail" xml:space="preserve">
+    <value>部分字体导入失败</value>
+  </data>
+  <data name="ImportedFontSingle" xml:space="preserve">
+    <value>已导入字体: {0}</value>
+  </data>
+  <data name="ImportedFontMultiple" xml:space="preserve">
+    <value>成功导入 {0} 个字体</value>
+  </data>
+  <data name="InvalidFontFile" xml:space="preserve">
+    <value>无效的字体文件</value>
+  </data>
+  <data name="UnselectedFontError" xml:space="preserve">
+    <value>未选择字体，无法进行渲染</value>
+  </data>
+  <data name="NoValidOutputFile" xml:space="preserve">
+    <value>未选择有效输出文件</value>
+  </data>
+  <data name="FontLibGenerated" xml:space="preserve">
+    <value>字库已成功生成</value>
+  </data>
+  <data name="OneBitText" xml:space="preserve">
+    <value>1位</value>
+  </data>
+  <data name="TwoBitText" xml:space="preserve">
+    <value>2位</value>
+  </data>
+  <data name="FourBitText" xml:space="preserve">
+    <value>4位</value>
+  </data>
+  <data name="EightBitText" xml:space="preserve">
+    <value>8位</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="FontRenderingTab" xml:space="preserve">
+    <value>字体渲染</value>
+  </data>
+  <data name="PreviewTab" xml:space="preserve">
+    <value>预览</value>
+  </data>
+  <data name="ExportTab" xml:space="preserve">
+    <value>导出</value>
+  </data>
+  <data name="InterfaceTab" xml:space="preserve">
+    <value>界面</value>
+  </data>
+  <data name="DefaultPixelWidth" xml:space="preserve">
+    <value>默认像素宽度</value>
+  </data>
+  <data name="DefaultPixelHeight" xml:space="preserve">
+    <value>默认像素高度</value>
+  </data>
+  <data name="DefaultFontSize" xml:space="preserve">
+    <value>默认字体大小</value>
+  </data>
+  <data name="DefaultBitDepth" xml:space="preserve">
+    <value>默认位深度</value>
+  </data>
+  <data name="OneBitBlackWhite" xml:space="preserve">
+    <value>1位 (黑白)</value>
+  </data>
+  <data name="TwoBit4Gray" xml:space="preserve">
+    <value>2位 (4灰度)</value>
+  </data>
+  <data name="FourBit16Gray" xml:space="preserve">
+    <value>4位 (16灰度)</value>
+  </data>
+  <data name="EightBit256Gray" xml:space="preserve">
+    <value>8位 (256灰度)</value>
+  </data>
+  <data name="DefaultHorizontalOffset" xml:space="preserve">
+    <value>默认水平偏移</value>
+  </data>
+  <data name="DefaultVerticalOffset" xml:space="preserve">
+    <value>默认垂直偏移</value>
+  </data>
+  <data name="DefaultHorizontalScan" xml:space="preserve">
+    <value>默认水平扫描</value>
+  </data>
+  <data name="DefaultLeftToRight" xml:space="preserve">
+    <value>默认从左到右位序</value>
+  </data>
+  <data name="DefaultFixedWidth" xml:space="preserve">
+    <value>默认固定宽度模式</value>
+  </data>
+  <data name="DefaultPreviewZoom" xml:space="preserve">
+    <value>默认预览缩放</value>
+  </data>
+  <data name="TextPreviewLineSpacing" xml:space="preserve">
+    <value>文本预览行间距</value>
+  </data>
+  <data name="MinZoomScale" xml:space="preserve">
+    <value>最小缩放倍数</value>
+  </data>
+  <data name="MaxZoomScale" xml:space="preserve">
+    <value>最大缩放倍数</value>
+  </data>
+  <data name="ZoomStep" xml:space="preserve">
+    <value>缩放步长</value>
+  </data>
+  <data name="DefaultExportFormat" xml:space="preserve">
+    <value>默认导出格式</value>
+  </data>
+  <data name="DefaultExportDirectory" xml:space="preserve">
+    <value>默认导出目录</value>
+  </data>
+  <data name="Browse" xml:space="preserve">
+    <value>浏览...</value>
+  </data>
+  <data name="LeaveEmptyUseLastLocation" xml:space="preserve">
+    <value>留空使用上次导出位置</value>
+  </data>
+  <data name="DefaultExportFileNameTemplate" xml:space="preserve">
+    <value>默认导出文件名模板</value>
+  </data>
+  <data name="SupportedVariables" xml:space="preserve">
+    <value>支持变量：{FontName} {CharsetName} {FontSize} {Width} {Height} {BPP} {DateTime} 等</value>
+  </data>
+  <data name="RemoveUnsupportedChars" xml:space="preserve">
+    <value>移除当前字体不支持的字符</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="ChineseSimplified" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Japanese" xml:space="preserve">
+    <value>日本語</value>
+  </data>
+  <data name="LongPressThreshold" xml:space="preserve">
+    <value>长按阈值(ms)</value>
+  </data>
+  <data name="FastScrollInterval" xml:space="preserve">
+    <value>快速滚动间隔(ms)</value>
+  </data>
+  <data name="LoadSettings" xml:space="preserve">
+    <value>加载设置...</value>
+  </data>
+  <data name="ExportSettings" xml:space="preserve">
+    <value>导出设置...</value>
+  </data>
+  <data name="RestoreDefaults" xml:space="preserve">
+    <value>恢复默认</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="SelectDefaultExportDir" xml:space="preserve">
+    <value>选择默认导出目录</value>
+  </data>
+  <data name="SelectThisFolder" xml:space="preserve">
+    <value>选择此文件夹</value>
+  </data>
+  <data name="JSONConfigFilter" xml:space="preserve">
+    <value>JSON配置文件 (*.json)|*.json|所有文件 (*.*)|*.*</value>
+  </data>
+  <data name="LoadSettingsFile" xml:space="preserve">
+    <value>加载设置文件</value>
+  </data>
+  <data name="Tip" xml:space="preserve">
+    <value>提示</value>
+  </data>
+  <data name="SettingsLoadSuccess" xml:space="preserve">
+    <value>设置文件加载成功！</value>
+  </data>
+  <data name="SettingsLoadFail" xml:space="preserve">
+    <value>加载设置文件失败！</value>
+  </data>
+  <data name="SettingsFileFormatError" xml:space="preserve">
+    <value>设置文件格式不正确或不完整！</value>
+  </data>
+  <data name="ExportSettingsFile" xml:space="preserve">
+    <value>导出设置文件</value>
+  </data>
+  <data name="SettingsExportSuccess" xml:space="preserve">
+    <value>设置文件导出成功！</value>
+  </data>
+  <data name="SettingsExportFail" xml:space="preserve">
+    <value>导出设置文件失败：{0}</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>警告</value>
+  </data>
+  <data name="ResetConfirmation" xml:space="preserve">
+    <value>确定要恢复所有设置为默认值吗？这将覆盖当前的所有设置。</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="SettingsSaveFail" xml:space="preserve">
+    <value>保存设置失败：{0}</value>
+  </data>
+  <data name="ConfigSaveFail" xml:space="preserve">
+    <value>保存配置文件失败: {0}</value>
+  </data>
+  <data name="ConfigLoadFail" xml:space="preserve">
+    <value>加载配置文件失败: {0}</value>
+  </data>
+  <data name="TextPreviewTitle" xml:space="preserve">
+    <value>文本预览</value>
+  </data>
+  <data name="PreviewText" xml:space="preserve">
+    <value>预览文本</value>
+  </data>
+  <data name="InputPreviewText" xml:space="preserve">
+    <value>输入要预览的文本...</value>
+  </data>
+  <data name="Zoom" xml:space="preserve">
+    <value>缩放:</value>
+  </data>
+  <data name="ZoomOutTooltip" xml:space="preserve">
+    <value>缩小</value>
+  </data>
+  <data name="ZoomInTooltip" xml:space="preserve">
+    <value>放大</value>
+  </data>
+  <data name="ResetTooltip" xml:space="preserve">
+    <value>重置</value>
+  </data>
+  <data name="UnsupportedLanguageCode" xml:space="preserve">
+    <value>不支持的语言代码: {0}</value>
+  </data>
+  <data name="ErrorNoLanguageResourcesFound" xml:space="preserve">
+    <value>未找到任何语言资源文件。请确保项目中包含Languages.resx等资源文件。</value>
+  </data>
+  <data name="ErrorNoValidLanguageResourcesParsed" xml:space="preserve">
+    <value>无法解析任何有效的语言资源文件。</value>
+  </data>
+  <data name="ErrorResourceNameCannotBeEmpty" xml:space="preserve">
+    <value>资源文件名不能为空</value>
+  </data>
+  <data name="ErrorInvalidResourceNameFormat" xml:space="preserve">
+    <value>资源文件名格式无效，未找到Languages部分: {0}</value>
+  </data>
+  <data name="ErrorExtractedCultureCodeIsEmpty" xml:space="preserve">
+    <value>从资源文件名中提取的文化代码为空: {0}</value>
+  </data>
+  <data name="FolderSelectionFilter" xml:space="preserve">
+    <value>文件夹选择|*.folder</value>
+  </data>
+  <data name="CannotParseFontPath" xml:space="preserve">
+    <value>无法解析字体路径: {0}</value>
+  </data>
+  <data name="DirectoryNotFound" xml:space="preserve">
+    <value>目录不存在: {0}</value>
+  </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>文件不存在: {0}</value>
+  </data>
+  <data name="CharacterIndexOutOfRange" xml:space="preserve">
+    <value>字符索引超出范围: {0}</value>
+  </data>
+  <data name="UserDefined" xml:space="preserve">
+    <value>用户自定义</value>
+  </data>
+  <data name="InvalidIndex" xml:space="preserve">
+    <value>无效索引</value>
+  </data>
+  <data name="NoExportFormatSelected" xml:space="preserve">
+    <value>未选择导出格式</value>
+  </data>
+  <data name="FontRendererCannotBeNull" xml:space="preserve">
+    <value>字体渲染器不能为空</value>
+  </data>
+  <data name="CharsetManagerCannotBeNull" xml:space="preserve">
+    <value>字符集管理器不能为空</value>
+  </data>
+  <data name="UnsupportedExportFormat" xml:space="preserve">
+    <value>不支持的导出格式: {0}</value>
+  </data>
+  <data name="CHeaderFileFilter" xml:space="preserve">
+    <value>C头文件 (*.h)|*.h</value>
+  </data>
+  <data name="ArduinoFileFilter" xml:space="preserve">
+    <value>Arduino文件 (*.ino)|*.ino</value>
+  </data>
+  <data name="LoadFontVariantError" xml:space="preserve">
+    <value>加载字体变体失败: {0}</value>
+  </data>
+  <data name="FontStyleRegular" xml:space="preserve">
+    <value>常规</value>
+  </data>
+  <data name="FontStyleItalic" xml:space="preserve">
+    <value>斜体</value>
+  </data>
+  <data name="FontStyleOblique" xml:space="preserve">
+    <value>倾斜体</value>
+  </data>
+  <data name="FontWeightThin" xml:space="preserve">
+    <value>极细</value>
+  </data>
+  <data name="FontWeightExtraLight" xml:space="preserve">
+    <value>半特细</value>
+  </data>
+  <data name="FontWeightUltraLight" xml:space="preserve">
+    <value>特细</value>
+  </data>
+  <data name="FontWeightSemiLight" xml:space="preserve">
+    <value>超细</value>
+  </data>
+  <data name="FontWeightLight" xml:space="preserve">
+    <value>细体</value>
+  </data>
+  <data name="FontWeightMedium" xml:space="preserve">
+    <value>中等</value>
+  </data>
+  <data name="FontWeightSemiBold" xml:space="preserve">
+    <value>半粗</value>
+  </data>
+  <data name="FontWeightBold" xml:space="preserve">
+    <value>粗体</value>
+  </data>
+  <data name="FontWeightExtraBold" xml:space="preserve">
+    <value>特粗</value>
+  </data>
+  <data name="FontWeightBlack" xml:space="preserve">
+    <value>极粗</value>
+  </data>
+  <data name="FontStretchUltraCondensed" xml:space="preserve">
+    <value>超紧缩</value>
+  </data>
+  <data name="FontStretchExtraCondensed" xml:space="preserve">
+    <value>特紧缩</value>
+  </data>
+  <data name="FontStretchCondensed" xml:space="preserve">
+    <value>紧缩</value>
+  </data>
+  <data name="FontStretchSemiCondensed" xml:space="preserve">
+    <value>半紧缩</value>
+  </data>
+  <data name="FontStretchSemiExpanded" xml:space="preserve">
+    <value>半扩展</value>
+  </data>
+  <data name="FontStretchExpanded" xml:space="preserve">
+    <value>扩展</value>
+  </data>
+  <data name="FontStretchExtraExpanded" xml:space="preserve">
+    <value>特扩展</value>
+  </data>
+  <data name="FontStretchUltraExpanded" xml:space="preserve">
+    <value>超扩展</value>
+  </data>
+  <data name="FontTypeMonospace" xml:space="preserve">
+    <value>字体类型: 1=等宽字体, 0=变宽字体</value>
+  </data>
+  <data name="FontWidth" xml:space="preserve">
+    <value>字符宽度(像素)</value>
+  </data>
+  <data name="FontHeight" xml:space="preserve">
+    <value>字符高度(像素)</value>
+  </data>
+  <data name="FontBPP" xml:space="preserve">
+    <value>每像素位数: 1=黑白, 2=4级灰度, 4=16级灰度, 8=256级灰度</value>
+  </data>
+  <data name="FontPitch" xml:space="preserve">
+    <value>每行字节数(向上取整)</value>
+  </data>
+  <data name="FontCharCount" xml:space="preserve">
+    <value>字符总数</value>
+  </data>
+  <data name="DataFormatDescription" xml:space="preserve">
+    <value>数据格式说明:</value>
+  </data>
+  <data name="FontFamily" xml:space="preserve">
+    <value>字体</value>
+  </data>
+  <data name="FontSizePixels" xml:space="preserve">
+    <value>尺寸</value>
+  </data>
+  <data name="CanvasSize" xml:space="preserve">
+    <value>画布</value>
+  </data>
+  <data name="BitOrderLeftToRight" xml:space="preserve">
+    <value>从左到右</value>
+  </data>
+  <data name="BitOrderRightToLeft" xml:space="preserve">
+    <value>从右到左</value>
+  </data>
+  <data name="VariableWidthDataStructure" xml:space="preserve">
+    <value>可变宽度数据结构说明:</value>
+  </data>
+  <data name="WidthBytesCount" xml:space="preserve">
+    <value>宽度字节数</value>
+  </data>
+  <data name="HeightBytesCount" xml:space="preserve">
+    <value>高度字节数</value>
+  </data>
+  <data name="CharacterDataFormat" xml:space="preserve">
+    <value>每个字符数据格式</value>
+  </data>
+  <data name="LittleEndianStorage" xml:space="preserve">
+    <value>宽度/高度字节按小端序存储 (低字节在前)</value>
+  </data>
+  <data name="VariableWidthCharReadHelper" xml:space="preserve">
+    <value>可变宽度字符读取辅助函数</value>
+  </data>
+  <data name="GetCharInfoFromTable" xml:space="preserve">
+    <value>从字符表中读取第index个字符信息</value>
+  </data>
+  <data name="ReadWidthLittleEndian" xml:space="preserve">
+    <value>读取宽度 (小端序)</value>
+  </data>
+  <data name="ReadHeightLittleEndian" xml:space="preserve">
+    <value>读取高度 (小端序)</value>
+  </data>
+  <data name="BitmapDataStartPosition" xml:space="preserve">
+    <value>点阵数据起始位置</value>
+  </data>
+  <data name="FixedWidthDataStructure" xml:space="preserve">
+    <value>固定宽度数据结构说明:</value>
+  </data>
+  <data name="FixedWidthCharAccess" xml:space="preserve">
+    <value>每个字符占用固定字节数，无需额外的宽高信息</value>
+  </data>
+  <data name="DirectCharAccess" xml:space="preserve">
+    <value>直接使用 m_char_bits[index] 访问第index个字符的点阵数据</value>
+  </data>
+</root>

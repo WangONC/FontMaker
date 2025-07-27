@@ -51,7 +51,7 @@ namespace FontMaker.Data.Models
         public char GetChar(int index)
         {
             if (index < 0 || index >= _characters.Count)
-                throw new IndexOutOfRangeException($"字符索引超出范围: {index}");
+                throw new IndexOutOfRangeException(string.Format(FontMaker.Resources.Lang.Languages.CharacterIndexOutOfRange, index));
             
             return _characters[index];
         }
@@ -137,10 +137,10 @@ namespace FontMaker.Data.Models
         /// <param name="characters">字符串</param>
         /// <param name="name">字符集名称</param>
         /// <returns>创建的字符集管理器</returns>
-        public static CharsetManager Create(string characters, string name = "用户自定义")
+        public static CharsetManager Create(string characters, string name = null)
         {
             var charset = new CharsetManager();
-            charset._name = name;
+            charset._name = name ?? FontMaker.Resources.Lang.Languages.UserDefined;
             charset._filePath = string.Empty;
 
             if (!string.IsNullOrEmpty(characters))
@@ -163,7 +163,7 @@ namespace FontMaker.Data.Models
         /// <param name="characters">字符数组</param>
         /// <param name="name">字符集名称</param>
         /// <returns>创建的字符集管理器</returns>
-        public static CharsetManager Create(char[] characters, string name = "用户自定义")
+        public static CharsetManager Create(char[] characters, string name = null)
         {
             if (characters != null)
             {
@@ -253,7 +253,7 @@ namespace FontMaker.Data.Models
         public string GetCharInfo(int index)
         {
             if (index < 0 || index >= _characters.Count)
-                return "无效索引";
+                return FontMaker.Resources.Lang.Languages.InvalidIndex;
 
             char ch = _characters[index];
             int unicode = (int)ch;

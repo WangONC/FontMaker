@@ -6,7 +6,8 @@
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:data="clr-namespace:FontMaker.Data"
         mc:Ignorable="d"
-        Title="设置" Height="700" Width="750"
+        xmlns:properties="clr-namespace:FontMaker.Resources.Lang"
+        Title="{x:Static properties:Languages.SettingsTitle}" Height="700" Width="750"
                  MinWidth="750"
         WindowBackdropType="Mica"
         ExtendsContentIntoTitleBar="True"
@@ -23,7 +24,7 @@
         <!-- 标题栏 -->
         <ui:TitleBar
             x:Name="TitleBar"
-            Title="设置"
+            Title="{x:Static properties:Languages.SettingsTitle}"
             Grid.Row="0"
             CloseWindowByDoubleClickOnIcon="True">
         </ui:TitleBar>
@@ -31,7 +32,7 @@
         <!-- 主内容区域 - 选项卡 -->
         <TabControl Grid.Row="1" Margin="15" TabStripPlacement="Top">
             <!-- 字体渲染设置 -->
-            <TabItem Header="字体渲染">
+            <TabItem Header="{x:Static properties:Languages.FontRenderingTab}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <ui:Card Margin="0,0,0,12" Padding="15">
                         <StackPanel>
@@ -49,45 +50,45 @@
 
                                 <!-- 默认像素宽度 -->
                                 <StackPanel Grid.Row="0" Grid.Column="0">
-                                    <TextBlock Text="默认像素宽度" Margin="0,0,0,4" FontSize="12"/>
+                                    <TextBlock Text="{x:Static properties:Languages.DefaultPixelWidth}" Margin="0,0,0,4" FontSize="12"/>
                                     <ui:NumberBox x:Name="defaultPixelWidthBox" Value="16" 
                                                  Height="33" Minimum="1" Maximum="256"/>
                                 </StackPanel>
 
                                 <!-- 默认像素高度 -->
                                 <StackPanel Grid.Row="0" Grid.Column="2">
-                                    <TextBlock Text="默认像素高度" Margin="0,0,0,4" FontSize="12"/>
+                                    <TextBlock Text="{x:Static properties:Languages.DefaultPixelHeight}" Margin="0,0,0,4" FontSize="12"/>
                                     <ui:NumberBox x:Name="defaultPixelHeightBox" Value="16" 
                                                  Height="33" Minimum="1" Maximum="256"/>
                                 </StackPanel>
 
                                 <!-- 默认字体大小 -->
                                 <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,8,0,0">
-                                    <TextBlock Text="默认字体大小" Margin="0,0,0,4" FontSize="12"/>
+                                    <TextBlock Text="{x:Static properties:Languages.DefaultFontSize}" Margin="0,0,0,4" FontSize="12"/>
                                     <ui:NumberBox x:Name="defaultFontSizeBox" Value="16" 
                                                  Height="33" Minimum="6" Maximum="200"/>
                                 </StackPanel>
 
                                 <!-- 默认位深度 -->
                                 <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,8,0,0">
-                                    <TextBlock Text="默认位深度" Margin="0,0,0,4" FontSize="12"/>
+                                    <TextBlock Text="{x:Static properties:Languages.DefaultBitDepth}" Margin="0,0,0,4" FontSize="12"/>
                                     <ComboBox x:Name="defaultBitsPerPixelBox" Height="33">
-                                        <ComboBoxItem Content="1位 (黑白)" Tag="1"/>
-                                        <ComboBoxItem Content="2位 (4灰度)" Tag="2"/>
-                                        <ComboBoxItem Content="4位 (16灰度)" Tag="4"/>
-                                        <ComboBoxItem Content="8位 (256灰度)" Tag="8"/>
+                                        <ComboBoxItem Content="{x:Static properties:Languages.OneBitBlackWhite}" Tag="1"/>
+                                        <ComboBoxItem Content="{x:Static properties:Languages.TwoBit4Gray}" Tag="2"/>
+                                        <ComboBoxItem Content="{x:Static properties:Languages.FourBit16Gray}" Tag="4"/>
+                                        <ComboBoxItem Content="{x:Static properties:Languages.EightBit256Gray}" Tag="8"/>
                                     </ComboBox>
                                 </StackPanel>
 
                                 <!-- 默认偏移量 -->
                                 <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,8,0,0">
-                                    <TextBlock Text="默认水平偏移" Margin="0,0,0,4" FontSize="12"/>
+                                    <TextBlock Text="{x:Static properties:Languages.DefaultHorizontalOffset}" Margin="0,0,0,4" FontSize="12"/>
                                     <ui:NumberBox x:Name="defaultHorizontalOffsetBox" Value="0" 
                                                  Height="33" Minimum="-50" Maximum="50"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="2" Grid.Column="2" Margin="0,8,0,0">
-                                    <TextBlock Text="默认垂直偏移" Margin="0,0,0,4" FontSize="12"/>
+                                    <TextBlock Text="{x:Static properties:Languages.DefaultVerticalOffset}" Margin="0,0,0,4" FontSize="12"/>
                                     <ui:NumberBox x:Name="defaultVerticalOffsetBox" Value="0" 
                                                  Height="33" Minimum="-50" Maximum="50"/>
                                 </StackPanel>
@@ -95,11 +96,11 @@
 
                             <!-- 默认渲染选项 -->
                             <StackPanel Margin="0,12,0,0">
-                                <CheckBox x:Name="defaultIsHorizontalScanBox" Content="默认水平扫描" 
+                                <CheckBox x:Name="defaultIsHorizontalScanBox" Content="{x:Static properties:Languages.DefaultHorizontalScan}" 
                                          IsChecked="True" Margin="0,0,0,8"/>
-                                <CheckBox x:Name="defaultIsHighBitFirstBox" Content="默认从左到右位序" 
+                                <CheckBox x:Name="defaultIsHighBitFirstBox" Content="{x:Static properties:Languages.DefaultLeftToRight}" 
                                          IsChecked="True" Margin="0,0,0,8"/>
-                                <CheckBox x:Name="defaultIsFixedWidthBox" Content="默认固定宽度模式" 
+                                <CheckBox x:Name="defaultIsFixedWidthBox" Content="{x:Static properties:Languages.DefaultFixedWidth}" 
                                          IsChecked="True"/>
                             </StackPanel>
                         </StackPanel>
@@ -108,7 +109,7 @@
             </TabItem>
 
             <!-- 预览设置 -->
-            <TabItem Header="预览">
+            <TabItem Header="{x:Static properties:Languages.PreviewTab}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <ui:Card Margin="0,0,0,12" Padding="15">
                         <StackPanel>
@@ -125,28 +126,28 @@
 
                                 <!-- 默认预览缩放 -->
                                 <StackPanel Grid.Row="0" Grid.Column="0">
-                                    <TextBlock Text="默认预览缩放" Margin="0,0,0,4" FontSize="12"/>
+                                    <TextBlock Text="{x:Static properties:Languages.DefaultPreviewZoom}" Margin="0,0,0,4" FontSize="12"/>
                                     <ui:NumberBox x:Name="defaultPreviewZoomBox" Value="1.0" 
                                                  Height="33" Minimum="0.1" Maximum="10.0" SmallChange="0.1"/>
                                 </StackPanel>
 
                                 <!-- 文本预览行间距 -->
                                 <StackPanel Grid.Row="0" Grid.Column="2">
-                                    <TextBlock Text="文本预览行间距" Margin="0,0,0,4" FontSize="12"/>
+                                    <TextBlock Text="{x:Static properties:Languages.TextPreviewLineSpacing}" Margin="0,0,0,4" FontSize="12"/>
                                     <ui:NumberBox x:Name="textPreviewLineSpacingBox" Value="1.0" 
                                                  Height="33" Minimum="0" Maximum="10.0" SmallChange="0.1"/>
                                 </StackPanel>
 
                                 <!-- 最小缩放倍数 -->
                                 <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,8,0,0">
-                                    <TextBlock Text="最小缩放倍数" Margin="0,0,0,4" FontSize="12"/>
+                                    <TextBlock Text="{x:Static properties:Languages.MinZoomScale}" Margin="0,0,0,4" FontSize="12"/>
                                     <ui:NumberBox x:Name="minZoomScaleBox" Value="0.1" 
                                                  Height="33" Minimum="0.01" Maximum="1.0" SmallChange="0.01"/>
                                 </StackPanel>
 
                                 <!-- 最大缩放倍数 -->
                                 <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,8,0,0">
-                                    <TextBlock Text="最大缩放倍数" Margin="0,0,0,4" FontSize="12"/>
+                                    <TextBlock Text="{x:Static properties:Languages.MaxZoomScale}" Margin="0,0,0,4" FontSize="12"/>
                                     <ui:NumberBox x:Name="maxZoomScaleBox" Value="10.0" 
                                                  Height="33" Minimum="1.0" Maximum="50.0" SmallChange="0.1"/>
                                 </StackPanel>
@@ -154,7 +155,7 @@
 
                             <!-- 缩放步长 -->
                             <StackPanel Margin="0,8,0,0">
-                                <TextBlock Text="缩放步长" Margin="0,0,0,4" FontSize="12"/>
+                                <TextBlock Text="{x:Static properties:Languages.ZoomStep}" Margin="0,0,0,4" FontSize="12"/>
                                 <ui:NumberBox x:Name="zoomStepBox" Value="0.1" 
                                              Height="33" Minimum="0.01" Maximum="1.0" SmallChange="0.01" Width="200" HorizontalAlignment="Left"/>
                             </StackPanel>
@@ -164,40 +165,40 @@
             </TabItem>
 
             <!-- 导出设置 -->
-            <TabItem Header="导出">
+            <TabItem Header="{x:Static properties:Languages.ExportTab}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <ui:Card Margin="0,0,0,12" Padding="15">
                         <StackPanel>
                             <!-- 默认导出格式 -->
                             <StackPanel Margin="0,0,0,8">
-                                <TextBlock Text="默认导出格式" Margin="0,0,0,4" FontSize="12"/>
-                                <ComboBox x:Name="defaultExportFormatBox" Height="36" ItemsSource="{Binding AvailableFormats}" SelectedItem="{Binding SelectedFormat}">
+                                <TextBlock Text="{x:Static properties:Languages.DefaultExportFormat}" Margin="0,0,0,4" FontSize="12"/>
+                                <ComboBox x:Name="defaultExportFormatBox" Height="36" ItemsSource="{Binding ExportVM.AvailableFormats}" SelectedItem="{Binding ExportVM.SelectedFormat}">
                                 </ComboBox>
                             </StackPanel>
 
                             <!-- 默认导出目录 -->
                             <StackPanel Margin="0,0,0,8">
-                                <TextBlock Text="默认导出目录" Margin="0,0,0,4" FontSize="12"/>
+                                <TextBlock Text="{x:Static properties:Languages.DefaultExportDirectory}" Margin="0,0,0,4" FontSize="12"/>
                                 <DockPanel>
                                     <ui:Button DockPanel.Dock="Right" x:Name="browseDefaultExportDirButton" 
-                                              Content="浏览..." Width="80" Height="33" Margin="8,0,0,0"
+                                              Content="{x:Static properties:Languages.Browse}" Width="80" Height="33" Margin="8,0,0,0"
                                               Appearance="Secondary" Click="BrowseDefaultExportDirButton_Click"/>
                                     <ui:TextBox x:Name="defaultExportDirectoryBox" Text="" 
-                                               Height="36" PlaceholderText="留空使用上次导出位置"/>
+                                               Height="36" PlaceholderText="{x:Static properties:Languages.LeaveEmptyUseLastLocation}"/>
                                 </DockPanel>
                             </StackPanel>
 
                             <!-- 默认导出文件名模板 -->
                             <StackPanel Margin="0,0,0,8">
-                                <TextBlock Text="默认导出文件名模板" Margin="0,0,0,4" FontSize="12"/>
+                                <TextBlock Text="{x:Static properties:Languages.DefaultExportFileNameTemplate}" Margin="0,0,0,4" FontSize="12"/>
                                 <ui:TextBox x:Name="defaultExportFileNameBox" Text="\{FontName\}_\{CharsetName\}" 
                                            Height="36" PlaceholderText="\{FontName\}_\{CharsetName\}"/>
-                                <TextBlock Text="支持变量：{FontName} {CharsetName} {FontSize} {Width} {Height} {BPP} {DateTime} 等" 
+                                <TextBlock Text="{x:Static properties:Languages.SupportedVariables}" 
                                           FontSize="10" Foreground="Gray" Margin="0,2,0,0"/>
                             </StackPanel>
 
                             <!-- 移除不支持字符 -->
-                            <CheckBox x:Name="isRemoveUnsupportCharBox" Content="移除当前字体不支持的字符" 
+                            <CheckBox x:Name="isRemoveUnsupportCharBox" Content="{x:Static properties:Languages.RemoveUnsupportedChars}" 
                                      IsChecked="False"/>
                         </StackPanel>
                     </ui:Card>
@@ -205,7 +206,7 @@
             </TabItem>
 
             <!-- 界面设置 -->
-            <TabItem Header="界面">
+            <TabItem Header="{x:Static properties:Languages.InterfaceTab}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <ui:Card Margin="0,0,0,12" Padding="15">
                         <StackPanel>
@@ -222,26 +223,23 @@
 
                                 <!-- 语言设置 -->
                                 <StackPanel Grid.Row="0" Grid.Column="0">
-                                    <TextBlock Text="语言" Margin="0,0,0,4" FontSize="12"/>
-                                    <ComboBox x:Name="languageComboBox" Height="33">
-                                        <ComboBoxItem Content="简体中文" Tag="zh-CN"/>
-                                        <ComboBoxItem Content="English" Tag="en-US"/>
-                                        <ComboBoxItem Content="日本語" Tag="ja-JP"/>
+                                    <TextBlock Text="{x:Static properties:Languages.Language}" Margin="0,0,0,4" FontSize="12"/>
+                                    <ComboBox x:Name="languageComboBox" Height="35" ItemsSource="{Binding LanguagesViewModel.SupportedLanguages}" SelectedItem="{Binding LanguagesViewModel.SelectedLanguage}" >
                                     </ComboBox>
                                 </StackPanel>
 
                                 <!-- 长按阈值 -->
                                 <StackPanel Grid.Row="0" Grid.Column="2">
-                                    <TextBlock Text="长按阈值(ms)" Margin="0,0,0,4" FontSize="12"/>
+                                    <TextBlock Text="{x:Static properties:Languages.LongPressThreshold}" Margin="0,0,0,4" FontSize="12"/>
                                     <ui:NumberBox x:Name="longPressThresholdBox" Value="600" 
-                                                 Height="33" Minimum="100" Maximum="2000"/>
+                                                 Height="35" Minimum="100" Maximum="2000"/>
                                 </StackPanel>
 
                                 <!-- 快速滚动间隔 -->
                                 <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,8,0,0">
-                                    <TextBlock Text="快速滚动间隔(ms)" Margin="0,0,0,4" FontSize="12"/>
+                                    <TextBlock Text="{x:Static properties:Languages.FastScrollInterval}" Margin="0,0,0,4" FontSize="12"/>
                                     <ui:NumberBox x:Name="fastScrollIntervalBox" Value="25" 
-                                                 Height="33" Minimum="10" Maximum="200"/>
+                                                 Height="35" Minimum="10" Maximum="200"/>
                                 </StackPanel>
                             </Grid>
                         </StackPanel>
@@ -263,27 +261,27 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- 左侧功能按钮 -->
-                <ui:Button Grid.Column="0" x:Name="loadSettingsButton" Content="加载设置..." 
+                <ui:Button Grid.Column="0" x:Name="loadSettingsButton" Content="{x:Static properties:Languages.LoadSettings}" 
                           Height="36" Width="103"
                           Appearance="Secondary" Icon="{ui:SymbolIcon FolderOpen24}"
                           Click="LoadSettingsButton_Click"/>
 
-                <ui:Button Grid.Column="1" x:Name="exportSettingsButton" Content="导出设置..." 
+                <ui:Button Grid.Column="1" x:Name="exportSettingsButton" Content="{x:Static properties:Languages.ExportSettings}" 
                           Height="36" Width="103"
                           Appearance="Secondary" Icon="{ui:SymbolIcon Save24}"
                           Click="ExportSettingsButton_Click"/>
 
-                <ui:Button Grid.Column="2" x:Name="resetToDefaultsButton" Content="恢复默认" 
+                <ui:Button Grid.Column="2" x:Name="resetToDefaultsButton" Content="{x:Static properties:Languages.RestoreDefaults}" 
                           Height="36" Width="103"
                           Appearance="Secondary" Icon="{ui:SymbolIcon ArrowReset32}"
                           Click="ResetToDefaultsButton_Click" HorizontalAlignment="Center"/>
 
                 <!-- 右侧主要按钮 -->
-                <ui:Button Grid.Column="4" x:Name="cancelButton" Content="取消" 
+                <ui:Button Grid.Column="4" x:Name="cancelButton" Content="{x:Static properties:Languages.Cancel}" 
                           Height="36" Width="100" Margin="0,0,8,0"
                           Appearance="Secondary" Click="CancelButton_Click"/>
 
-                <ui:Button Grid.Column="5" x:Name="saveButton" Content="保存" 
+                <ui:Button Grid.Column="5" x:Name="saveButton" Content="{x:Static properties:Languages.Save}" 
                           Height="36" Width="100"
                           Appearance="Primary" Icon="{ui:SymbolIcon Checkmark24}"
                           Click="SaveButton_Click"/>

@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppName" xml:space="preserve">
+    <value>FontMaker</value>
+  </data>
+  <data name="charView" xml:space="preserve">
+    <value>Character Preview</value>
+  </data>
+  <data name="ViewResize" xml:space="preserve">
+    <value>Preview Zoom</value>
+  </data>
+  <data name="CurrentChar" xml:space="preserve">
+    <value>Current Character</value>
+  </data>
+  <data name="Char" xml:space="preserve">
+    <value>Character:</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>Current:</value>
+  </data>
+  <data name="Navigation" xml:space="preserve">
+    <value>Navigation:</value>
+  </data>
+  <data name="FirstChar" xml:space="preserve">
+    <value>First Character</value>
+  </data>
+  <data name="LastChar" xml:space="preserve">
+    <value>Last Character</value>
+  </data>
+  <data name="NextChar" xml:space="preserve">
+    <value>Next Character</value>
+  </data>
+  <data name="PreviousChar" xml:space="preserve">
+    <value>Previous Character</value>
+  </data>
+  <data name="FontSetting" xml:space="preserve">
+    <value>Font Settings</value>
+  </data>
+  <data name="Font" xml:space="preserve">
+    <value>Font:</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="FontSize" xml:space="preserve">
+    <value>Font Size:</value>
+  </data>
+  <data name="CharSet" xml:space="preserve">
+    <value>Character Set</value>
+  </data>
+  <data name="StandardCharSet" xml:space="preserve">
+    <value>Standard Character Set</value>
+  </data>
+  <data name="CustomCharSet" xml:space="preserve">
+    <value>Custom Character Set</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="PointSize" xml:space="preserve">
+    <value>Bitmap Size</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="HorizontalOffset" xml:space="preserve">
+    <value>Horizontal Offset</value>
+  </data>
+  <data name="VerticalOffset" xml:space="preserve">
+    <value>Vertical Offset</value>
+  </data>
+  <data name="ScanMethod" xml:space="preserve">
+    <value>Scan Method</value>
+  </data>
+  <data name="HorizontalScan" xml:space="preserve">
+    <value>Horizontal Scan</value>
+  </data>
+  <data name="VerticalScan" xml:space="preserve">
+    <value>Vertical Scan</value>
+  </data>
+  <data name="OutputSetting" xml:space="preserve">
+    <value>Output Settings</value>
+  </data>
+  <data name="BitOrderLabel" xml:space="preserve">
+    <value>Bit Order</value>
+  </data>
+  <data name="LeftToRightLabel" xml:space="preserve">
+    <value>Left to Right</value>
+  </data>
+  <data name="RightToLeftLabel" xml:space="preserve">
+    <value>Right to Left</value>
+  </data>
+  <data name="ByteWidthLabel" xml:space="preserve">
+    <value>Byte Width</value>
+  </data>
+  <data name="FixedWidthLabel" xml:space="preserve">
+    <value>Fixed Width</value>
+  </data>
+  <data name="VariableWidthLabel" xml:space="preserve">
+    <value>Variable Width</value>
+  </data>
+  <data name="FileFormatLabel" xml:space="preserve">
+    <value>File Format</value>
+  </data>
+  <data name="GrayLevelLabel" xml:space="preserve">
+    <value>Gray Level</value>
+  </data>
+  <data name="AdvanceSetting" xml:space="preserve">
+    <value>Advanced Settings</value>
+  </data>
+  <data name="GenerateFontLibrary" xml:space="preserve">
+    <value>Generate Font Library</value>
+  </data>
+  <data name="SelectCharSetFile" xml:space="preserve">
+    <value>Select Character Set File</value>
+  </data>
+  <data name="CharSetFilter" xml:space="preserve">
+    <value>Character Set Files (*.cst)|*.cst|All Files (*.*)|*.*</value>
+  </data>
+  <data name="PreviewFail" xml:space="preserve">
+    <value>Preview Failed</value>
+  </data>
+  <data name="OutputFail" xml:space="preserve">
+    <value>Export Failed</value>
+  </data>
+  <data name="OutputFontLibing" xml:space="preserve">
+    <value>Generating Font Library...</value>
+  </data>
+  <data name="OutputSuccess" xml:space="preserve">
+    <value>Export Successful</value>
+  </data>
+  <data name="SetingUpdated" xml:space="preserve">
+    <value>Settings Updated</value>
+  </data>
+  <data name="OpenSettingWinFail" xml:space="preserve">
+    <value>Failed to Open Settings Window</value>
+  </data>
+  <data name="NewSettingUpdate2UI" xml:space="preserve">
+    <value>New Settings Applied to Interface, Language Changes Take Effect After Restart</value>
+  </data>
+  <data name="NeedSelectFontCharset" xml:space="preserve">
+    <value>Please Select Font and Character Set First</value>
+  </data>
+  <data name="ImportCharSetSuccess" xml:space="preserve">
+    <value>Character Set Import Successful</value>
+  </data>
+  <data name="ImportCharSetFail" xml:space="preserve">
+    <value>Character Set Import Failed</value>
+  </data>
+  <data name="SelectFontFile" xml:space="preserve">
+    <value>Select Font File</value>
+  </data>
+  <data name="importFontSuccess" xml:space="preserve">
+    <value>Font Import Successful</value>
+  </data>
+  <data name="PartialCharSetImportFail" xml:space="preserve">
+    <value>Partial Character Set Import Failed</value>
+  </data>
+  <data name="NoCharSetImported" xml:space="preserve">
+    <value>No Character Set Successfully Imported</value>
+  </data>
+  <data name="InvalidCharSetOrExists" xml:space="preserve">
+    <value>Invalid Character Set File or Duplicate Name Exists</value>
+  </data>
+  <data name="ImportedCharSetSingle" xml:space="preserve">
+    <value>Imported Character Set: {0}</value>
+  </data>
+  <data name="ImportedCharSetMultiple" xml:space="preserve">
+    <value>Successfully Imported {0} Character Sets</value>
+  </data>
+  <data name="ImportFailedFilesList" xml:space="preserve">
+    <value>Failed to Import Files:
+{0}</value>
+  </data>
+  <data name="FontFileFilter" xml:space="preserve">
+    <value>Font Files (*.ttf;*.otf)|*.ttf;*.otf|All Files (*.*)|*.*</value>
+  </data>
+  <data name="PartialFontImportFail" xml:space="preserve">
+    <value>Partial Font Import Failed</value>
+  </data>
+  <data name="ImportedFontSingle" xml:space="preserve">
+    <value>Imported Font: {0}</value>
+  </data>
+  <data name="ImportedFontMultiple" xml:space="preserve">
+    <value>Successfully Imported {0} Fonts</value>
+  </data>
+  <data name="InvalidFontFile" xml:space="preserve">
+    <value>Invalid Font File</value>
+  </data>
+  <data name="UnselectedFontError" xml:space="preserve">
+    <value>No Font Selected, Cannot Render</value>
+  </data>
+  <data name="NoValidOutputFile" xml:space="preserve">
+    <value>No Valid Output File Selected</value>
+  </data>
+  <data name="FontLibGenerated" xml:space="preserve">
+    <value>Font Library Generated Successfully</value>
+  </data>
+  <data name="OneBitText" xml:space="preserve">
+    <value>1-bit</value>
+  </data>
+  <data name="TwoBitText" xml:space="preserve">
+    <value>2-bit</value>
+  </data>
+  <data name="FourBitText" xml:space="preserve">
+    <value>4-bit</value>
+  </data>
+  <data name="EightBitText" xml:space="preserve">
+    <value>8-bit</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="FontRenderingTab" xml:space="preserve">
+    <value>Font Rendering</value>
+  </data>
+  <data name="PreviewTab" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="ExportTab" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="InterfaceTab" xml:space="preserve">
+    <value>Interface</value>
+  </data>
+  <data name="DefaultPixelWidth" xml:space="preserve">
+    <value>Default Pixel Width</value>
+  </data>
+  <data name="DefaultPixelHeight" xml:space="preserve">
+    <value>Default Pixel Height</value>
+  </data>
+  <data name="DefaultFontSize" xml:space="preserve">
+    <value>Default Font Size</value>
+  </data>
+  <data name="DefaultBitDepth" xml:space="preserve">
+    <value>Default Bit Depth</value>
+  </data>
+  <data name="OneBitBlackWhite" xml:space="preserve">
+    <value>1-bit (Black &amp; White)</value>
+  </data>
+  <data name="TwoBit4Gray" xml:space="preserve">
+    <value>2-bit (4 Grayscale)</value>
+  </data>
+  <data name="FourBit16Gray" xml:space="preserve">
+    <value>4-bit (16 Grayscale)</value>
+  </data>
+  <data name="EightBit256Gray" xml:space="preserve">
+    <value>8-bit (256 Grayscale)</value>
+  </data>
+  <data name="DefaultHorizontalOffset" xml:space="preserve">
+    <value>Default Horizontal Offset</value>
+  </data>
+  <data name="DefaultVerticalOffset" xml:space="preserve">
+    <value>Default Vertical Offset</value>
+  </data>
+  <data name="DefaultHorizontalScan" xml:space="preserve">
+    <value>Default Horizontal Scan</value>
+  </data>
+  <data name="DefaultLeftToRight" xml:space="preserve">
+    <value>Default Left to Right Bit Order</value>
+  </data>
+  <data name="DefaultFixedWidth" xml:space="preserve">
+    <value>Default Fixed Width Mode</value>
+  </data>
+  <data name="DefaultPreviewZoom" xml:space="preserve">
+    <value>Default Preview Zoom</value>
+  </data>
+  <data name="TextPreviewLineSpacing" xml:space="preserve">
+    <value>Text Preview Line Spacing</value>
+  </data>
+  <data name="MinZoomScale" xml:space="preserve">
+    <value>Minimum Zoom Scale</value>
+  </data>
+  <data name="MaxZoomScale" xml:space="preserve">
+    <value>Maximum Zoom Scale</value>
+  </data>
+  <data name="ZoomStep" xml:space="preserve">
+    <value>Zoom Step</value>
+  </data>
+  <data name="DefaultExportFormat" xml:space="preserve">
+    <value>Default Export Format</value>
+  </data>
+  <data name="DefaultExportDirectory" xml:space="preserve">
+    <value>Default Export Directory</value>
+  </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Browse...</value>
+  </data>
+  <data name="LeaveEmptyUseLastLocation" xml:space="preserve">
+    <value>Leave Empty to Use Last Export Location</value>
+  </data>
+  <data name="DefaultExportFileNameTemplate" xml:space="preserve">
+    <value>Default Export Filename Template</value>
+  </data>
+  <data name="SupportedVariables" xml:space="preserve">
+    <value>Supported Variables: {FontName} {CharsetName} {FontSize} {Width} {Height} {BPP} {DateTime} etc.</value>
+  </data>
+  <data name="RemoveUnsupportedChars" xml:space="preserve">
+    <value>Remove Characters Not Supported by Current Font</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="ChineseSimplified" xml:space="preserve">
+    <value>Simplified Chinese</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Japanese" xml:space="preserve">
+    <value>Japanese</value>
+  </data>
+  <data name="LongPressThreshold" xml:space="preserve">
+    <value>Long Press Threshold (ms)</value>
+  </data>
+  <data name="FastScrollInterval" xml:space="preserve">
+    <value>Fast Scroll Interval (ms)</value>
+  </data>
+  <data name="LoadSettings" xml:space="preserve">
+    <value>Load Settings...</value>
+  </data>
+  <data name="ExportSettings" xml:space="preserve">
+    <value>Export Settings...</value>
+  </data>
+  <data name="RestoreDefaults" xml:space="preserve">
+    <value>Restore Defaults</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SelectDefaultExportDir" xml:space="preserve">
+    <value>Select Default Export Directory</value>
+  </data>
+  <data name="SelectThisFolder" xml:space="preserve">
+    <value>Select This Folder</value>
+  </data>
+  <data name="JSONConfigFilter" xml:space="preserve">
+    <value>JSON Config Files (*.json)|*.json|All Files (*.*)|*.*</value>
+  </data>
+  <data name="LoadSettingsFile" xml:space="preserve">
+    <value>Load Settings File</value>
+  </data>
+  <data name="Tip" xml:space="preserve">
+    <value>Tip</value>
+  </data>
+  <data name="SettingsLoadSuccess" xml:space="preserve">
+    <value>Settings File Loaded Successfully!</value>
+  </data>
+  <data name="SettingsLoadFail" xml:space="preserve">
+    <value>Failed to Load Settings File!</value>
+  </data>
+  <data name="SettingsFileFormatError" xml:space="preserve">
+    <value>Settings File Format Incorrect or Incomplete!</value>
+  </data>
+  <data name="ExportSettingsFile" xml:space="preserve">
+    <value>Export Settings File</value>
+  </data>
+  <data name="SettingsExportSuccess" xml:space="preserve">
+    <value>Settings File Exported Successfully!</value>
+  </data>
+  <data name="SettingsExportFail" xml:space="preserve">
+    <value>Failed to Export Settings File: {0}</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="ResetConfirmation" xml:space="preserve">
+    <value>Are you sure you want to restore all settings to default values? This will overwrite all current settings.</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="SettingsSaveFail" xml:space="preserve">
+    <value>Failed to Save Settings: {0}</value>
+  </data>
+  <data name="ConfigSaveFail" xml:space="preserve">
+    <value>Failed to Save Config File: {0}</value>
+  </data>
+  <data name="ConfigLoadFail" xml:space="preserve">
+    <value>Failed to Load Config File: {0}</value>
+  </data>
+  <data name="TextPreviewTitle" xml:space="preserve">
+    <value>Text Preview</value>
+  </data>
+  <data name="PreviewText" xml:space="preserve">
+    <value>Preview Text</value>
+  </data>
+  <data name="InputPreviewText" xml:space="preserve">
+    <value>Enter text to preview...</value>
+  </data>
+  <data name="Zoom" xml:space="preserve">
+    <value>Zoom:</value>
+  </data>
+  <data name="ZoomOutTooltip" xml:space="preserve">
+    <value>Zoom Out</value>
+  </data>
+  <data name="ZoomInTooltip" xml:space="preserve">
+    <value>Zoom In</value>
+  </data>
+  <data name="ResetTooltip" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="UnsupportedLanguageCode" xml:space="preserve">
+    <value>Unsupported Language Code: {0}</value>
+  </data>
+  <data name="ErrorNoLanguageResourcesFound" xml:space="preserve">
+    <value>No language resource files found. Please ensure your project contains resource files like Languages.resx.</value>
+  </data>
+  <data name="ErrorNoValidLanguageResourcesParsed" xml:space="preserve">
+    <value>Cannot parse any valid language resource files.</value>
+  </data>
+  <data name="ErrorResourceNameCannotBeEmpty" xml:space="preserve">
+    <value>Resource filename cannot be empty</value>
+  </data>
+  <data name="ErrorInvalidResourceNameFormat" xml:space="preserve">
+    <value>Invalid resource filename format, Languages part not found: {0}</value>
+  </data>
+  <data name="ErrorExtractedCultureCodeIsEmpty" xml:space="preserve">
+    <value>Culture code extracted from resource filename is empty: {0}</value>
+  </data>
+  <data name="FolderSelectionFilter" xml:space="preserve">
+    <value>Folder Selection|*.folder</value>
+  </data>
+  <data name="CannotParseFontPath" xml:space="preserve">
+    <value>Cannot parse font path: {0}</value>
+  </data>
+  <data name="DirectoryNotFound" xml:space="preserve">
+    <value>Directory not found: {0}</value>
+  </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>File not found: {0}</value>
+  </data>
+  <data name="CharacterIndexOutOfRange" xml:space="preserve">
+    <value>Character index out of range: {0}</value>
+  </data>
+  <data name="UserDefined" xml:space="preserve">
+    <value>User Defined</value>
+  </data>
+  <data name="InvalidIndex" xml:space="preserve">
+    <value>Invalid Index</value>
+  </data>
+  <data name="NoExportFormatSelected" xml:space="preserve">
+    <value>No export format selected</value>
+  </data>
+  <data name="FontRendererCannotBeNull" xml:space="preserve">
+    <value>Font renderer cannot be null</value>
+  </data>
+  <data name="CharsetManagerCannotBeNull" xml:space="preserve">
+    <value>Charset manager cannot be null</value>
+  </data>
+  <data name="UnsupportedExportFormat" xml:space="preserve">
+    <value>Unsupported export format: {0}</value>
+  </data>
+  <data name="CHeaderFileFilter" xml:space="preserve">
+    <value>C Header Files (*.h)|*.h</value>
+  </data>
+  <data name="ArduinoFileFilter" xml:space="preserve">
+    <value>Arduino Files (*.ino)|*.ino</value>
+  </data>
+  <data name="LoadFontVariantError" xml:space="preserve">
+    <value>Failed to load font variant: {0}</value>
+  </data>
+  <data name="FontStyleRegular" xml:space="preserve">
+    <value>Regular</value>
+  </data>
+  <data name="FontStyleItalic" xml:space="preserve">
+    <value>Italic</value>
+  </data>
+  <data name="FontStyleOblique" xml:space="preserve">
+    <value>Oblique</value>
+  </data>
+  <data name="FontWeightThin" xml:space="preserve">
+    <value>Thin</value>
+  </data>
+  <data name="FontWeightExtraLight" xml:space="preserve">
+    <value>Extra Light</value>
+  </data>
+  <data name="FontWeightUltraLight" xml:space="preserve">
+    <value>Ultra Light</value>
+  </data>
+  <data name="FontWeightSemiLight" xml:space="preserve">
+    <value>Semi Light</value>
+  </data>
+  <data name="FontWeightLight" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="FontWeightMedium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="FontWeightSemiBold" xml:space="preserve">
+    <value>Semi Bold</value>
+  </data>
+  <data name="FontWeightBold" xml:space="preserve">
+    <value>Bold</value>
+  </data>
+  <data name="FontWeightExtraBold" xml:space="preserve">
+    <value>Extra Bold</value>
+  </data>
+  <data name="FontWeightBlack" xml:space="preserve">
+    <value>Black</value>
+  </data>
+  <data name="FontStretchUltraCondensed" xml:space="preserve">
+    <value>Ultra Condensed</value>
+  </data>
+  <data name="FontStretchExtraCondensed" xml:space="preserve">
+    <value>Extra Condensed</value>
+  </data>
+  <data name="FontStretchCondensed" xml:space="preserve">
+    <value>Condensed</value>
+  </data>
+  <data name="FontStretchSemiCondensed" xml:space="preserve">
+    <value>Semi Condensed</value>
+  </data>
+  <data name="FontStretchSemiExpanded" xml:space="preserve">
+    <value>Semi Expanded</value>
+  </data>
+  <data name="FontStretchExpanded" xml:space="preserve">
+    <value>Expanded</value>
+  </data>
+  <data name="FontStretchExtraExpanded" xml:space="preserve">
+    <value>Extra Expanded</value>
+  </data>
+  <data name="FontStretchUltraExpanded" xml:space="preserve">
+    <value>Ultra Expanded</value>
+  </data>
+  <data name="FontTypeMonospace" xml:space="preserve">
+    <value>Font type: 1=monospace, 0=variable width</value>
+  </data>
+  <data name="FontWidth" xml:space="preserve">
+    <value>Character width (pixels)</value>
+  </data>
+  <data name="FontHeight" xml:space="preserve">
+    <value>Character height (pixels)</value>
+  </data>
+  <data name="FontBPP" xml:space="preserve">
+    <value>Bits per pixel: 1=B&amp;W, 2=4-level gray, 4=16-level gray, 8=256-level gray</value>
+  </data>
+  <data name="FontPitch" xml:space="preserve">
+    <value>Bytes per line (rounded up)</value>
+  </data>
+  <data name="FontCharCount" xml:space="preserve">
+    <value>Total character count</value>
+  </data>
+  <data name="DataFormatDescription" xml:space="preserve">
+    <value>Data format description:</value>
+  </data>
+  <data name="FontFamily" xml:space="preserve">
+    <value>Font</value>
+  </data>
+  <data name="FontSizePixels" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="CanvasSize" xml:space="preserve">
+    <value>Canvas</value>
+  </data>
+  <data name="BitOrderLeftToRight" xml:space="preserve">
+    <value>Left to right</value>
+  </data>
+  <data name="BitOrderRightToLeft" xml:space="preserve">
+    <value>Right to left</value>
+  </data>
+  <data name="VariableWidthDataStructure" xml:space="preserve">
+    <value>Variable width data structure description:</value>
+  </data>
+  <data name="WidthBytesCount" xml:space="preserve">
+    <value>Width bytes count</value>
+  </data>
+  <data name="HeightBytesCount" xml:space="preserve">
+    <value>Height bytes count</value>
+  </data>
+  <data name="CharacterDataFormat" xml:space="preserve">
+    <value>Character data format</value>
+  </data>
+  <data name="LittleEndianStorage" xml:space="preserve">
+    <value>Width/height bytes stored in little-endian (low byte first)</value>
+  </data>
+  <data name="VariableWidthCharReadHelper" xml:space="preserve">
+    <value>Variable width character reading helper functions</value>
+  </data>
+  <data name="GetCharInfoFromTable" xml:space="preserve">
+    <value>Read character info for index from character table</value>
+  </data>
+  <data name="ReadWidthLittleEndian" xml:space="preserve">
+    <value>Read width (little-endian)</value>
+  </data>
+  <data name="ReadHeightLittleEndian" xml:space="preserve">
+    <value>Read height (little-endian)</value>
+  </data>
+  <data name="BitmapDataStartPosition" xml:space="preserve">
+    <value>Bitmap data start position</value>
+  </data>
+  <data name="FixedWidthDataStructure" xml:space="preserve">
+    <value>Fixed width data structure description:</value>
+  </data>
+  <data name="FixedWidthCharAccess" xml:space="preserve">
+    <value>Each character occupies fixed bytes, no additional width/height info needed</value>
+  </data>
+  <data name="DirectCharAccess" xml:space="preserve">
+    <value>Directly use m_char_bits[index] to access bitmap data for index-th character</value>
+  </data>
+</root>

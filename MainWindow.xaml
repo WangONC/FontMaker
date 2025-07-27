@@ -6,9 +6,9 @@
             xmlns:local="clr-namespace:FontMaker"
             xmlns:converters="clr-namespace:FontMaker.Converters"
             xmlns:data="clr-namespace:FontMaker.Data"
-            xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-            mc:Ignorable="d"
-            Title="点阵字库生成器" Height="1012" Width="1200" MinHeight="600" MinWidth="900"
+            xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" xmlns:properties="clr-namespace:FontMaker.Resources.Lang"
+                 mc:Ignorable="d"
+            Title="{x:Static properties:Languages.AppName}" Height="1012" Width="1200" MinHeight="600" MinWidth="900"
             WindowStartupLocation="CenterScreen"
             WindowCornerPreference="Default"
             WindowBackdropType="Mica"
@@ -27,7 +27,7 @@
         <!-- 标题栏 -->
         <ui:TitleBar
             x:Name="TitleBar"
-            Title="点阵字库生成器"
+            Title="{x:Static properties:Languages.AppName}"
             Grid.Row="0"
             CloseWindowByDoubleClickOnIcon="True">
         </ui:TitleBar>
@@ -50,7 +50,7 @@
                     </Grid.RowDefinitions>
 
                     <!-- 预览区标题 -->
-                    <TextBlock Grid.Row="0" Text="字符预览" FontSize="14" FontWeight="SemiBold" 
+                    <TextBlock Grid.Row="0" Text="{x:Static properties:Languages.charView}" FontSize="14" FontWeight="SemiBold" 
                               Margin="0,0,0,12"/>
 
                     <!-- 字符预览画布 -->
@@ -74,12 +74,6 @@
                                     <!-- 像素网格容器 - 将通过代码动态填充 -->
                                     <Canvas x:Name="pixelGridContainer"/>
 
-                                    <!-- 预览信息文本 -->
-                                    <TextBlock x:Name="pixelInfoText" 
-                                          Text="16×16像素 (可缩放查看细节)" 
-                                          Canvas.Left="10" Canvas.Top="330" 
-                                          FontSize="12" Foreground="Gray"/>
-
                                 </Canvas>
                             </Viewbox>
                         </ScrollViewer>
@@ -89,27 +83,27 @@
                     <StackPanel Grid.Row="2">
                         <!-- 缩放控制 -->
                         <DockPanel Margin="0,0,0,8">
-                            <TextBlock DockPanel.Dock="Left" Text="预览缩放" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.ViewResize}" FontWeight="SemiBold" VerticalAlignment="Center"/>
                             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
                                 <ui:Button x:Name="zoomOutButton" Width="36" Height="36" 
                                           Appearance="Secondary" FontSize="14" Margin="0,0,2,0"
                                           Icon="{ui:SymbolIcon ZoomOut24}"
-                                          Click="ZoomOutButton_Click" ToolTip="缩小"/>
+                                          Click="ZoomOutButton_Click" ToolTip="{x:Static properties:Languages.ZoomOutTooltip}"/>
                                 <Slider x:Name="zoomSlider" Width="60" Minimum="{x:Static data:Config.MinZoomScale}" Maximum="{x:Static data:Config.MaxZoomScale}" Value="{x:Static data:Config.DefaultPreviewZoom}" 
                                        VerticalAlignment="Center" Margin="0,0,2,0"
                                        ValueChanged="ZoomSlider_ValueChanged"/>
                                 <ui:Button x:Name="zoomInButton" Width="36" Height="36" 
                                           Appearance="Secondary" FontSize="14" Margin="0,0,2,0"
                                           Icon="{ui:SymbolIcon Zoomin24}"
-                                          Click="ZoomInButton_Click" ToolTip="放大"/>
+                                          Click="ZoomInButton_Click" ToolTip="{x:Static properties:Languages.ZoomInTooltip}"/>
                                 <ui:Button x:Name="zoomResetButton" Width="36" Height="36" 
                                           Icon="{ui:SymbolIcon ArrowReset32, Filled=True}"
                                           Appearance="Secondary" FontSize="14"
-                                          Click="ZoomResetButton_Click" ToolTip="重置"/>
+                                          Click="ZoomResetButton_Click" ToolTip="{x:Static properties:Languages.ResetTooltip}"/>
                             </StackPanel>
                         </DockPanel>
 
-                        <TextBlock Text="当前字符" FontWeight="SemiBold" Margin="0,0,0,8" Height="19"/>
+                        <TextBlock Text="{x:Static properties:Languages.CurrentChar}" FontWeight="SemiBold" Margin="0,0,0,8" Height="19"/>
 
                         <!-- 字符输入和导航区域 -->
                         <Grid>
@@ -121,7 +115,7 @@
 
                             <!-- 字符输入 -->
                             <DockPanel Grid.Row="0" Margin="0,0,0,8">
-                                <TextBlock DockPanel.Dock="Left" Text="字符：" VerticalAlignment="Center" Width="50"/>
+                                <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.Char}" VerticalAlignment="Center" Width="50"/>
                                 <ui:TextBox x:Name="characterInputTextBox" Text="A" Height="33"  MaxLines="1" MinLines="1"
                                        TextAlignment="Center" FontSize="16"
                                        TextChanged="CharacterInputTextBox_TextChanged"
@@ -131,28 +125,28 @@
 
                             <!-- 当前字符信息 -->
                             <DockPanel Grid.Row="1" Margin="0,0,0,8">
-                                <TextBlock DockPanel.Dock="Left" Text="当前：" VerticalAlignment="Center" Width="50"/>
+                                <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.Current}" VerticalAlignment="Center" Width="50"/>
                                 <ui:TextBox x:Name="currentCharInfoTextBox" Text="U+0000 (0/0)" Height="33" MaxLines="1" MouseWheel="currentCharInfoTextBox_MouseWheel"
                                            IsReadOnly="True" TextAlignment="Center" FontSize="12"/>
                             </DockPanel>
 
                             <!-- 字符导航 -->
                             <DockPanel Grid.Row="2" Margin="0,0,0,0">
-                                <TextBlock DockPanel.Dock="Left" Text="导航：" VerticalAlignment="Center" Width="50"/>
+                                <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.Navigation}" VerticalAlignment="Center" Width="50"/>
                                 <StackPanel Orientation="Horizontal">
                                     <ui:Button x:Name="firstCharButton" Content="⫷" Width="44" Height="29" Margin="0,0,2,0"
-                                              Appearance="Secondary" ToolTip="第一个字符" FontSize="12"
+                                              Appearance="Secondary" ToolTip="{x:Static properties:Languages.FirstChar}" FontSize="12"
                                               Click="FirstCharButton_Click"/>
                                     <ui:Button x:Name="prevCharButton" Content="◀" Width="44" Height="29" Margin="0,0,2,0"
-                                              Appearance="Secondary" ToolTip="上一个字符" FontSize="12"
+                                              Appearance="Secondary" ToolTip="{x:Static properties:Languages.PreviousChar}" FontSize="12"
                                                PreviewMouseLeftButtonDown="prevCharButton_MouseLeftButtonDown"
                                                PreviewMouseLeftButtonUp="prevCharButton_MouseLeftButtonUp"/>
                                     <ui:Button x:Name="nextCharButton" Content="▶" Width="44" Height="29" Margin="0,0,2,0"
-                                              Appearance="Secondary" ToolTip="下一个字符" FontSize="12"
+                                              Appearance="Secondary" ToolTip="{x:Static properties:Languages.NextChar}" FontSize="12"
                                                PreviewMouseLeftButtonDown="nextCharButton_MouseLeftButtonDown"
                                                PreviewMouseLeftButtonUp="nextCharButton_MouseLeftButtonUp"/>
                                     <ui:Button x:Name="lastCharButton" Content="⫸" Width="44" Height="29"
-                                              Appearance="Secondary" ToolTip="最后一个字符" FontSize="12"
+                                              Appearance="Secondary" ToolTip="{x:Static properties:Languages.LastChar}" FontSize="12"
                                               Click="LastCharButton_Click"/>
                                 </StackPanel>
                             </DockPanel>
@@ -168,7 +162,7 @@
                     <!-- 字体设置 -->
                     <ui:Card Margin="0,0,0,12" Padding="15">
                         <StackPanel>
-                            <TextBlock Text="字体设置" FontSize="14" FontWeight="SemiBold" 
+                            <TextBlock Text="{x:Static properties:Languages.FontSetting}" FontSize="14" FontWeight="SemiBold" 
                                   Margin="0,0,0,12"/>
 
                             <Grid>
@@ -179,9 +173,9 @@
 
                                 <!-- 字体选择行 -->
                                 <DockPanel Grid.Row="0" Margin="0,0,0,8">
-                                    <TextBlock DockPanel.Dock="Left" Text="字体：" VerticalAlignment="Center" Width="50"/>
+                                    <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.Font}" VerticalAlignment="Center" Width="50"/>
                                     <ui:Button DockPanel.Dock="Right" x:Name="importFontButton" 
-                                          Content="导入" Width="77" Height="35" Margin="8,0,0,0"
+                                          Content="{x:Static properties:Languages.Import}" Width="77" Height="35" Margin="8,0,0,0"
                                           Appearance="Secondary" FontSize="12" 
                                           Icon="{ui:SymbolIcon DocumentAdd24}" Click="importFontButton_Click"/>
                                     <ComboBox  x:Name="fontComboBox" Height="35"
@@ -198,7 +192,7 @@
 
                                 <!-- 字号和样式行 -->
                                 <DockPanel Grid.Row="1" Margin="0,0,0,8">
-                                    <TextBlock DockPanel.Dock="Left" Text="字号：" VerticalAlignment="Center" Width="50"/>
+                                    <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.FontSize}" VerticalAlignment="Center" Width="50"/>
                                     <ComboBox SelectedItem="{Binding FontVM.SelectedVariant}"
                                               ItemsSource="{Binding FontVM.FontVariants}" DockPanel.Dock="Right" x:Name="fontStyleComboBox" Width="114" Height="35" Margin="8,0,0,0" SelectionChanged="fontStyleComboBox_SelectionChanged">
                                         <ComboBox.ItemTemplate>
@@ -226,12 +220,12 @@
                     <!-- 字符集设置 -->
                     <ui:Card Margin="0,0,0,12" Padding="15">
                         <StackPanel>
-                            <TextBlock Text="字符集" FontSize="14" FontWeight="SemiBold" 
+                            <TextBlock Text="{x:Static properties:Languages.CharSet}" FontSize="14" FontWeight="SemiBold" 
                                   Margin="0,0,0,12"/>
 
                             <!-- 标准字符集 -->
                             <DockPanel Margin="0,0,0,8">
-                                <TextBlock DockPanel.Dock="Left" Text="标准字符集" VerticalAlignment="Center" Width="80" FontSize="12"/>
+                                <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.StandardCharSet}" VerticalAlignment="Center" Width="80" FontSize="12"/>
                                 <ComboBox DockPanel.Dock="Left" x:Name="charsetComboBox" Height="33" SelectionChanged="CharsetComboBox_SelectionChanged" Margin="0,0,8,0"
                                           ItemsSource="{Binding CharsetVM.AllCharsets}"
                                           SelectedItem="{Binding CharsetVM.SelectedCharset}">
@@ -241,14 +235,14 @@
 
                             <!-- 自定义字符集 -->
                             <DockPanel Margin="0,0,0,0">
-                                <TextBlock DockPanel.Dock="Left" Text="自定义字符集" VerticalAlignment="Center" Width="80" FontSize="12"/>
+                                <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.CustomCharSet}" VerticalAlignment="Center" Width="80" FontSize="12"/>
                                 <ui:Button DockPanel.Dock="Right" x:Name="importCustomCharsetButton" 
-                                          Content="导入" Height="33" Width="96" Margin="8,0,0,0"
+                                          Content="{x:Static properties:Languages.Import}" Height="33" Width="96" Margin="8,0,0,0"
                                           Appearance="Secondary" FontSize="12"
                                           Icon="{ui:SymbolIcon FolderOpen24}"
                                           Click="BrowseCustomCharsetButton_Click"/>
                                 <ui:Button DockPanel.Dock="Right" x:Name="editCustomCharsetButton" 
-                                          Content="编辑" Height="33" Width="96" Margin="0,0,8,0"
+                                          Content="{x:Static properties:Languages.Edit}" Height="33" Width="96" Margin="0,0,8,0"
                                           Appearance="Secondary" FontSize="12"
                                           Icon="{ui:SymbolIcon Edit24}"/>
                             </DockPanel>
@@ -258,7 +252,7 @@
                     <!-- 点阵大小 -->
                     <ui:Card Margin="0,0,0,12" Padding="15">
                         <StackPanel>
-                            <TextBlock Text="点阵大小" FontSize="14" FontWeight="SemiBold" 
+                            <TextBlock Text="{x:Static properties:Languages.PointSize}" FontSize="14" FontWeight="SemiBold" 
                                   Margin="0,0,0,12"/>
 
                             <Grid>
@@ -273,25 +267,25 @@
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Row="0" Grid.Column="0">
-                                    <TextBlock Text="宽度" Margin="0,0,0,4" FontSize="12"/>
+                                    <TextBlock Text="{x:Static properties:Languages.Width}" Margin="0,0,0,4" FontSize="12"/>
                                     <ui:NumberBox x:Name="widthNumberBox" Value="16" Height="33" Minimum="0"
                                              ValueChanged="PixelSizeChanged"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="0" Grid.Column="2">
-                                    <TextBlock Text="高度" Margin="0,0,0,4" FontSize="12"/>
+                                    <TextBlock Text="{x:Static properties:Languages.Height}" Margin="0,0,0,4" FontSize="12"/>
                                     <ui:NumberBox x:Name="heightNumberBox" Value="16" Minimum="0" Height="33"
                                              ValueChanged="PixelSizeChanged"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,8,0,0">
-                                    <TextBlock Text="水平偏移" Margin="0,0,0,4" FontSize="12"/>
+                                    <TextBlock Text="{x:Static properties:Languages.HorizontalOffset}" Margin="0,0,0,4" FontSize="12"/>
                                     <ui:NumberBox x:Name="horizontalSpaceNumberBox" Value="0" Height="33" 
                                                   ValueChanged="SpaceSizeChanged"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,8,0,0">
-                                    <TextBlock Text="垂直偏移" Margin="0,0,0,4" FontSize="12"/>
+                                    <TextBlock Text="{x:Static properties:Languages.VerticalOffset}" Margin="0,0,0,4" FontSize="12"/>
                                     <ui:NumberBox x:Name="verticalSpaceNumberBox" Value="0" Height="33"
                                                   ValueChanged="SpaceSizeChanged"/>
                                 </StackPanel>
@@ -302,12 +296,12 @@
                     <!-- 扫描方式 -->
                     <ui:Card Margin="0,0,0,12" Padding="15">
                         <StackPanel>
-                            <TextBlock Text="扫描方式" FontSize="14" FontWeight="SemiBold" 
+                            <TextBlock Text="{x:Static properties:Languages.ScanMethod}" FontSize="14" FontWeight="SemiBold" 
                                   Margin="0,0,0,8"/>
 
                             <StackPanel Orientation="Horizontal">
-                                <RadioButton x:Name="horizontalScanRadio" Content="水平扫描" IsChecked="True" Margin="0,0,15,0"/>
-                                <RadioButton x:Name="verticalScanRadio" Content="垂直扫描"/>
+                                <RadioButton x:Name="horizontalScanRadio" Content="{x:Static properties:Languages.HorizontalScan}" IsChecked="True" Margin="0,0,15,0"/>
+                                <RadioButton x:Name="verticalScanRadio" Content="{x:Static properties:Languages.VerticalScan}"/>
                             </StackPanel>
                         </StackPanel>
                     </ui:Card>
@@ -315,17 +309,17 @@
                     <!-- 输出设置 -->
                     <ui:Card Margin="0,0,0,12" Padding="15" Height="210">
                         <StackPanel>
-                            <TextBlock Text="输出设置" FontSize="14" FontWeight="SemiBold" 
+                            <TextBlock Text="{x:Static properties:Languages.OutputSetting}" FontSize="14" FontWeight="SemiBold" 
                                   Margin="0,0,0,12"/>
 
                             <!-- 位序排列 -->
                             <DockPanel Margin="0,0,0,8">
-                                <TextBlock DockPanel.Dock="Left" Text="位序排列" VerticalAlignment="Center" Width="70" FontSize="12"/>
+                                <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.BitOrderLabel}" VerticalAlignment="Center" Width="70" FontSize="12"/>
                                 <StackPanel Orientation="Horizontal">
-                                    <RadioButton x:Name="highBitFirstRadio" Content="从左到右" IsChecked="True" FontSize="12" Margin="0,0,12,0" 
+                                    <RadioButton x:Name="highBitFirstRadio" Content="{x:Static properties:Languages.LeftToRightLabel}" IsChecked="True" FontSize="12" Margin="0,0,12,0" 
                                                  Checked="FirstRadioCheckedChanged"
                                                  Unchecked="FirstRadioCheckedChanged" Width="60"/>
-                                    <RadioButton x:Name="lowBitFirstRadio" Content="从右到左" FontSize="12"
+                                    <RadioButton x:Name="lowBitFirstRadio" Content="{x:Static properties:Languages.RightToLeftLabel}" FontSize="12"
                                                  Checked="FirstRadioCheckedChanged"
                                                  Unchecked="FirstRadioCheckedChanged" Width="60"/>
                                 </StackPanel>
@@ -333,12 +327,12 @@
 
                             <!-- 字节宽度 -->
                             <DockPanel Margin="0,0,0,8">
-                                <TextBlock DockPanel.Dock="Left" Text="字节宽度" VerticalAlignment="Center" Width="70" FontSize="12"/>
+                                <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.ByteWidthLabel}" VerticalAlignment="Center" Width="70" FontSize="12"/>
                                 <StackPanel Orientation="Horizontal">
-                                    <RadioButton x:Name="fixedWidthRadio" Content="固定宽度" IsChecked="True" FontSize="12" Margin="0,0,12,0"
+                                    <RadioButton x:Name="fixedWidthRadio" Content="{x:Static properties:Languages.FixedWidthLabel}" IsChecked="True" FontSize="12" Margin="0,0,12,0"
                                                  Checked="FixedRadioCheckedChanged"
 Unchecked="FixedRadioCheckedChanged"/>
-                                    <RadioButton x:Name="variableWidthRadio" Content="可变宽度" FontSize="12"
+                                    <RadioButton x:Name="variableWidthRadio" Content="{x:Static properties:Languages.VariableWidthLabel}" FontSize="12"
                                                                                                   Checked="FixedRadioCheckedChanged"
 Unchecked="FixedRadioCheckedChanged"/>
                                 </StackPanel>
@@ -346,7 +340,7 @@ Unchecked="FixedRadioCheckedChanged"/>
 
                             <!-- 文件格式 -->
                             <DockPanel Margin="0,0,0,8">
-                                <TextBlock DockPanel.Dock="Left" Text="文件格式" VerticalAlignment="Center" Width="70" FontSize="12"/>
+                                <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.FileFormatLabel}" VerticalAlignment="Center" Width="70" FontSize="12"/>
                                 <ComboBox x:Name="fileFormatComboBox" Height="33" FontSize="12" 
                                           ItemsSource="{Binding ExportVM.AvailableFormats}"
                                             SelectedItem="{Binding ExportVM.SelectedFormat}">
@@ -356,8 +350,8 @@ Unchecked="FixedRadioCheckedChanged"/>
                             <!-- 灰度级别 -->
                             <StackPanel Margin="0,0,0,0">
                                 <DockPanel Margin="0,0,0,4">
-                                    <TextBlock DockPanel.Dock="Left" Text="灰度级别" VerticalAlignment="Center" Width="70" FontSize="12"/>
-                                    <TextBlock DockPanel.Dock="Right" x:Name="grayLevelText" Text="1位" FontSize="12" VerticalAlignment="Center" Width="30"/>
+                                    <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.GrayLevelLabel}" VerticalAlignment="Center" Width="70" FontSize="12"/>
+                                    <TextBlock DockPanel.Dock="Right" x:Name="grayLevelText" Text="{x:Static properties:Languages.OneBitText}" FontSize="12" VerticalAlignment="Center" Width="30"/>
                                     <Slider x:Name="grayLevelSlider" Minimum="0" Maximum="3" Value="0" 
                                            TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True"
                                            ValueChanged="GrayLevelSlider_ValueChanged" Height="24"/>
@@ -375,9 +369,9 @@ Unchecked="FixedRadioCheckedChanged"/>
                         </Grid.RowDefinitions>
                         
                         <!-- 设置按钮 -->
-                        <ui:Button Grid.Row="0" x:Name="settingsButton" Content="设置" Height="30" 
+                        <ui:Button Grid.Row="0" x:Name="settingsButton" Content="{x:Static properties:Languages.SettingsTitle}" Height="30" 
                                   Appearance="Secondary" Icon="{ui:SymbolIcon Options48}" 
-                                  ToolTip="高级设置" HorizontalAlignment="Stretch" Click="SettingsButton_Click"/>
+                                  ToolTip="{x:Static properties:Languages.AdvanceSetting}" HorizontalAlignment="Stretch" Click="SettingsButton_Click"/>
                         
                         <!-- 主要操作按钮 -->
                         <Grid Grid.Row="2">
@@ -401,9 +395,9 @@ Unchecked="FixedRadioCheckedChanged"/>
                                     <ColumnDefinition Width="8"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <ui:Button Grid.Column="0" x:Name="previewButton" Content="预览" Height="36" 
+                                <ui:Button Grid.Column="0" x:Name="previewButton" Content="{x:Static properties:Languages.PreviewTab}" Height="36" 
                                           Appearance="Secondary" Icon="{ui:SymbolIcon Eye24}" Width="146" Click="previewButton_Click"/>
-                                <ui:Button Grid.Column="2" x:Name="generateButton" Content="生成字库" Height="36" 
+                                <ui:Button Grid.Column="2" x:Name="generateButton" Content="{x:Static properties:Languages.GenerateFontLibrary}" Height="36" 
                                           Appearance="Primary" Icon="{ui:SymbolIcon Save24}" Width="146" Click="generateButton_Click"/>
                             </Grid>
                         </Grid>

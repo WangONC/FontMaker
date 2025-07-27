@@ -19,4 +19,23 @@
   </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="ViewModel\LanguagesViewModel.cs~RF45c7868.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\Lang\Languages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Languages.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Lang\Languages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Languages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

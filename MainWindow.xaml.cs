@@ -76,6 +76,9 @@ namespace FontMaker
             // 程序启动时加载配置
             SettingsWindow.InitializeAppConfig();
             
+            // 初始化语言设置
+            FontMaker.ViewModel.LanguagesViewModel.Initialize();
+            
             ViewModel = new MainViewModel();
             InitializeComponent();
             this.DataContext = ViewModel;
@@ -94,9 +97,6 @@ namespace FontMaker
             
             // 从Config设置默认值
             InitializeControlsFromConfig();
-            
-            // 初始化像素网格预览（预留）
-            InitializePixelGrid();
 
             // 初始化字体渲染器
             InitializeFontRenderer();
@@ -187,37 +187,6 @@ namespace FontMaker
             pixelCanvas.MouseLeave += PixelCanvas_MouseLeave;
         }
 
-        // 初始化像素网格（预留方法）
-        private void InitializePixelGrid()
-        {
-            // TODO: 根据默认的16x16像素创建网格
-            // CreatePixelGrid(16, 16);
-        }
-
-        // 创建像素网格（预留方法）
-        private void CreatePixelGrid(int width, int height)
-        {
-            // TODO: 实现像素网格创建逻辑
-            // 1. 清空现有网格
-            // pixelGridContainer.Children.Clear();
-            // 
-            // 2. 根据宽度和高度创建网格
-            // double pixelSize = 20; // 每个像素的显示大小
-            // 
-            // 3. 绘制网格线
-            // for (int i = 0; i <= width; i++) { ... }
-            // for (int j = 0; j <= height; j++) { ... }
-            // 
-            // 4. 创建像素点
-            // for (int x = 0; x < width; x++) {
-            //     for (int y = 0; y < height; y++) { ... }
-            // }
-            //
-            // 5. 更新画布尺寸
-            // pixelCanvas.Width = width * pixelSize;
-            // pixelCanvas.Height = height * pixelSize;
-        }
-
         private void CharsetComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             charsetManager = charsetComboBox.SelectedItem as CharsetManager;
@@ -235,8 +204,8 @@ namespace FontMaker
             // 打开文件对话框选择字符集文件，支持多选
             var openFileDialog = new Microsoft.Win32.OpenFileDialog
             {
-                Filter = "字符集文件 (*.cst)|*.cst|所有文件 (*.*)|*.*",
-                Title = "选择字符集文件",
+                Filter = FontMaker.Resources.Lang.Languages.CharSetFilter,
+                Title = FontMaker.Resources.Lang.Languages.SelectCharSetFile,
                 Multiselect = true // 启用多选
             };
 
@@ -259,7 +228,7 @@ namespace FontMaker
                         }
                         else
                         {
-                            failedFiles.Add($"{System.IO.Path.GetFileName(filePath)}: 无效的字符集文件或已存在同名字符集");
+                            failedFiles.Add($"{System.IO.Path.GetFileName(filePath)}: {FontMaker.Resources.Lang.Languages.InvalidCharSetOrExists}");
                         }
                     }
                     catch (Exception ex)
@@ -272,21 +241,21 @@ namespace FontMaker
                 if (importedCharsets.Count > 0)
                 {
                     string message = importedCharsets.Count == 1
-                        ? $"已导入字符集: {importedCharsets.First()}"
-                        : $"成功导入 {importedCharsets.Count} 个字符集";
+                        ? string.Format(FontMaker.Resources.Lang.Languages.ImportedCharSetSingle, importedCharsets.First())
+                        : string.Format(FontMaker.Resources.Lang.Languages.ImportedCharSetMultiple, importedCharsets.Count);
 
-                    NotificationUtils.showSuccessNotification(this.SnackbarPresenter, "导入字符集成功", message, 3000, null);
+                    NotificationUtils.showSuccessNotification(this.SnackbarPresenter, FontMaker.Resources.Lang.Languages.ImportCharSetSuccess, message, 3000, null);
                 }
 
                 if (failedFiles.Count > 0)
                 {
-                    string errorMessage = "以下文件导入失败:\n" + string.Join("\n", failedFiles);
-                    NotificationUtils.showErrorNotification(this.SnackbarPresenter, "部分字符集导入失败", errorMessage, 10000, null);
+                    string errorMessage = string.Format(FontMaker.Resources.Lang.Languages.ImportFailedFilesList, string.Join("\n", failedFiles));
+                    NotificationUtils.showErrorNotification(this.SnackbarPresenter, FontMaker.Resources.Lang.Languages.PartialCharSetImportFail, errorMessage, 10000, null);
                 }
 
                 if (importedCharsets.Count == 0)
                 {
-                    NotificationUtils.showErrorNotification(this.SnackbarPresenter, "导入字符集失败", "没有成功导入任何字符集文件", 5000, null);
+                    NotificationUtils.showErrorNotification(this.SnackbarPresenter, FontMaker.Resources.Lang.Languages.ImportCharSetFail, FontMaker.Resources.Lang.Languages.NoCharSetImported, 5000, null);
                 }
             }
         }
@@ -360,23 +329,23 @@ namespace FontMaker
             {
                 case 0:
                     grayLeve = 1;  // 1位深度 = 2级 (黑白)
-                    grayLevelText.Text = "1位";
+                    grayLevelText.Text = FontMaker.Resources.Lang.Languages.OneBitText;
                     break;
                 case 1:
                     grayLeve = 2;  // 2位深度 = 4级灰度
-                    grayLevelText.Text = "2位";
+                    grayLevelText.Text = FontMaker.Resources.Lang.Languages.TwoBitText;
                     break;
                 case 2:
                     grayLeve = 4;  // 4位深度 = 16级灰度
-                    grayLevelText.Text = "4位";
+                    grayLevelText.Text = FontMaker.Resources.Lang.Languages.FourBitText;
                     break;
                 case 3:
                     grayLeve = 8;  // 8位深度 = 256级灰度
-                    grayLevelText.Text = "8位";
+                    grayLevelText.Text = FontMaker.Resources.Lang.Languages.EightBitText;
                     break;
                 default:
                     grayLeve = 1;
-                    grayLevelText.Text = "1位";
+                    grayLevelText.Text = FontMaker.Resources.Lang.Languages.OneBitText;
                     break;
             }
             
@@ -531,7 +500,7 @@ namespace FontMaker
                 
                 // 如果没有选择字体，则抛出异常
                 if (fontFamily == null)
-                    throw new InvalidOperationException("未选择字体，无法进行渲染");
+                    throw new InvalidOperationException(FontMaker.Resources.Lang.Languages.UnselectedFontError);
                 
                 string fontFamilyName = fontFamily.Source;
                 
@@ -580,8 +549,8 @@ namespace FontMaker
             // 打开filePicker，筛选字体，支持多选
             var openFileDialog = new Microsoft.Win32.OpenFileDialog
             {
-                Filter = "字体文件 (*.ttf;*.otf)|*.ttf;*.otf|所有文件 (*.*)|*.*",
-                Title = "选择字体文件",
+                Filter = FontMaker.Resources.Lang.Languages.FontFileFilter,
+                Title = FontMaker.Resources.Lang.Languages.SelectFontFile,
                 Multiselect = true // 启用多选
             };
 
@@ -601,7 +570,7 @@ namespace FontMaker
                         // 验证字体是否有效
                         if (!newFontFamily.GetTypefaces().Any())
                         {
-                            throw new InvalidOperationException("无效的字体文件");
+                            throw new InvalidOperationException(FontMaker.Resources.Lang.Languages.InvalidFontFile);
                         }
 
                         // 添加到ViewModel中
@@ -623,16 +592,16 @@ namespace FontMaker
                     isLocalFont = true;
 
                     string message = importedFonts.Count == 1
-                        ? $"已导入字体: {System.IO.Path.GetFileName(fontPath)}"
-                        : $"成功导入 {importedFonts.Count} 个字体";
+                        ? string.Format(FontMaker.Resources.Lang.Languages.ImportedFontSingle, System.IO.Path.GetFileName(fontPath))
+                        : string.Format(FontMaker.Resources.Lang.Languages.ImportedFontMultiple, importedFonts.Count);
 
-                    NotificationUtils.showSuccessNotification(this.SnackbarPresenter, "导入字体成功", message, 3000, null);
+                    NotificationUtils.showSuccessNotification(this.SnackbarPresenter, FontMaker.Resources.Lang.Languages.importFontSuccess, message, 3000, null);
                 }
 
                 if (failedFiles.Count > 0)
                 {
-                    string errorMessage = "以下文件导入失败:\n" + string.Join("\n", failedFiles);
-                    NotificationUtils.showErrorNotification(this.SnackbarPresenter, "部分字体导入失败", errorMessage, 10000, null);
+                    string errorMessage = string.Format(FontMaker.Resources.Lang.Languages.ImportFailedFilesList, string.Join("\n", failedFiles));
+                    NotificationUtils.showErrorNotification(this.SnackbarPresenter, FontMaker.Resources.Lang.Languages.PartialFontImportFail, errorMessage, 10000, null);
                 }
 
                 if (importedFonts.Count == 0)
@@ -829,7 +798,7 @@ namespace FontMaker
         {
             if (_fontRenderer == null || charsetManager == null)
             {
-                NotificationUtils.showErrorNotification(this.SnackbarPresenter, "预览失败", "请先选择字体和字符集", 3000, null);
+                NotificationUtils.showErrorNotification(this.SnackbarPresenter, FontMaker.Resources.Lang.Languages.PreviewFail, FontMaker.Resources.Lang.Languages.NeedSelectFontCharset, 3000, null);
                 return;
             }
 
@@ -846,7 +815,7 @@ namespace FontMaker
             }
             catch (Exception ex)
             {
-                NotificationUtils.showErrorNotification(this.SnackbarPresenter, "预览失败", ex.Message, 5000, null);
+                NotificationUtils.showErrorNotification(this.SnackbarPresenter, FontMaker.Resources.Lang.Languages.PreviewFail, ex.Message, 5000, null);
             }
         }
 
@@ -855,7 +824,7 @@ namespace FontMaker
         {
             if (_fontRenderer == null || charsetManager == null)
             {
-                NotificationUtils.showErrorNotification(this.SnackbarPresenter, "导出失败", "请先选择字体和字符集", 3000, null);
+                NotificationUtils.showErrorNotification(this.SnackbarPresenter, FontMaker.Resources.Lang.Languages.OutputFail, FontMaker.Resources.Lang.Languages.NeedSelectFontCharset, 3000, null);
                 return;
             }
 
@@ -866,7 +835,7 @@ namespace FontMaker
                 generateProgressBar.Visibility = Visibility.Visible;
                 progressText.Visibility = Visibility.Visible;
                 generateProgressBar.IsIndeterminate = true;
-                progressText.Text = "正在生成字库...";
+                progressText.Text = FontMaker.Resources.Lang.Languages.OutputFontLibing;
 
                 // 更新渲染器参数
                 UpdateFontRendererParameters();
@@ -919,11 +888,11 @@ namespace FontMaker
 
                 if (!result)
                 {
-                    NotificationUtils.showErrorNotification(this.SnackbarPresenter, "导出失败", "未选择有效输出文件", 5000, null);
+                    NotificationUtils.showErrorNotification(this.SnackbarPresenter, FontMaker.Resources.Lang.Languages.OutputFail, FontMaker.Resources.Lang.Languages.NoValidOutputFile, 5000, null);
                 }
                 else
                 {
-                    NotificationUtils.showSuccessNotification(this.SnackbarPresenter, "导出成功", "字库已成功生成", 3000, null);
+                    NotificationUtils.showSuccessNotification(this.SnackbarPresenter, FontMaker.Resources.Lang.Languages.OutputSuccess, FontMaker.Resources.Lang.Languages.FontLibGenerated, 3000, null);
                 }
             }
             catch (Exception ex)
@@ -933,7 +902,7 @@ namespace FontMaker
                 progressText.Visibility = Visibility.Collapsed;
                 generateButton.IsEnabled = true;
                 
-                NotificationUtils.showErrorNotification(this.SnackbarPresenter, "导出失败", ex.Message, 5000, null);
+                NotificationUtils.showErrorNotification(this.SnackbarPresenter, FontMaker.Resources.Lang.Languages.OutputFail, ex.Message, 5000, null);
             }
         }
 
@@ -1018,6 +987,9 @@ namespace FontMaker
 
         protected override void OnClosed(EventArgs e)
         {
+            // 保存当前配置
+            SettingsWindow.SaveConfigToFile();
+            
             // 清理渲染器资源
             _fontRenderer?.Dispose();
             base.OnClosed(e);
@@ -1101,12 +1073,12 @@ namespace FontMaker
                     // 更新预览
                     UpdateCharacterPreview();
                     
-                    NotificationUtils.showSuccessNotification(this.SnackbarPresenter, "设置已更新", "新的设置已应用到界面", 3000, null);
+                    NotificationUtils.showSuccessNotification(this.SnackbarPresenter, FontMaker.Resources.Lang.Languages.SetingUpdated, FontMaker.Resources.Lang.Languages.NewSettingUpdate2UI, 3000, null);
                 }
             }
             catch (Exception ex)
             {
-                NotificationUtils.showErrorNotification(this.SnackbarPresenter, "打开设置窗口失败", ex.Message, 5000, null);
+                NotificationUtils.showErrorNotification(this.SnackbarPresenter, FontMaker.Resources.Lang.Languages.OpenSettingWinFail, ex.Message, 5000, null);
             }
         }
     }

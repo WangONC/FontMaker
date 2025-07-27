@@ -95,7 +95,7 @@ namespace FontMaker
                 var parts = fontFamilyName.Split('#');
                 if (parts.Length != 2)
                 {
-                    throw new ArgumentException($"无法解析字体路径: {fontFamilyName}");
+                    throw new ArgumentException(string.Format(FontMaker.Resources.Lang.Languages.CannotParseFontPath, fontFamilyName));
                 }
 
                 string fontPath = parts[0].Replace("file:///", "").Replace("/", "\\");

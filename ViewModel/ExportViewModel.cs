@@ -48,13 +48,13 @@ namespace FontMaker.ViewModel
                 AvailableFormats = new ObservableCollection<string>();
             }
 
-            AvailableFormats.Add("C文件 (.c/.h)");
-            AvailableFormats.Add("BIN文件 (.bin)");
-            AvailableFormats.Add("TXT文件 (.txt)");
-            AvailableFormats.Add("JSON文件 (.json)");
-            AvailableFormats.Add("XML文件 (.xml)");
-            AvailableFormats.Add("HEX文件 (.hex)");
-            AvailableFormats.Add("Arduino代码 (.ino)");
+            AvailableFormats.Add("C (.c/.h)");
+            AvailableFormats.Add("BIN (.bin)");
+            AvailableFormats.Add("TXT (.txt)");
+            AvailableFormats.Add("JSON (.json)");
+            AvailableFormats.Add("XML (.xml)");
+            AvailableFormats.Add("HEX (.hex)");
+            AvailableFormats.Add("Arduino (.ino)");
 
             // 设置默认选中项
             SelectedFormat = AvailableFormats.FirstOrDefault() ?? string.Empty;
@@ -62,13 +62,13 @@ namespace FontMaker.ViewModel
 
         private void InitializeExportHandlers()
         {
-            _exportHandlers["C文件 (.c/.h)"] = ExportToCFile;
-            _exportHandlers["BIN文件 (.bin)"] = ExportToBinFile;
-            _exportHandlers["TXT文件 (.txt)"] = ExportToTXTFile;
-            _exportHandlers["JSON文件 (.json)"] = ExportToJSONFile;
-            _exportHandlers["XML文件 (.xml)"] = ExportToXMLFile;
-            _exportHandlers["HEX文件 (.hex)"] = ExportToHEXFile;
-            _exportHandlers["Arduino代码 (.ino)"] = ExportToINOFile;
+            _exportHandlers["C (.c/.h)"] = ExportToCFile;
+            _exportHandlers["BIN (.bin)"] = ExportToBinFile;
+            _exportHandlers["TXT (.txt)"] = ExportToTXTFile;
+            _exportHandlers["JSON (.json)"] = ExportToJSONFile;
+            _exportHandlers["XML (.xml)"] = ExportToXMLFile;
+            _exportHandlers["HEX (.hex)"] = ExportToHEXFile;
+            _exportHandlers["Arduino (.ino)"] = ExportToINOFile;
         }
 
         /// <summary>
@@ -83,17 +83,17 @@ namespace FontMaker.ViewModel
         {
             if (string.IsNullOrEmpty(SelectedFormat))
             {
-                throw new InvalidOperationException("未选择导出格式");
+                throw new InvalidOperationException(FontMaker.Resources.Lang.Languages.NoExportFormatSelected);
             }
 
             if (fontRenderer == null)
             {
-                throw new ArgumentNullException(nameof(fontRenderer), "字体渲染器不能为空");
+                throw new ArgumentNullException(nameof(fontRenderer), FontMaker.Resources.Lang.Languages.FontRendererCannotBeNull);
             }
 
             if (charsetManager == null)
             {
-                throw new ArgumentNullException(nameof(charsetManager), "字符集管理器不能为空");
+                throw new ArgumentNullException(nameof(charsetManager), FontMaker.Resources.Lang.Languages.CharsetManagerCannotBeNull);
             }
 
             // 生成字体数据
@@ -101,7 +101,7 @@ namespace FontMaker.ViewModel
 
             if (!_exportHandlers.TryGetValue(SelectedFormat, out var handler))
             {
-                throw new NotSupportedException($"不支持的导出格式: {SelectedFormat}");
+                throw new NotSupportedException(string.Format(FontMaker.Resources.Lang.Languages.UnsupportedExportFormat, SelectedFormat));
             }
 
             // 调用对应的导出处理器
@@ -125,7 +125,7 @@ namespace FontMaker.ViewModel
                 charCount: charsetManager.CharCount
             ) + ".h";
 
-            string outputPath = exportPath ?? FileUtils.GetSaveFilePath("C头文件 (*.h)|*.h", defaultFileName);
+            string outputPath = exportPath ?? FileUtils.GetSaveFilePath(FontMaker.Resources.Lang.Languages.CHeaderFileFilter, defaultFileName);
             if (string.IsNullOrEmpty(outputPath))
                 return false;
 
@@ -180,7 +180,7 @@ namespace FontMaker.ViewModel
                 charCount: charsetManager.CharCount
             ) + ".ino";
 
-            string outputPath = exportPath ?? FileUtils.GetSaveFilePath("Arduino文件 (*.ino)|*.ino", defaultFileName);
+            string outputPath = exportPath ?? FileUtils.GetSaveFilePath(FontMaker.Resources.Lang.Languages.ArduinoFileFilter, defaultFileName);
             if (string.IsNullOrEmpty(outputPath))
                 return false;
 

@@ -107,6 +107,16 @@ namespace FontMaker.Data
             set => SetProperty(ref _defaultIsFixedWidth, value);
         }
 
+        private static string _defaultLanguageCode = "zh-CN";
+        /// <summary>
+        /// 默认语言代码
+        /// </summary>
+        public static string DefaultLanguageCode
+        {
+            get => _defaultLanguageCode;
+            set => SetProperty(ref _defaultLanguageCode, value);
+        }
+
         #endregion
 
         #region 预览设置
@@ -165,7 +175,7 @@ namespace FontMaker.Data
 
         #region 导出设置
 
-        private static string _defaultExportFormat = "C文件 (.c/.h)";
+        private static string _defaultExportFormat = "C (.c/.h)";
         /// <summary>
         /// 默认导出格式
         /// </summary>
@@ -306,6 +316,7 @@ namespace FontMaker.Data
             DefaultExportFileName = "{FontName}_{CharsetName}";
             LongPressThreshold = 600;
             FastScrollInterval = 25;
+            DefaultLanguageCode = "zh-CN";
         }
 
         /// <summary>
@@ -334,7 +345,8 @@ namespace FontMaker.Data
                 DefaultExportDirectory = DefaultExportDirectory,
                 DefaultExportFileName = DefaultExportFileName,
                 LongPressThreshold = LongPressThreshold,
-                FastScrollInterval = FastScrollInterval
+                FastScrollInterval = FastScrollInterval,
+                DefaultLanguageCode = DefaultLanguageCode
             };
         }
 
@@ -424,6 +436,7 @@ namespace FontMaker.Data
             DefaultExportFileName = snapshot.DefaultExportFileName;
             LongPressThreshold = snapshot.LongPressThreshold;
             FastScrollInterval = snapshot.FastScrollInterval;
+            DefaultLanguageCode = snapshot.DefaultLanguageCode;
         }
 
         #endregion
@@ -454,5 +467,6 @@ namespace FontMaker.Data
         public string DefaultExportFileName { get; set; } = "";
         public int LongPressThreshold { get; set; }
         public int FastScrollInterval { get; set; }
+        public string DefaultLanguageCode { get; set; } = "";
     }
 }

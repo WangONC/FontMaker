@@ -20,7 +20,7 @@ namespace FontMaker.Utils
             // 检查目录是否存在
             if (!Directory.Exists(path))
             {
-                throw new DirectoryNotFoundException($"目录不存在: {path}");
+                throw new DirectoryNotFoundException(string.Format(FontMaker.Resources.Lang.Languages.DirectoryNotFound, path));
             }
 
             // 创建结果列表
@@ -86,7 +86,7 @@ namespace FontMaker.Utils
             // 检查文件是否存在
             if (!File.Exists(filePath))
             {
-                throw new FileNotFoundException($"文件不存在: {filePath}");
+                throw new FileNotFoundException(string.Format(FontMaker.Resources.Lang.Languages.FileNotFound, filePath));
             }
             // 读取文件内容
             return File.ReadAllText(filePath);
@@ -97,7 +97,7 @@ namespace FontMaker.Utils
             // 检查文件是否存在
             if (!File.Exists(filePath))
             {
-                throw new FileNotFoundException($"文件不存在: {filePath}");
+                throw new FileNotFoundException(string.Format(FontMaker.Resources.Lang.Languages.FileNotFound, filePath));
             }
             // 读取文件内容
             return File.ReadAllBytes(filePath);

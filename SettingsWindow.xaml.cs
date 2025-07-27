@@ -19,11 +19,14 @@ namespace FontMaker
         private const string ConfigFileName = "FontMakerSettings.json";
         private static string ConfigFilePath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigFileName);
 
-        public ExportViewModel ExportViewModel { get; } = new ExportViewModel();
+        public SettingViewModel SettingViewModel;
 
         public SettingsWindow()
         {
+            SettingViewModel = new SettingViewModel();
             InitializeComponent();
+            this.DataContext = SettingViewModel;
+
 
             Loaded += (sender, args) =>
             {
@@ -33,7 +36,6 @@ namespace FontMaker
                     true
                 );
             };
-            this.DataContext = ExportViewModel;
 
             // 从当前Config加载到UI
             LoadConfigToUI();
@@ -149,7 +151,7 @@ namespace FontMaker
             // 导出设置
             if (defaultExportFormatBox.SelectedItem is ExportViewModel formatItem)
             {
-                Config.DefaultExportFormat = formatItem.ToString() ?? "C文件 (.c/.h)";
+                Config.DefaultExportFormat = formatItem.ToString() ?? "C (.c/.h)";
             }
             Config.DefaultExportDirectory = defaultExportDirectoryBox.Text ?? "";
             Config.DefaultExportFileName = defaultExportFileNameBox.Text ?? "{FontName}_{CharsetName}";
@@ -183,7 +185,7 @@ namespace FontMaker
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"保存配置文件失败: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine(string.Format(FontMaker.Resources.Lang.Languages.ConfigSaveFail, ex.Message));
                 throw;
             }
         }
@@ -216,7 +218,7 @@ namespace FontMaker
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"加载配置文件失败: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine(string.Format(FontMaker.Resources.Lang.Languages.ConfigLoadFail, ex.Message));
             }
             return false;
         }
@@ -271,10 +273,10 @@ namespace FontMaker
             // 使用SaveFileDialog来选择文件夹（间接方式）
             var saveDialog = new SaveFileDialog
             {
-                Title = "选择默认导出目录",
-                FileName = "选择此文件夹",
+                Title = FontMaker.Resources.Lang.Languages.SelectDefaultExportDir,
+                FileName = FontMaker.Resources.Lang.Languages.SelectThisFolder,
                 DefaultExt = "folder",
-                Filter = "文件夹选择|*.folder"
+                Filter = FontMaker.Resources.Lang.Languages.FolderSelectionFilter
             };
 
             if (!string.IsNullOrEmpty(defaultExportDirectoryBox.Text))
@@ -294,8 +296,8 @@ namespace FontMaker
         {
             var openFileDialog = new OpenFileDialog
             {
-                Filter = "JSON配置文件 (*.json)|*.json|所有文件 (*.*)|*.*",
-                Title = "加载设置文件"
+                Filter = FontMaker.Resources.Lang.Languages.JSONConfigFilter,
+                Title = FontMaker.Resources.Lang.Languages.LoadSettingsFile
             };
 
             if (openFileDialog.ShowDialog() == true)
@@ -305,16 +307,16 @@ namespace FontMaker
                     if (LoadConfigFromFile(openFileDialog.FileName))
                     {
                         LoadConfigToUI(); // 重新加载UI
-                        NotificationUtils.showMessageWPF("提示", "设置文件加载成功！");
+                        NotificationUtils.showMessageWPF(FontMaker.Resources.Lang.Languages.Tip, FontMaker.Resources.Lang.Languages.SettingsLoadSuccess);
                     }
                     else
                     {
-                        NotificationUtils.showMessageWPF("提示", "加载设置文件失败！");
+                        NotificationUtils.showMessageWPF(FontMaker.Resources.Lang.Languages.Tip, FontMaker.Resources.Lang.Languages.SettingsLoadFail);
                     }
                 }
                 else
                 {
-                    NotificationUtils.showMessageWPF("提示", "设置文件格式不正确或不完整！");
+                    NotificationUtils.showMessageWPF(FontMaker.Resources.Lang.Languages.Tip, FontMaker.Resources.Lang.Languages.SettingsFileFormatError);
                 }
             }
         }
@@ -323,8 +325,8 @@ namespace FontMaker
         {
             var saveFileDialog = new SaveFileDialog
             {
-                Filter = "JSON配置文件 (*.json)|*.json",
-                Title = "导出设置文件",
+                Filter = FontMaker.Resources.Lang.Languages.JSONConfigFilter,
+                Title = FontMaker.Resources.Lang.Languages.ExportSettingsFile,
                 FileName = "FontMakerSettings.json"
             };
 
@@ -336,11 +338,11 @@ namespace FontMaker
                     SaveUIToConfig();
                     // 然后导出到指定文件
                     SaveConfigToFile(saveFileDialog.FileName);
-                    NotificationUtils.showMessageWPF("提示","设置文件导出成功！");
+                    NotificationUtils.showMessageWPF(FontMaker.Resources.Lang.Languages.Tip, FontMaker.Resources.Lang.Languages.SettingsExportSuccess);
                 }
                 catch (Exception ex)
                 {
-                    NotificationUtils.showMessageWPF("提示", $"导出设置文件失败：{ex.Message}");
+                    NotificationUtils.showMessageWPF(FontMaker.Resources.Lang.Languages.Tip, string.Format(FontMaker.Resources.Lang.Languages.SettingsExportFail, ex.Message));
                 }
             }
         }
@@ -348,10 +350,10 @@ namespace FontMaker
         private void ResetToDefaultsButton_Click(object sender, RoutedEventArgs e)
         {
             var result = NotificationUtils.showMessageWPF(
-                "警告",
-                "确定要恢复所有设置为默认值吗？这将覆盖当前的所有设置。",
-                "是",
-                "否",
+                FontMaker.Resources.Lang.Languages.Warning,
+                FontMaker.Resources.Lang.Languages.ResetConfirmation,
+                FontMaker.Resources.Lang.Languages.Yes,
+                FontMaker.Resources.Lang.Languages.No,
                 null);
 
             if (result.Result == Wpf.Ui.Controls.MessageBoxResult.Primary)
@@ -374,7 +376,7 @@ namespace FontMaker
             }
             catch (Exception ex)
             {
-                NotificationUtils.showMessageWPF("错误",$"保存设置失败：{ex.Message}");
+                NotificationUtils.showMessageWPF(FontMaker.Resources.Lang.Languages.Error, string.Format(FontMaker.Resources.Lang.Languages.SettingsSaveFail, ex.Message));
             }
         }
 

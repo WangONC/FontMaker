@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:data="clr-namespace:FontMaker.Data"
-        Title="文本预览" Height="600" Width="800"
+        xmlns:properties="clr-namespace:FontMaker.Resources.Lang"
+        Title="{x:Static properties:Languages.TextPreviewTitle}" Height="600" Width="800"
         WindowBackdropType="Mica"
         ExtendsContentIntoTitleBar="True"
         WindowCornerPreference="Round">
@@ -19,7 +20,7 @@
         <!-- 标题栏 -->
         <ui:TitleBar
             x:Name="TitleBar"
-            Title="文本预览"
+            Title="{x:Static properties:Languages.TextPreviewTitle}"
             Grid.Row="0"
             CloseWindowByDoubleClickOnIcon="True">
         </ui:TitleBar>
@@ -27,9 +28,9 @@
         <!-- 输入区域 -->
         <ui:Card Grid.Row="1" Margin="10,10,10,5">
             <DockPanel>
-                <TextBlock DockPanel.Dock="Top" Text="预览文本" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                <TextBlock DockPanel.Dock="Top" Text="{x:Static properties:Languages.PreviewText}" FontWeight="SemiBold" Margin="0,0,0,8"/>
                 <ui:TextBox x:Name="previewTextBox" 
-                           PlaceholderText="输入要预览的文本..."
+                           PlaceholderText="{x:Static properties:Languages.InputPreviewText}"
                            Height="60"
                            TextWrapping="Wrap"
                            AcceptsReturn="True"
@@ -41,14 +42,14 @@
         <!-- 控制区域 -->
         <ui:Card Grid.Row="2" Margin="10,5">
             <DockPanel>
-                <TextBlock DockPanel.Dock="Left" Text="缩放:" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <TextBlock DockPanel.Dock="Left" Text="{x:Static properties:Languages.Zoom}" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,10,0"/>
                 <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
                     <ui:Button x:Name="zoomOutButton" Icon="{ui:SymbolIcon ZoomOut24}" 
-                              ToolTip="缩小" Width="36" Height="32" Margin="0,0,5,0" Click="ZoomOutButton_Click"/>
+                              ToolTip="{x:Static properties:Languages.ZoomOutTooltip}" Width="36" Height="32" Margin="0,0,5,0" Click="ZoomOutButton_Click"/>
                     <ui:Button x:Name="zoomInButton" Icon="{ui:SymbolIcon ZoomIn24}" 
-                              ToolTip="放大" Width="36" Height="32" Margin="0,0,5,0" Click="ZoomInButton_Click"/>
+                              ToolTip="{x:Static properties:Languages.ZoomInTooltip}" Width="36" Height="32" Margin="0,0,5,0" Click="ZoomInButton_Click"/>
                     <ui:Button x:Name="zoomResetButton" Icon="{ui:SymbolIcon ArrowReset32, Filled=True}" 
-                              ToolTip="重置" Width="36" Height="32" Click="ZoomResetButton_Click"/>
+                              ToolTip="{x:Static properties:Languages.ResetTooltip}" Width="36" Height="32" Click="ZoomResetButton_Click"/>
                 </StackPanel>
                 <Slider x:Name="zoomSlider" Minimum="{x:Static data:Config.MinZoomScale}" Maximum="{x:Static data:Config.MaxZoomScale}" Value="{x:Static data:Config.DefaultPreviewZoom}" 
                        TickFrequency="0.1" IsSnapToTickEnabled="True" VerticalAlignment="Center"

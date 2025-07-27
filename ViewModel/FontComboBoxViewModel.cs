@@ -98,7 +98,7 @@ namespace FontMaker.ViewModels
             catch (Exception ex)
             {
                 // 处理字体加载错误
-                NotificationUtils.showMessageError("错误",$"加载字体变体失败: {ex.Message}");
+                NotificationUtils.showMessageError(FontMaker.Resources.Lang.Languages.Error, string.Format(FontMaker.Resources.Lang.Languages.LoadFontVariantError, ex.Message));
             }
         }
 
@@ -197,11 +197,11 @@ namespace FontMaker.ViewModels
 
                 var parts = new List<string>();
 
-                if (weight != "常规") parts.Add(weight);
-                if (style != "常规") parts.Add(style);
-                if (stretch != "常规") parts.Add(stretch);
+                if (weight != FontMaker.Resources.Lang.Languages.FontStyleRegular) parts.Add(weight);
+                if (style != FontMaker.Resources.Lang.Languages.FontStyleRegular) parts.Add(style);
+                if (stretch != FontMaker.Resources.Lang.Languages.FontStyleRegular) parts.Add(stretch);
 
-                return parts.Any() ? string.Join(", ", parts) : "常规";
+                return parts.Any() ? string.Join(", ", parts) : FontMaker.Resources.Lang.Languages.FontStyleRegular;
             }
         }
 
@@ -211,32 +211,32 @@ namespace FontMaker.ViewModels
             return weightValue switch
             {
                 // 细体
-                <= 100 => "极细",
-                <= 150 => "半特细",
-                <= 200 => "特细",
-                <= 250 => "超细",
-                <= 300 => "细体",
+                <= 100 => FontMaker.Resources.Lang.Languages.FontWeightThin,
+                <= 150 => FontMaker.Resources.Lang.Languages.FontWeightExtraLight,
+                <= 200 => FontMaker.Resources.Lang.Languages.FontWeightUltraLight,
+                <= 250 => FontMaker.Resources.Lang.Languages.FontWeightSemiLight,
+                <= 300 => FontMaker.Resources.Lang.Languages.FontWeightLight,
 
                 // 常规
-                350 => "半细",
-                400 => "常规",
-                450 => "半中等",
+                350 => FontMaker.Resources.Lang.Languages.FontWeightLight,
+                400 => FontMaker.Resources.Lang.Languages.FontStyleRegular,
+                450 => FontMaker.Resources.Lang.Languages.FontWeightMedium,
 
                 // 中等
-                500 => "中等",
-                550 => "半粗",
+                500 => FontMaker.Resources.Lang.Languages.FontWeightMedium,
+                550 => FontMaker.Resources.Lang.Languages.FontWeightSemiBold,
 
                 // 粗体
-                600 => "半粗",
-                650 => "中粗",
-                700 => "粗体",
+                600 => FontMaker.Resources.Lang.Languages.FontWeightSemiBold,
+                650 => FontMaker.Resources.Lang.Languages.FontWeightSemiBold,
+                700 => FontMaker.Resources.Lang.Languages.FontWeightBold,
 
                 // 特粗
-                750 => "特粗",
-                800 => "特粗",
-                850 => "超粗",
+                750 => FontMaker.Resources.Lang.Languages.FontWeightExtraBold,
+                800 => FontMaker.Resources.Lang.Languages.FontWeightExtraBold,
+                850 => FontMaker.Resources.Lang.Languages.FontWeightExtraBold,
                 // 极粗
-                900 => "极粗",
+                900 => FontMaker.Resources.Lang.Languages.FontWeightBlack,
 
                 _ => weight.ToString()
             };
@@ -245,36 +245,36 @@ namespace FontMaker.ViewModels
         private string GetStyleName(FontStyle style)
         {
             if (style == FontStyles.Normal)
-                return "常规";
+                return FontMaker.Resources.Lang.Languages.FontStyleRegular;
             if (style == FontStyles.Italic)
-                return "斜体";
+                return FontMaker.Resources.Lang.Languages.FontStyleItalic;
             if (style == FontStyles.Oblique)
-                return "倾斜体";
+                return FontMaker.Resources.Lang.Languages.FontStyleOblique;
             return style.ToString();
         }
 
         private string GetStretchName(FontStretch stretch)
         {
             if (stretch == FontStretches.UltraCondensed)
-                return "超紧缩";
+                return FontMaker.Resources.Lang.Languages.FontStretchUltraCondensed;
             if (stretch == FontStretches.ExtraCondensed)
-                return "特紧缩";
+                return FontMaker.Resources.Lang.Languages.FontStretchExtraCondensed;
             if (stretch == FontStretches.Condensed)
-                return "紧缩";
+                return FontMaker.Resources.Lang.Languages.FontStretchCondensed;
             if (stretch == FontStretches.SemiCondensed)
-                return "半紧缩";
+                return FontMaker.Resources.Lang.Languages.FontStretchSemiCondensed;
             if (stretch == FontStretches.Normal)
-                return "常规";
+                return FontMaker.Resources.Lang.Languages.FontStyleRegular;
             if (stretch == FontStretches.SemiExpanded)
-                return "半扩展";
+                return FontMaker.Resources.Lang.Languages.FontStretchSemiExpanded;
             if (stretch == FontStretches.Expanded)
-                return "扩展";
+                return FontMaker.Resources.Lang.Languages.FontStretchExpanded;
             if (stretch == FontStretches.ExtraExpanded)
-                return "特扩展";
+                return FontMaker.Resources.Lang.Languages.FontStretchExtraExpanded;
             if (stretch == FontStretches.UltraExpanded)
-                return "超扩展";
+                return FontMaker.Resources.Lang.Languages.FontStretchUltraExpanded;
             if (stretch == FontStretches.Medium)
-                return "中等";
+                return FontMaker.Resources.Lang.Languages.FontWeightMedium;
             return stretch.ToString();
         }
 
