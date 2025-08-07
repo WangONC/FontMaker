@@ -97,6 +97,15 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 位序 的本地化字符串。
+        /// </summary>
+        public static string BitOrder {
+            get {
+                return ResourceManager.GetString("BitOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 位序排列 的本地化字符串。
         /// </summary>
         public static string BitOrderLabel {
@@ -196,6 +205,15 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 未找到 的本地化字符串。
+        /// </summary>
+        public static string CharNotFound {
+            get {
+                return ResourceManager.GetString("CharNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 字符集 的本地化字符串。
         /// </summary>
         public static string CharSet {
@@ -237,6 +255,15 @@ namespace FontMaker.Resources.Lang {
         public static string CHeaderFileFilter {
             get {
                 return ResourceManager.GetString("CHeaderFileFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 检查字符是否存在 的本地化字符串。
+        /// </summary>
+        public static string CheckCharExists {
+            get {
+                return ResourceManager.GetString("CheckCharExists", resourceCulture);
             }
         }
         
@@ -291,6 +318,15 @@ namespace FontMaker.Resources.Lang {
         public static string CustomCharSet {
             get {
                 return ResourceManager.GetString("CustomCharSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 [{0}字节宽度] + [{0}字节高度] + [点阵数据] 的本地化字符串。
+        /// </summary>
+        public static string DataCompositionBreakdown {
+            get {
+                return ResourceManager.GetString("DataCompositionBreakdown", resourceCulture);
             }
         }
         
@@ -421,7 +457,25 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
-        ///   查找类似 直接使用 m_char_bits[index] 访问第index个字符的点阵数据 的本地化字符串。
+        ///   查找类似 根据最大高度 {0} 确定 的本地化字符串。
+        /// </summary>
+        public static string DeterminedByMaxHeight {
+            get {
+                return ResourceManager.GetString("DeterminedByMaxHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 根据最大宽度 {0} 确定 的本地化字符串。
+        /// </summary>
+        public static string DeterminedByMaxWidth {
+            get {
+                return ResourceManager.GetString("DeterminedByMaxWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 直接使用 CHAR_BITS[index] 访问第index个字符的点阵数据 的本地化字符串。
         /// </summary>
         public static string DirectCharAccess {
             get {
@@ -556,6 +610,15 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 提取点阵数据 的本地化字符串。
+        /// </summary>
+        public static string ExtractBitmapData {
+            get {
+                return ResourceManager.GetString("ExtractBitmapData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 快速滚动间隔(ms) 的本地化字符串。
         /// </summary>
         public static string FastScrollInterval {
@@ -570,6 +633,15 @@ namespace FontMaker.Resources.Lang {
         public static string FileFormatLabel {
             get {
                 return ResourceManager.GetString("FileFormatLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 当前文件由FontMaker生成 的本地化字符串。
+        /// </summary>
+        public static string FileGeneratedBy {
+            get {
+                return ResourceManager.GetString("FileGeneratedBy", resourceCulture);
             }
         }
         
@@ -606,6 +678,15 @@ namespace FontMaker.Resources.Lang {
         public static string FixedWidthDataStructure {
             get {
                 return ResourceManager.GetString("FixedWidthDataStructure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 固定宽度：直接返回字符数据 的本地化字符串。
+        /// </summary>
+        public static string FixedWidthDirectAccess {
+            get {
+                return ResourceManager.GetString("FixedWidthDirectAccess", resourceCulture);
             }
         }
         
@@ -853,6 +934,15 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 字体类型: True=等宽字体, False=变宽字体 的本地化字符串。
+        /// </summary>
+        public static string FontTypeMonospacePy {
+            get {
+                return ResourceManager.GetString("FontTypeMonospacePy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 极粗 的本地化字符串。
         /// </summary>
         public static string FontWeightBlack {
@@ -970,11 +1060,56 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 生成于 的本地化字符串。
+        /// </summary>
+        public static string Generated {
+            get {
+                return ResourceManager.GetString("Generated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 生成字库 的本地化字符串。
         /// </summary>
         public static string GenerateFontLibrary {
             get {
                 return ResourceManager.GetString("GenerateFontLibrary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 根据字符直接获取数据 的本地化字符串。
+        /// </summary>
+        public static string GetCharDataByChar {
+            get {
+                return ResourceManager.GetString("GetCharDataByChar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 根据索引获取字符数据 的本地化字符串。
+        /// </summary>
+        public static string GetCharDataByIndex {
+            get {
+                return ResourceManager.GetString("GetCharDataByIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 根据字符获取索引 的本地化字符串。
+        /// </summary>
+        public static string GetCharIndexByChar {
+            get {
+                return ResourceManager.GetString("GetCharIndexByChar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 根据字符获取字符信息 的本地化字符串。
+        /// </summary>
+        public static string GetCharInfoByChar {
+            get {
+                return ResourceManager.GetString("GetCharInfoByChar", resourceCulture);
             }
         }
         
@@ -1114,6 +1249,33 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 根据字符直接获取字符数据 的本地化字符串。
+        /// </summary>
+        public static string IndexAccessByChar {
+            get {
+                return ResourceManager.GetString("IndexAccessByChar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 根据索引获取字符数据 的本地化字符串。
+        /// </summary>
+        public static string IndexAccessByIndex {
+            get {
+                return ResourceManager.GetString("IndexAccessByIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 索引访问说明: 的本地化字符串。
+        /// </summary>
+        public static string IndexAccessDescription {
+            get {
+                return ResourceManager.GetString("IndexAccessDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 输入要预览的文本... 的本地化字符串。
         /// </summary>
         public static string InputPreviewText {
@@ -1164,6 +1326,15 @@ namespace FontMaker.Resources.Lang {
         public static string Japanese {
             get {
                 return ResourceManager.GetString("Japanese", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Java源文件 (*.java)|*.java 的本地化字符串。
+        /// </summary>
+        public static string JavaSourceFileFilter {
+            get {
+                return ResourceManager.GetString("JavaSourceFileFilter", resourceCulture);
             }
         }
         
@@ -1474,6 +1645,15 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 Python源文件 (*.py)|*.py 的本地化字符串。
+        /// </summary>
+        public static string PythonSourceFileFilter {
+            get {
+                return ResourceManager.GetString("PythonSourceFileFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 读取高度 (小端序) 的本地化字符串。
         /// </summary>
         public static string ReadHeightLittleEndian {
@@ -1551,6 +1731,24 @@ namespace FontMaker.Resources.Lang {
         public static string ScanMethod {
             get {
                 return ResourceManager.GetString("ScanMethod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 水平扫描 的本地化字符串。
+        /// </summary>
+        public static string ScanMethodHorizontal {
+            get {
+                return ResourceManager.GetString("ScanMethodHorizontal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 垂直扫描 的本地化字符串。
+        /// </summary>
+        public static string ScanMethodVertical {
+            get {
+                return ResourceManager.GetString("ScanMethodVertical", resourceCulture);
             }
         }
         
@@ -1753,11 +1951,29 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 使用get_char_info()获取解析后的字符信息 的本地化字符串。
+        /// </summary>
+        public static string UseCharInfoForParsing {
+            get {
+                return ResourceManager.GetString("UseCharInfoForParsing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 用户自定义 的本地化字符串。
         /// </summary>
         public static string UserDefined {
             get {
                 return ResourceManager.GetString("UserDefined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 可变宽度字符信息类 的本地化字符串。
+        /// </summary>
+        public static string VariableWidthCharInfoClass {
+            get {
+                return ResourceManager.GetString("VariableWidthCharInfoClass", resourceCulture);
             }
         }
         
@@ -1771,6 +1987,15 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 可变宽度字符读取辅助函数 的本地化字符串。
+        /// </summary>
+        public static string VariableWidthCharReadHelper_Duplicate_1_ {
+            get {
+                return ResourceManager.GetString("VariableWidthCharReadHelper_Duplicate[1]", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 可变宽度数据结构说明: 的本地化字符串。
         /// </summary>
         public static string VariableWidthDataStructure {
@@ -1780,11 +2005,29 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 可变宽度字体专用：根据字符获取解析后的字符信息 的本地化字符串。
+        /// </summary>
+        public static string VariableWidthExclusiveAccess {
+            get {
+                return ResourceManager.GetString("VariableWidthExclusiveAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 可变宽度 的本地化字符串。
         /// </summary>
         public static string VariableWidthLabel {
             get {
                 return ResourceManager.GetString("VariableWidthLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 可变宽度：返回原始数据块（包含宽高信息） 的本地化字符串。
+        /// </summary>
+        public static string VariableWidthRawAccess {
+            get {
+                return ResourceManager.GetString("VariableWidthRawAccess", resourceCulture);
             }
         }
         
@@ -1839,6 +2082,33 @@ namespace FontMaker.Resources.Lang {
         public static string WidthBytesCount {
             get {
                 return ResourceManager.GetString("WidthBytesCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 宽度模式 的本地化字符串。
+        /// </summary>
+        public static string WidthMode {
+            get {
+                return ResourceManager.GetString("WidthMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 固定宽度 的本地化字符串。
+        /// </summary>
+        public static string WidthModeFixed {
+            get {
+                return ResourceManager.GetString("WidthModeFixed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 可变宽度 的本地化字符串。
+        /// </summary>
+        public static string WidthModeVariable {
+            get {
+                return ResourceManager.GetString("WidthModeVariable", resourceCulture);
             }
         }
         

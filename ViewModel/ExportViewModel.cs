@@ -49,6 +49,8 @@ namespace FontMaker.ViewModel
             }
 
             AvailableFormats.Add("C (.c/.h)");
+            AvailableFormats.Add("Java (.java)");
+            AvailableFormats.Add("Python (.py)");
             AvailableFormats.Add("BIN (.bin)");
             AvailableFormats.Add("TXT (.txt)");
             AvailableFormats.Add("JSON (.json)");
@@ -63,6 +65,8 @@ namespace FontMaker.ViewModel
         private void InitializeExportHandlers()
         {
             _exportHandlers["C (.c/.h)"] = ExportToCFile;
+            _exportHandlers["Java (.java)"] = ExportToJavaFile;
+            _exportHandlers["Python (.py)"] = ExportToPythonFile;
             _exportHandlers["BIN (.bin)"] = ExportToBinFile;
             _exportHandlers["TXT (.txt)"] = ExportToTXTFile;
             _exportHandlers["JSON (.json)"] = ExportToJSONFile;
@@ -130,6 +134,56 @@ namespace FontMaker.ViewModel
                 return false;
 
             var exporter = new FontMaker.Exporters.CExporter(outputPath);
+            return exporter.Export(fontData, fontName);
+        }
+
+        private bool ExportToJavaFile(FontBitmapData fontData, string fontName, string charsetName, BitmapFontRenderer fontRenderer, CharsetManager charsetManager, string? exportPath)
+        {
+            // 使用Config的文件名模板
+            string defaultFileName = Config.ReplaceFileNameVariables(
+                Config.DefaultExportFileName,
+                fontName: fontName,
+                charsetName: charsetName,
+                fontSize: fontRenderer.FontSize,
+                width: fontRenderer.Width,
+                height: fontRenderer.Height,
+                bitsPerPixel: fontRenderer.BitsPerPixel,
+                isHorizontalScan: fontRenderer.IsHorizontalScan,
+                isHighBitFirst: fontRenderer.IsHighBitFirst,
+                isFixedWidth: fontRenderer.IsFixedWidth,
+                charCount: charsetManager.CharCount
+            ) + ".java";
+
+            string outputPath = exportPath ?? FileUtils.GetSaveFilePath(FontMaker.Resources.Lang.Languages.JavaSourceFileFilter, defaultFileName);
+            if (string.IsNullOrEmpty(outputPath))
+                return false;
+
+            var exporter = new FontMaker.Exporters.JavaExporter(outputPath);
+            return exporter.Export(fontData, fontName);
+        }
+
+        private bool ExportToPythonFile(FontBitmapData fontData, string fontName, string charsetName, BitmapFontRenderer fontRenderer, CharsetManager charsetManager, string? exportPath)
+        {
+            // 使用Config的文件名模板
+            string defaultFileName = Config.ReplaceFileNameVariables(
+                Config.DefaultExportFileName,
+                fontName: fontName,
+                charsetName: charsetName,
+                fontSize: fontRenderer.FontSize,
+                width: fontRenderer.Width,
+                height: fontRenderer.Height,
+                bitsPerPixel: fontRenderer.BitsPerPixel,
+                isHorizontalScan: fontRenderer.IsHorizontalScan,
+                isHighBitFirst: fontRenderer.IsHighBitFirst,
+                isFixedWidth: fontRenderer.IsFixedWidth,
+                charCount: charsetManager.CharCount
+            ) + ".py";
+
+            string outputPath = exportPath ?? FileUtils.GetSaveFilePath(FontMaker.Resources.Lang.Languages.PythonSourceFileFilter, defaultFileName);
+            if (string.IsNullOrEmpty(outputPath))
+                return false;
+
+            var exporter = new FontMaker.Exporters.PythonExporter(outputPath);
             return exporter.Export(fontData, fontName);
         }
         

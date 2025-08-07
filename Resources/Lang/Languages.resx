@@ -586,6 +586,9 @@
   <data name="ArduinoFileFilter" xml:space="preserve">
     <value>Arduino文件 (*.ino)|*.ino</value>
   </data>
+  <data name="JavaSourceFileFilter" xml:space="preserve">
+    <value>Java源文件 (*.java)|*.java</value>
+  </data>
   <data name="LoadFontVariantError" xml:space="preserve">
     <value>加载字体变体失败: {0}</value>
   </data>
@@ -725,6 +728,93 @@
     <value>每个字符占用固定字节数，无需额外的宽高信息</value>
   </data>
   <data name="DirectCharAccess" xml:space="preserve">
-    <value>直接使用 m_char_bits[index] 访问第index个字符的点阵数据</value>
+    <value>直接使用 CHAR_BITS[index] 访问第index个字符的点阵数据</value>
+  </data>
+  <data name="GetCharDataByIndex" xml:space="preserve">
+    <value>根据索引获取字符数据</value>
+  </data>
+  <data name="GetCharIndexByChar" xml:space="preserve">
+    <value>根据字符获取索引</value>
+  </data>
+  <data name="GetCharDataByChar" xml:space="preserve">
+    <value>根据字符直接获取数据</value>
+  </data>
+  <data name="CharNotFound" xml:space="preserve">
+    <value>未找到</value>
+  </data>
+  <data name="CheckCharExists" xml:space="preserve">
+    <value>检查字符是否存在</value>
+  </data>
+  <data name="GetCharInfoByChar" xml:space="preserve">
+    <value>根据字符获取字符信息</value>
+  </data>
+  <data name="IndexAccessDescription" xml:space="preserve">
+    <value>索引访问说明:</value>
+  </data>
+  <data name="IndexAccessByIndex" xml:space="preserve">
+    <value>根据索引获取字符数据</value>
+  </data>
+  <data name="IndexAccessByChar" xml:space="preserve">
+    <value>根据字符直接获取字符数据</value>
+  </data>
+  <data name="FixedWidthDirectAccess" xml:space="preserve">
+    <value>固定宽度：直接返回字符数据</value>
+  </data>
+  <data name="VariableWidthRawAccess" xml:space="preserve">
+    <value>可变宽度：返回原始数据块（包含宽高信息）</value>
+  </data>
+  <data name="UseCharInfoForParsing" xml:space="preserve">
+    <value>使用get_char_info()获取解析后的字符信息</value>
+  </data>
+  <data name="VariableWidthExclusiveAccess" xml:space="preserve">
+    <value>可变宽度字体专用：根据字符获取解析后的字符信息</value>
+  </data>
+  <data name="PythonSourceFileFilter" xml:space="preserve">
+    <value>Python源文件 (*.py)|*.py</value>
+  </data>
+  <data name="ScanMethodHorizontal" xml:space="preserve">
+    <value>水平扫描</value>
+  </data>
+  <data name="ScanMethodVertical" xml:space="preserve">
+    <value>垂直扫描</value>
+  </data>
+  <data name="WidthModeFixed" xml:space="preserve">
+    <value>固定宽度</value>
+  </data>
+  <data name="WidthModeVariable" xml:space="preserve">
+    <value>可变宽度</value>
+  </data>
+  <data name="VariableWidthCharInfoClass" xml:space="preserve">
+    <value>可变宽度字符信息类</value>
+  </data>
+  <data name="VariableWidthCharReadHelper_Duplicate[1]" xml:space="preserve">
+    <value>可变宽度字符读取辅助函数</value>
+  </data>
+  <data name="ExtractBitmapData" xml:space="preserve">
+    <value>提取点阵数据</value>
+  </data>
+  <data name="BitOrder" xml:space="preserve">
+    <value>位序</value>
+  </data>
+  <data name="WidthMode" xml:space="preserve">
+    <value>宽度模式</value>
+  </data>
+  <data name="FileGeneratedBy" xml:space="preserve">
+    <value>当前文件由FontMaker生成</value>
+  </data>
+  <data name="Generated" xml:space="preserve">
+    <value>生成于</value>
+  </data>
+  <data name="DeterminedByMaxWidth" xml:space="preserve">
+    <value>根据最大宽度 {0} 确定</value>
+  </data>
+  <data name="DeterminedByMaxHeight" xml:space="preserve">
+    <value>根据最大高度 {0} 确定</value>
+  </data>
+  <data name="DataCompositionBreakdown" xml:space="preserve">
+    <value>[{0}字节宽度] + [{0}字节高度] + [点阵数据]</value>
+  </data>
+  <data name="FontTypeMonospacePy" xml:space="preserve">
+    <value>字体类型: True=等宽字体, False=变宽字体</value>
   </data>
 </root>
