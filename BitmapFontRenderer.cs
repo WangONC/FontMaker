@@ -122,6 +122,15 @@ namespace FontMaker
         /// <returns>预览图像</returns>
         public BitmapSource RenderCharacterPreview(char character)
         {
+            // 检查字符是否被当前字体支持
+            if (!_renderer.IsSupportedByFont(character))
+            {
+                // 如果字体不支持该字符，返回空白画布
+                _renderer.HorizontalOffset = HorizontalOffset;
+                _renderer.VerticalOffset = VerticalOffset;
+                return _renderer.RenderEmptyCanvas();
+            }
+            
             _renderer.HorizontalOffset = HorizontalOffset;
             _renderer.VerticalOffset = VerticalOffset;
             return _renderer.RenderCharacterWithGrayLevel(character, BitsPerPixel);
@@ -136,6 +145,22 @@ namespace FontMaker
         {
             _renderer.HorizontalOffset = HorizontalOffset;
             _renderer.VerticalOffset = VerticalOffset;
+
+            // 检查字符是否被当前字体支持
+            if (!_renderer.IsSupportedByFont(character))
+            {
+                // 如果字体不支持该字符，返回空白结果
+                var emptyImage = _renderer.RenderEmptyCanvas();
+                return new CharacterRenderResult
+                {
+                    Character = character,
+                    PreviewImage = emptyImage,
+                    PixelData = new byte[(Width * Height * BitsPerPixel + 7) / 8], // 全0数据
+                    ActualWidth = 1,
+                    CanvasWidth = Width,
+                    CanvasHeight = Height
+                };
+            }
 
             var previewImage = _renderer.RenderCharacter(character);
             var pixelData = _renderer.GetCharacterPixelData(character, BitsPerPixel);
@@ -158,7 +183,9 @@ namespace FontMaker
                 PreviewImage = previewImage,
                 PixelData = pixelData,
                 ActualWidth = actualWidth,
-                Character = character
+                Character = character,
+                CanvasWidth = Width,
+                CanvasHeight = Height
             };
         }
 
@@ -252,10 +279,13 @@ namespace FontMaker
                 
                 if (IsFixedWidth)
                 {
-                    // 固定宽度模式：使用原始画布数据和尺寸
+                    // 固定宽度模式：使用原始画布数据和尺寸（不裁剪）
                     dataToProcess = _renderer.GetCharacterPixelData(character, BitsPerPixel);
                     dataWidth = Width;
                     dataHeight = Height;
+                    // 更新实际尺寸为画布尺寸
+                    charResult.ActualWidth = Width;
+                    charResult.ActualHeight = Height;
                 }
                 else
                 {
@@ -267,8 +297,8 @@ namespace FontMaker
 
                 // 处理扫描方式
                 var processedData = IsHorizontalScan ? dataToProcess : ConvertToVerticalScan(dataToProcess, dataWidth, dataHeight, BitsPerPixel);
-                
-                // 处理位序（修正逻辑：让界面描述与实际行为一致）
+
+                // 处理位序
                 if (IsHighBitFirst)
                 {
                     // 从左到右：需要反转默认的MSB存储格式
@@ -278,6 +308,7 @@ namespace FontMaker
 
                 // 转换为BitArray
                 charResult.BitmapData = new BitArray(processedData.Length * 8);
+                
                 for (int i = 0; i < processedData.Length; i++)
                 {
                     for (int bit = 0; bit < 8; bit++)
@@ -316,10 +347,18 @@ namespace FontMaker
         private (byte[] trimmedData, int width, int height) TrimEmptyEdges(byte[] data, int originalWidth, int originalHeight, int bitsPerPixel)
         {
             if (data == null || data.Length == 0)
-                return (data, originalWidth, originalHeight);
+                return (data ?? new byte[1], 1, 1);
 
             int pixelsPerByte = 8 / bitsPerPixel;
-            int bytesPerRow = (originalWidth + pixelsPerByte - 1) / pixelsPerByte;
+            int totalPixels = originalWidth * originalHeight;
+            int totalBits = totalPixels * bitsPerPixel;
+            int expectedBytes = (totalBits + 7) / 8;
+            
+            // 如果数据长度不足，返回最小尺寸
+            if (data.Length < expectedBytes)
+            {
+                return (new byte[1], 1, 1);
+            }
 
             // 找到内容边界
             int topBound = -1, bottomBound = -1, leftBound = originalWidth, rightBound = -1;
@@ -328,14 +367,22 @@ namespace FontMaker
             for (int y = 0; y < originalHeight; y++)
             {
                 bool hasContent = false;
-                int rowStart = y * bytesPerRow;
                 
-                for (int byteIdx = 0; byteIdx < bytesPerRow; byteIdx++)
+                for (int x = 0; x < originalWidth; x++)
                 {
-                    if (rowStart + byteIdx < data.Length && data[rowStart + byteIdx] != 0)
+                    int pixelIndex = y * originalWidth + x;
+                    int bitIndex = pixelIndex * bitsPerPixel;
+                    int byteIndex = bitIndex / 8;
+                    int bitOffset = bitIndex % 8;
+                    
+                    if (byteIndex < data.Length)
                     {
-                        hasContent = true;
-                        break;
+                        int mask = ((1 << bitsPerPixel) - 1) << (8 - bitOffset - bitsPerPixel);
+                        if ((data[byteIndex] & mask) != 0)
+                        {
+                            hasContent = true;
+                            break;
+                        }
                     }
                 }
 
@@ -360,8 +407,9 @@ namespace FontMaker
                 for (int y = topBound; y <= bottomBound; y++)
                 {
                     int pixelIndex = y * originalWidth + x;
-                    int byteIndex = pixelIndex / pixelsPerByte;
-                    int bitOffset = (pixelIndex % pixelsPerByte) * bitsPerPixel;
+                    int bitIndex = pixelIndex * bitsPerPixel;
+                    int byteIndex = bitIndex / 8;
+                    int bitOffset = bitIndex % 8;
                     
                     if (byteIndex < data.Length)
                     {
@@ -376,42 +424,57 @@ namespace FontMaker
 
                 if (hasContent)
                 {
-                    leftBound = Math.Min(leftBound, x);
-                    rightBound = Math.Max(rightBound, x);
+                    if (leftBound == originalWidth) leftBound = x; // 第一次找到，设为左边界
+                    rightBound = x; // 最后一次找到，更新为右边界
                 }
+            }
+
+            // 如果没找到左右边界，说明没有内容
+            if (rightBound == -1)
+            {
+                return (new byte[1], 1, 1);
             }
 
             // 计算裁剪后的尺寸
             int newWidth = rightBound - leftBound + 1;
             int newHeight = bottomBound - topBound + 1;
-            int newBytesPerRow = (newWidth + pixelsPerByte - 1) / pixelsPerByte;
-
-            // 提取裁剪后的数据
-            byte[] trimmedData = new byte[newBytesPerRow * newHeight];
+            int newTotalPixels = newWidth * newHeight;
+            int newTotalBits = newTotalPixels * bitsPerPixel;
+            int newTotalBytes = (newTotalBits + 7) / 8;
             
-            for (int y = 0; y < newHeight; y++)
+            // 提取裁剪后的数据
+            byte[] trimmedData = new byte[newTotalBytes];
+            
+            // 逐像素复制裁剪后的数据
+            for (int dstPixelIndex = 0; dstPixelIndex < newTotalPixels; dstPixelIndex++)
             {
-                int srcRowStart = (topBound + y) * bytesPerRow;
-                int dstRowStart = y * newBytesPerRow;
+                int newY = dstPixelIndex / newWidth;
+                int newX = dstPixelIndex % newWidth;
+                int srcY = topBound + newY;
+                int srcX = leftBound + newX;
                 
-                // 按像素复制数据
-                for (int x = 0; x < newWidth; x++)
+                // 源像素位置
+                int srcPixelIndex = srcY * originalWidth + srcX;
+                int srcBitIndex = srcPixelIndex * bitsPerPixel;
+                int srcByteIndex = srcBitIndex / 8;
+                int srcBitOffset = srcBitIndex % 8;
+                
+                // 目标像素位置
+                int dstBitIndex = dstPixelIndex * bitsPerPixel;
+                int dstByteIndex = dstBitIndex / 8;
+                int dstBitOffset = dstBitIndex % 8;
+                
+                // 确保索引有效
+                if (srcByteIndex < data.Length && dstByteIndex < trimmedData.Length)
                 {
-                    int srcPixelIndex = (topBound + y) * originalWidth + (leftBound + x);
-                    int srcByteIndex = srcPixelIndex / pixelsPerByte;
-                    int srcBitOffset = (srcPixelIndex % pixelsPerByte) * bitsPerPixel;
+                    // 提取源像素值
+                    int srcMask = ((1 << bitsPerPixel) - 1) << (8 - srcBitOffset - bitsPerPixel);
+                    int pixelValue = (data[srcByteIndex] & srcMask) >> (8 - srcBitOffset - bitsPerPixel);
                     
-                    int dstPixelIndex = y * newWidth + x;
-                    int dstByteIndex = dstPixelIndex / pixelsPerByte;
-                    int dstBitOffset = (dstPixelIndex % pixelsPerByte) * bitsPerPixel;
-                    
-                    if (srcByteIndex < data.Length && dstRowStart + dstByteIndex < trimmedData.Length)
-                    {
-                        int mask = ((1 << bitsPerPixel) - 1) << (8 - srcBitOffset - bitsPerPixel);
-                        int pixelValue = (data[srcByteIndex] & mask) >> (8 - srcBitOffset - bitsPerPixel);
-                        
-                        trimmedData[dstRowStart + dstByteIndex] |= (byte)(pixelValue << (8 - dstBitOffset - bitsPerPixel));
-                    }
+                    // 清除目标位置并设置新值
+                    int dstMask = ((1 << bitsPerPixel) - 1) << (8 - dstBitOffset - bitsPerPixel);
+                    trimmedData[dstByteIndex] &= (byte)~dstMask; // 清除目标位
+                    trimmedData[dstByteIndex] |= (byte)(pixelValue << (8 - dstBitOffset - bitsPerPixel));
                 }
             }
 

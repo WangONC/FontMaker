@@ -184,25 +184,41 @@ namespace FontMaker.Exporters
             sb.AppendLine("\";");
             sb.AppendLine();
 
-            // 计算每个字符的字节数
-            int bytesPerChar = CalculateBytesPerChar(metadata);
-
-            // 字符点阵数据二维数组
-            sb.AppendLine($"    private static final byte[][] CHAR_BITS = {{");
+            // 字符点阵数据数组
+            sb.AppendLine("    private static final byte[][] CHAR_BITS = {");
 
             for (int i = 0; i < charCount; i++)
             {
                 var charInfo = characters[i];
                 char ch = charInfo.Character;
-                byte[] pixelData = GetCharacterBytes(charInfo, bytesPerChar);
+                byte[] pixelData;
+                
+                if (metadata.IsFixedWidth)
+                {
+                    // 固定宽度模式：使用固定大小
+                    int bytesPerChar = CalculateBytesPerChar(metadata);
+                    pixelData = GetCharacterBytes(charInfo, bytesPerChar);
+                }
+                else
+                {
+                    // 可变宽度模式：使用实际大小（包含宽高信息）
+                    pixelData = charInfo.GetCompleteData();
+                }
 
                 // 字符注释
                 string charDesc = GetCharacterDescription(ch);
-                sb.AppendLine($"        // U+{(int)ch:X4}({charDesc})");
+                if (metadata.IsFixedWidth)
+                {
+                    sb.AppendLine($"        // U+{(int)ch:X4}({charDesc})");
+                }
+                else
+                {
+                    sb.AppendLine($"        // U+{(int)ch:X4}({charDesc}) - {charInfo.ActualWidth}x{charInfo.ActualHeight}");
+                }
 
                 // 生成字节数组
                 sb.Append("        { ");
-                for (int j = 0; j < bytesPerChar; j++)
+                for (int j = 0; j < pixelData.Length; j++)
                 {
                     if (j > 0)
                     {
@@ -327,8 +343,19 @@ namespace FontMaker.Exporters
         /// </summary>
         private int CalculateBytesPerChar(FontMetadata metadata)
         {
-            int totalBits = metadata.MaxCharacterWidth * metadata.MaxCharacterHeight * metadata.BitsPerPixel;
-            return (totalBits + 7) / 8; // 向上取整到字节边界
+            if (metadata.IsFixedWidth)
+            {
+                // 固定宽度模式：仅包含点阵数据
+                int totalBits = metadata.MaxCharacterWidth * metadata.MaxCharacterHeight * metadata.BitsPerPixel;
+                return (totalBits + 7) / 8; // 向上取整到字节边界
+            }
+            else
+            {
+                // 可变宽度模式：最大可能的字节数（包含宽高信息）
+                int maxBitmapBits = metadata.MaxCharacterWidth * metadata.MaxCharacterHeight * metadata.BitsPerPixel;
+                int maxBitmapBytes = (maxBitmapBits + 7) / 8;
+                return metadata.WidthBytesCount + metadata.HeightBytesCount + maxBitmapBytes;
+            }
         }
 
         /// <summary>
@@ -336,12 +363,23 @@ namespace FontMaker.Exporters
         /// </summary>
         private byte[] GetCharacterBytes(CharacterBitmapResult charInfo, int requiredBytes)
         {
-            byte[] sourceData = charInfo.GetBitmapBytes();
             byte[] result = new byte[requiredBytes];
-
-            int copyLength = Math.Min(sourceData.Length, requiredBytes);
-            Array.Copy(sourceData, 0, result, 0, copyLength);
-
+            
+            if (charInfo.WidthBytes.Length > 0 && charInfo.HeightBytes.Length > 0)
+            {
+                // 可变宽度模式：包含宽高信息 + 点阵数据
+                byte[] completeData = charInfo.GetCompleteData();
+                int copyLength = Math.Min(completeData.Length, requiredBytes);
+                Array.Copy(completeData, 0, result, 0, copyLength);
+            }
+            else
+            {
+                // 固定宽度模式：仅包含点阵数据
+                byte[] sourceData = charInfo.GetBitmapBytes();
+                int copyLength = Math.Min(sourceData.Length, requiredBytes);
+                Array.Copy(sourceData, 0, result, 0, copyLength);
+            }
+            
             return result;
         }
 

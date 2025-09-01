@@ -14,11 +14,11 @@ namespace FontMaker
     /// </summary>
     public class CharacterRenderer : IDisposable
     {
-        private Graphics _graphics;
-        private Bitmap _bitmap;
-        private System.Drawing.Font _font;
-        private SolidBrush _textBrush;
-        private SolidBrush _backgroundBrush;
+        private Graphics _graphics = null!;
+        private Bitmap _bitmap = null!;
+        private System.Drawing.Font _font = null!;
+        private SolidBrush _textBrush = null!;
+        private SolidBrush _backgroundBrush = null!;
         private readonly object _lockObject = new object();
         private FontUtils? _fontUtils; // 用于检查字符支持的工具类
 
@@ -123,13 +123,7 @@ namespace FontMaker
                 // 清除背景
                 _graphics.Clear(Color.Black);
 
-                // 检查字体是否支持该字符
-                if (!IsSupportedByFont(character))
-                {
-                    // 字体不支持该字符，返回空白位图
-                    return ConvertToBitmapSource(_bitmap);
-                }
-
+                // 始终尝试渲染字符，让字符支持性检查在更高层处理
                 // 测量字符尺寸
                 SizeF charSize = _graphics.MeasureString(character.ToString(), _font);
                 
@@ -158,12 +152,7 @@ namespace FontMaker
                 // 清除背景
                 _graphics.Clear(Color.Black);
 
-                // 检查字体是否支持该字符
-                if (!IsSupportedByFont(character))
-                {
-                    // 字体不支持该字符，返回空白位图
-                    return ConvertToBitmapSource(_bitmap);
-                }
+                // 始终渲染字符，让字符支持性检查在更高层处理
 
                 // 对于灰度渲染，启用抗锯齿以产生灰度像素
                 bool useAntiAlias = bitsPerPixel > 1;
@@ -197,6 +186,22 @@ namespace FontMaker
 
                 // 应用灰度级别处理
                 return ApplyGrayLevelToBitmap(_bitmap, bitsPerPixel);
+            }
+        }
+
+        /// <summary>
+        /// 渲染空白画布
+        /// </summary>
+        /// <returns>空白位图</returns>
+        public BitmapSource RenderEmptyCanvas()
+        {
+            lock (_lockObject)
+            {
+                // 清除背景（显示为空白）
+                _graphics.Clear(Color.Black);
+                
+                // 直接返回空白位图
+                return ConvertToBitmapSource(_bitmap);
             }
         }
 
@@ -287,15 +292,18 @@ namespace FontMaker
             int stride = bitmapData.Stride;
             IntPtr scan0 = bitmapData.Scan0;
             
-            // 计算输出数据大小
-            int pixelsPerByte = 8 / bitsPerPixel;
-            int bytesPerRow = (Width + pixelsPerByte - 1) / pixelsPerByte;
-            byte[] pixelData = new byte[bytesPerRow * Height];
+            // 计算输出数据大小 - 紧密打包，不按行对齐
+            int totalPixels = Width * Height;
+            int totalBits = totalPixels * bitsPerPixel;
+            int totalBytes = (totalBits + 7) / 8;
+            byte[] pixelData = new byte[totalBytes];
 
             int maxGrayValue = (1 << bitsPerPixel) - 1;
 
             // 使用Marshal.Copy来安全地读取像素数据
             byte[] scanlineData = new byte[stride];
+            int pixelsPerByte = 8 / bitsPerPixel;
+            int currentPixelIndex = 0;
             
             for (int y = 0; y < Height; y++)
             {
@@ -318,11 +326,19 @@ namespace FontMaker
                         // 量化到指定位深度
                         int quantizedGray = (gray * maxGrayValue) / 255;
 
-                        // 打包到输出数组
-                        int byteIndex = y * bytesPerRow + x / pixelsPerByte;
-                        int bitOffset = (x % pixelsPerByte) * bitsPerPixel;
+                        // 紧密打包到输出数组
+                        if (currentPixelIndex < totalPixels)
+                        {
+                            int byteIndex = currentPixelIndex / pixelsPerByte;
+                            int bitOffset = (currentPixelIndex % pixelsPerByte) * bitsPerPixel;
+                            
+                            if (byteIndex < pixelData.Length)
+                            {
+                                pixelData[byteIndex] |= (byte)(quantizedGray << (8 - bitOffset - bitsPerPixel));
+                            }
+                        }
                         
-                        pixelData[byteIndex] |= (byte)(quantizedGray << (8 - bitOffset - bitsPerPixel));
+                        currentPixelIndex++;
                     }
                 }
             }
@@ -443,9 +459,11 @@ namespace FontMaker
     /// </summary>
     public class CharacterRenderResult
     {
-        public BitmapSource PreviewImage { get; set; }
-        public byte[] PixelData { get; set; }
+        public BitmapSource PreviewImage { get; set; } = null!;
+        public byte[] PixelData { get; set; } = null!;
         public int ActualWidth { get; set; }
         public char Character { get; set; }
+        public int CanvasWidth { get; set; }
+        public int CanvasHeight { get; set; }
     }
 }
