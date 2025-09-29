@@ -114,7 +114,7 @@ namespace FontMaker.Exporters
                 GenerateReadBytesCode(sb, "info.height", metadata.HeightBytesCount);
                 sb.AppendLine("    ");
                 sb.AppendLine($"    // {FontMaker.Resources.Lang.Languages.BitmapDataStartPosition}");
-                sb.AppendLine($"    info.data = ptr + {metadata.WidthBytesCount + metadata.HeightBytesCount};");
+                sb.AppendLine($"    info.data = ptr;");
                 sb.AppendLine("    ");
                 sb.AppendLine("    return info;");
                 sb.AppendLine("}");
