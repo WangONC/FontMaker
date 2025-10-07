@@ -53,6 +53,23 @@ namespace FontMaker.Exporters
 
             // 获取类名（从文件路径中提取，去除扩展名）
             string className = Path.GetFileNameWithoutExtension(_filePath);
+            // 移除空格和其他非法字符，确保符合Java类名规范
+            if (!string.IsNullOrEmpty(className))
+            {
+                // 移除所有空格
+                className = className.Replace(" ", "");
+                // 移除其他非法字符，只保留字母、数字和下划线
+                var sb1 = new StringBuilder();
+                foreach (char c in className)
+                {
+                    if (char.IsLetterOrDigit(c) || c == '_')
+                    {
+                        sb1.Append(c);
+                    }
+                }
+                className = sb1.ToString();
+            }
+            // 如果处理后为空或不以字母开头，使用默认名称
             if (string.IsNullOrEmpty(className) || !char.IsLetter(className[0]))
             {
                 className = "BitmapFont";
