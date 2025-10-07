@@ -1294,6 +1294,15 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 内部辅助方法：根据索引获取原始字符数据 的本地化字符串。
+        /// </summary>
+        public static string InternalHelperGetRawCharData {
+            get {
+                return ResourceManager.GetString("InternalHelperGetRawCharData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 无效的字符集文件或已存在同名字符集 的本地化字符串。
         /// </summary>
         public static string InvalidCharSetOrExists {
@@ -1326,6 +1335,33 @@ namespace FontMaker.Resources.Lang {
         public static string Japanese {
             get {
                 return ResourceManager.GetString("Japanese", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 本文件包含 {0} 个字符，分割到多个内部类中 的本地化字符串。
+        /// </summary>
+        public static string JavaFileContainsChars {
+            get {
+                return ResourceManager.GetString("JavaFileContainsChars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 主类位于文件末尾 的本地化字符串。
+        /// </summary>
+        public static string JavaMainClassLocation {
+            get {
+                return ResourceManager.GetString("JavaMainClassLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 主类名称 的本地化字符串。
+        /// </summary>
+        public static string JavaMainClassName {
+            get {
+                return ResourceManager.GetString("JavaMainClassName", resourceCulture);
             }
         }
         

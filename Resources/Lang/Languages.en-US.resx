@@ -817,4 +817,16 @@
   <data name="DeterminedByMaxWidth" xml:space="preserve">
     <value>Determined by maximum width {0}</value>
   </data>
+  <data name="InternalHelperGetRawCharData" xml:space="preserve">
+    <value>Internal helper method: Get raw character data by index</value>
+  </data>
+  <data name="JavaMainClassName" xml:space="preserve">
+    <value>Main Class Name</value>
+  </data>
+  <data name="JavaMainClassLocation" xml:space="preserve">
+    <value>The main public class is located at the end of this file</value>
+  </data>
+  <data name="JavaFileContainsChars" xml:space="preserve">
+    <value>This file contains {0} characters split into multiple internal classes</value>
+  </data>
 </root>

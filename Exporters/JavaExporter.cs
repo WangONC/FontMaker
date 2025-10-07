@@ -75,6 +75,19 @@ namespace FontMaker.Exporters
                 className = "BitmapFont";
             }
 
+            // 文件顶部说明注释
+            var headerSb = new StringBuilder();
+            headerSb.AppendLine("/**");
+            headerSb.AppendLine($" * {FontMaker.Resources.Lang.Languages.FileGeneratedBy}");
+            headerSb.AppendLine(" * GitHub: https://github.com/WangONC/FontMaker");
+            headerSb.AppendLine($" * {FontMaker.Resources.Lang.Languages.Generated}: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+            headerSb.AppendLine(" * ");
+            headerSb.AppendLine($" * ====== {FontMaker.Resources.Lang.Languages.JavaMainClassName}: {className} ======");
+            headerSb.AppendLine($" * {FontMaker.Resources.Lang.Languages.JavaMainClassLocation}");
+            headerSb.AppendLine($" * {string.Format(FontMaker.Resources.Lang.Languages.JavaFileContainsChars, charCount)}");
+            headerSb.AppendLine(" */");
+            headerSb.AppendLine();
+
             // 文件头注释
             sb.AppendLine("/**");
             sb.AppendLine($" * {FontMaker.Resources.Lang.Languages.FileGeneratedBy}");
@@ -146,11 +159,11 @@ namespace FontMaker.Exporters
                 // 添加读取辅助方法
                 sb.AppendLine($"   // {FontMaker.Resources.Lang.Languages.GetCharInfoFromTable}");
                 sb.AppendLine("    public static CharInfo get_char_info(int index) {");
-                sb.AppendLine("        if (index < 0 || index >= FONT_CHAR_COUNT) {");
+                sb.AppendLine("        byte[] charData = get_raw_char_bits(index);");
+                sb.AppendLine("        if (charData == null) {");
                 sb.AppendLine("            return null;");
                 sb.AppendLine("        }");
                 sb.AppendLine("        ");
-                sb.AppendLine("        byte[] charData = CHAR_BITS[index];");
                 sb.AppendLine("        int ptr = 0;");
                 sb.AppendLine("        ");
                 sb.AppendLine($"        // {FontMaker.Resources.Lang.Languages.ReadWidthLittleEndian}");
@@ -180,113 +193,154 @@ namespace FontMaker.Exporters
                 sb.AppendLine();
             }
 
-            // 字符映射表
-            sb.Append("    private static final String CHAR_TABLE = \"");
-            foreach (var charInfo in characters)
+            // 生成包级私有类来分段存储数据，避免单个类代码过大
+            const int CHARS_PER_CLASS = 100;
+            int classCount = (charCount + CHARS_PER_CLASS - 1) / CHARS_PER_CLASS;
+
+            // 在主类之前生成数据存储类
+            var dataClassesSb = new StringBuilder();
+            for (int classIndex = 0; classIndex < classCount; classIndex++)
             {
-                char ch = charInfo.Character;
-                // 转换为Java字符串表示
-                if (ch == '"') sb.Append("\\\"");
-                else if (ch == '\\') sb.Append("\\\\");
-                else if (ch == '\n') sb.Append("\\n");
-                else if (ch == '\r') sb.Append("\\r");
-                else if (ch == '\t') sb.Append("\\t");
-                else if (ch >= 32 && ch <= 126) sb.Append(ch);
-                else
-                {
-                    // 对于不可显示字符，使用Unicode转义
-                    sb.Append($"\\u{(int)ch:X4}");
-                }
-            }
-            sb.AppendLine("\";");
-            sb.AppendLine();
+                int startIdx = classIndex * CHARS_PER_CLASS;
+                int endIdx = Math.Min(startIdx + CHARS_PER_CLASS, charCount);
+                int charsInClass = endIdx - startIdx;
 
-            // 字符点阵数据数组
-            sb.AppendLine("    private static final byte[][] CHAR_BITS = {");
+                dataClassesSb.AppendLine($"// 包级私有类：存储字符 {startIdx} 到 {endIdx - 1} 的数据");
+                dataClassesSb.AppendLine($"class CharData{classIndex} {{");
+                dataClassesSb.AppendLine();
 
-            for (int i = 0; i < charCount; i++)
-            {
-                var charInfo = characters[i];
-                char ch = charInfo.Character;
-                byte[] pixelData;
-                
-                if (metadata.IsFixedWidth)
+                // 生成该段的字符映射表
+                dataClassesSb.Append("    static final String CHAR_TABLE = \"");
+                for (int i = startIdx; i < endIdx; i++)
                 {
-                    // 固定宽度模式：使用固定大小
-                    int bytesPerChar = CalculateBytesPerChar(metadata);
-                    pixelData = GetCharacterBytes(charInfo, bytesPerChar);
-                }
-                else
-                {
-                    // 可变宽度模式：使用实际大小（包含宽高信息）
-                    pixelData = charInfo.GetCompleteData();
-                }
-
-                // 字符注释
-                string charDesc = GetCharacterDescription(ch);
-                if (metadata.IsFixedWidth)
-                {
-                    sb.AppendLine($"        // U+{(int)ch:X4}({charDesc})");
-                }
-                else
-                {
-                    sb.AppendLine($"        // U+{(int)ch:X4}({charDesc}) - {charInfo.ActualWidth}x{charInfo.ActualHeight}");
-                }
-
-                // 生成字节数组
-                sb.Append("        { ");
-                for (int j = 0; j < pixelData.Length; j++)
-                {
-                    if (j > 0)
+                    var charInfo = characters[i];
+                    char ch = charInfo.Character;
+                    // 转换为Java字符串表示
+                    if (ch == '"') dataClassesSb.Append("\\\"");
+                    else if (ch == '\\') dataClassesSb.Append("\\\\");
+                    else if (ch == '\n') dataClassesSb.Append("\\n");
+                    else if (ch == '\r') dataClassesSb.Append("\\r");
+                    else if (ch == '\t') dataClassesSb.Append("\\t");
+                    else if (ch >= 32 && ch <= 126) dataClassesSb.Append(ch);
+                    else
                     {
-                        sb.Append(", ");
-                        // 每16字节换行对齐
-                        if (j % 16 == 0)
-                        {
-                            sb.AppendLine();
-                            sb.Append("          ");
-                        }
+                        // 对于不可显示字符，使用Unicode转义
+                        dataClassesSb.Append($"\\u{(int)ch:X4}");
                     }
-                    sb.Append($"(byte)0x{pixelData[j]:X2}");
                 }
+                dataClassesSb.AppendLine("\";");
+                dataClassesSb.AppendLine();
 
-                if (i < charCount - 1)
-                    sb.AppendLine(" },");
-                else
-                    sb.AppendLine(" }");
+                // 生成该段的字符点阵数据
+                dataClassesSb.AppendLine("    static final byte[][] CHAR_BITS = {");
+                for (int i = startIdx; i < endIdx; i++)
+                {
+                    var charInfo = characters[i];
+                    char ch = charInfo.Character;
+                    byte[] pixelData;
+
+                    if (metadata.IsFixedWidth)
+                    {
+                        // 固定宽度模式：使用固定大小
+                        int bytesPerChar = CalculateBytesPerChar(metadata);
+                        pixelData = GetCharacterBytes(charInfo, bytesPerChar);
+                    }
+                    else
+                    {
+                        // 可变宽度模式：使用实际大小（包含宽高信息）
+                        pixelData = charInfo.GetCompleteData();
+                    }
+
+                    // 字符注释
+                    string charDesc = GetCharacterDescription(ch);
+                    if (metadata.IsFixedWidth)
+                    {
+                        dataClassesSb.AppendLine($"        // U+{(int)ch:X4}({charDesc})");
+                    }
+                    else
+                    {
+                        dataClassesSb.AppendLine($"        // U+{(int)ch:X4}({charDesc}) - {charInfo.ActualWidth}x{charInfo.ActualHeight}");
+                    }
+
+                    // 生成字节数组
+                    dataClassesSb.Append("        { ");
+                    for (int j = 0; j < pixelData.Length; j++)
+                    {
+                        if (j > 0)
+                        {
+                            dataClassesSb.Append(", ");
+                            // 每16字节换行对齐
+                            if (j % 16 == 0)
+                            {
+                                dataClassesSb.AppendLine();
+                                dataClassesSb.Append("          ");
+                            }
+                        }
+                        dataClassesSb.Append($"(byte)0x{pixelData[j]:X2}");
+                    }
+
+                    if (i < endIdx - 1)
+                        dataClassesSb.AppendLine(" },");
+                    else
+                        dataClassesSb.AppendLine(" }");
+                }
+                dataClassesSb.AppendLine("    };");
+                dataClassesSb.AppendLine("}");
+                dataClassesSb.AppendLine();
             }
 
-            sb.AppendLine("    };");
+            // 在主类内部实现路由逻辑
+            sb.AppendLine($"    // {FontMaker.Resources.Lang.Languages.InternalHelperGetRawCharData}");
+            sb.AppendLine("    private static byte[] get_raw_char_bits(int index) {");
+            sb.AppendLine("        if (index < 0 || index >= FONT_CHAR_COUNT) {");
+            sb.AppendLine("            return null;");
+            sb.AppendLine("        }");
+            sb.AppendLine($"        int classIndex = index / {CHARS_PER_CLASS};");
+            sb.AppendLine($"        int localIndex = index % {CHARS_PER_CLASS};");
+            sb.AppendLine("        switch (classIndex) {");
+            for (int i = 0; i < classCount; i++)
+            {
+                sb.AppendLine($"            case {i}: return CharData{i}.CHAR_BITS[localIndex];");
+            }
+            sb.AppendLine("            default: return null;");
+            sb.AppendLine("        }");
+            sb.AppendLine("    }");
             sb.AppendLine();
 
             // 获取字符数据的方法
             sb.AppendLine("    public static byte[] get_char_data_by_index(int index) {");
-            sb.AppendLine("        if (index < 0 || index >= FONT_CHAR_COUNT) {");
-            sb.AppendLine("            return null;");
-            sb.AppendLine("        }");
-            sb.AppendLine("        return CHAR_BITS[index].clone();");
+            sb.AppendLine("        byte[] data = get_raw_char_bits(index);");
+            sb.AppendLine("        return data != null ? data.clone() : null;");
             sb.AppendLine("    }");
             sb.AppendLine();
 
             // 添加索引访问函数
-            GenerateJavaIndexFunctions(sb, metadata);
+            GenerateJavaIndexFunctions(sb, metadata, classCount, CHARS_PER_CLASS);
 
             // 类结束
             sb.AppendLine("}");
 
-            return sb.ToString();
+            // 组装最终内容：文件头 + 包级私有类 + 主类
+            string finalContent = headerSb.ToString() + dataClassesSb.ToString() + sb.ToString();
+            return finalContent;
         }
 
         /// <summary>
         /// 生成Java索引访问函数
         /// </summary>
-        private void GenerateJavaIndexFunctions(StringBuilder sb, FontMetadata metadata)
+        private void GenerateJavaIndexFunctions(StringBuilder sb, FontMetadata metadata, int classCount, int charsPerClass)
         {
             // 通用函数：根据字符获取索引
             sb.AppendLine($"   // {FontMaker.Resources.Lang.Languages.GetCharIndexByChar}");
             sb.AppendLine("    public static int get_char_index(char ch) {");
-            sb.AppendLine("        String table = CHAR_TABLE;");
-            sb.AppendLine("        return table.indexOf(ch);");
+            sb.AppendLine("        int baseIndex = 0;");
+            for (int i = 0; i < classCount; i++)
+            {
+                sb.AppendLine($"        int idx{i} = CharData{i}.CHAR_TABLE.indexOf(ch);");
+                sb.AppendLine($"        if (idx{i} >= 0) return baseIndex + idx{i};");
+                sb.AppendLine($"        baseIndex += CharData{i}.CHAR_TABLE.length();");
+            }
+            sb.AppendLine("        return -1;");
             sb.AppendLine("    }");
             sb.AppendLine();
 

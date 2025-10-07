@@ -817,4 +817,16 @@
   <data name="DataCompositionBreakdown" xml:space="preserve">
     <value>[{0}位元組寬度] + [{1}位元組高度] + [點陣資料]</value>
   </data>
+  <data name="InternalHelperGetRawCharData" xml:space="preserve">
+    <value>內部輔助方法：根據索引獲取原始字符數據</value>
+  </data>
+  <data name="JavaMainClassName" xml:space="preserve">
+    <value>主類名稱</value>
+  </data>
+  <data name="JavaMainClassLocation" xml:space="preserve">
+    <value>主類位於檔案末尾</value>
+  </data>
+  <data name="JavaFileContainsChars" xml:space="preserve">
+    <value>本檔案包含 {0} 個字符，分割到多個內部類中</value>
+  </data>
 </root>
