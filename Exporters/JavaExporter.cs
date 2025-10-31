@@ -29,7 +29,9 @@ namespace FontMaker.Exporters
             try
             {
                 var content = GenerateJavaContent(fontData, fontName);
-                File.WriteAllText(_filePath, content, Encoding.UTF8);
+                // 使用 UTF8Encoding(false) 来避免添加 BOM，因为 Java 编译器不接受带 BOM 的源文件
+                var utf8WithoutBom = new UTF8Encoding(false);
+                File.WriteAllText(_filePath, content, utf8WithoutBom);
                 return true;
             }
             catch (Exception)
