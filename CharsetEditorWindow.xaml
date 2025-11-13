@@ -1,0 +1,174 @@
+﻿<ui:FluentWindow x:Class="FontMaker.CharsetEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:properties="clr-namespace:FontMaker.Resources.Lang"
+        mc:Ignorable="d"
+        Title="{x:Static properties:Languages.CharsetEditorTitle}" Height="680" Width="850"
+        MinWidth="500" MinHeight="550"
+        WindowBackdropType="Mica"
+        ExtendsContentIntoTitleBar="True"
+        WindowCornerPreference="Round"
+        WindowStartupLocation="CenterOwner">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 标题栏 -->
+        <ui:TitleBar
+            x:Name="TitleBar"
+            Title="{x:Static properties:Languages.CharsetEditorTitle}"
+            Grid.Row="0"
+            CloseWindowByDoubleClickOnIcon="True">
+        </ui:TitleBar>
+
+        <!-- 主内容区域 -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="15">
+            <ui:Card Padding="20">
+                <StackPanel>
+                    <!-- 字符集名称 -->
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Text="{x:Static properties:Languages.CharsetName}"
+                                   FontSize="12" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                        <ui:TextBox x:Name="charsetNameBox"
+                                   Height="36"
+                                   PlaceholderText="{x:Static properties:Languages.CharsetNamePlaceholder}"/>
+                    </StackPanel>
+
+                    <!-- 字符输入区域 -->
+                    <StackPanel Margin="0,0,0,15">
+                        <DockPanel Margin="0,0,0,6">
+                            <TextBlock DockPanel.Dock="Left"
+                                      Text="{x:Static properties:Languages.CharacterInput}"
+                                      FontSize="12" FontWeight="SemiBold"/>
+                            <TextBlock x:Name="charCountText"
+                                      DockPanel.Dock="Right"
+                                      Text="{x:Static properties:Languages.CharCount}"
+                                      FontSize="11"
+                                      Foreground="Gray"
+                                      HorizontalAlignment="Right"/>
+                        </DockPanel>
+
+                        <TextBox x:Name="characterInputBox"
+                                TextWrapping="Wrap"
+                                AcceptsReturn="True"
+                                VerticalScrollBarVisibility="Auto"
+                                Height="220"
+                                FontSize="14"
+                                Padding="8"
+                                BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
+                                BorderThickness="1"
+                                TextChanged="CharacterInputBox_TextChanged"/>
+
+                        <TextBlock Text="{x:Static properties:Languages.CharacterInputHint}"
+                                  FontSize="10"
+                                  Foreground="Gray"
+                                  Margin="0,4,0,0"/>
+                    </StackPanel>
+
+                    <!-- 快捷操作按钮 -->
+                    <StackPanel Margin="0,0,0,0">
+                        <TextBlock Text="{x:Static properties:Languages.QuickActions}"
+                                  FontSize="12" FontWeight="SemiBold" Margin="0,0,0,8"/>
+
+                        <!-- 所有按钮统一在一个 WrapPanel 中，自动换行 -->
+                        <WrapPanel>
+                            <ui:Button x:Name="addDigitsButton"
+                                      Content="{x:Static properties:Languages.AddDigits}"
+                                      Width="120" Height="34" Margin="0,0,8,4"
+                                      Appearance="Secondary"
+                                      Click="AddDigitsButton_Click"
+                                      ToolTip="{x:Static properties:Languages.AddDigitsTooltip}"/>
+
+                            <ui:Button x:Name="addLowercaseButton"
+                                      Content="{x:Static properties:Languages.AddLowercase}"
+                                      Width="120" Height="34" Margin="0,0,8,4"
+                                      Appearance="Secondary"
+                                      Click="AddLowercaseButton_Click"
+                                      ToolTip="{x:Static properties:Languages.AddLowercaseTooltip}"/>
+
+                            <ui:Button x:Name="addUppercaseButton"
+                                      Content="{x:Static properties:Languages.AddUppercase}"
+                                      Width="120" Height="34" Margin="0,0,8,4"
+                                      Appearance="Secondary"
+                                      Click="AddUppercaseButton_Click"
+                                      ToolTip="{x:Static properties:Languages.AddUppercaseTooltip}"/>
+
+                            <ui:Button x:Name="addPunctuationButton"
+                                      Content="{x:Static properties:Languages.AddPunctuation}"
+                                      Width="120" Height="34" Margin="0,0,8,4"
+                                      Appearance="Secondary"
+                                      Click="AddPunctuationButton_Click"
+                                      ToolTip="{x:Static properties:Languages.AddPunctuationTooltip}"/>
+
+                            <ui:Button x:Name="removeDuplicatesButton"
+                                      Content="{x:Static properties:Languages.RemoveDuplicates}"
+                                      Width="120" Height="34" Margin="0,0,8,4"
+                                      Appearance="Secondary"
+                                      Icon="{ui:SymbolIcon Sparkle24}"
+                                      Click="RemoveDuplicatesButton_Click"
+                                      ToolTip="{x:Static properties:Languages.RemoveDuplicatesTooltip}"/>
+
+                            <ui:Button x:Name="sortButton"
+                                      Content="{x:Static properties:Languages.SortCharacters}"
+                                      Width="120" Height="34" Margin="0,0,8,4"
+                                      Appearance="Secondary"
+                                      Icon="{ui:SymbolIcon TextSortAscending24}"
+                                      Click="SortButton_Click"
+                                      ToolTip="{x:Static properties:Languages.SortCharactersTooltip}"/>
+
+                            <ui:Button x:Name="clearButton"
+                                      Content="{x:Static properties:Languages.ClearAll}"
+                                      Width="120" Height="34" Margin="0,0,0,4"
+                                      Appearance="Secondary"
+                                      Icon="{ui:SymbolIcon Delete24}"
+                                      Click="ClearButton_Click"
+                                      ToolTip="{x:Static properties:Languages.ClearAllTooltip}"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </StackPanel>
+            </ui:Card>
+        </ScrollViewer>
+
+        <!-- 底部按钮区域 -->
+        <ui:Card Grid.Row="2" Margin="15" Padding="15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- 左侧信息 -->
+                <TextBlock x:Name="statusText"
+                          Grid.Column="0"
+                          VerticalAlignment="Center"
+                          Foreground="Gray"
+                          FontSize="11"/>
+
+                <!-- 右侧按钮 -->
+                <ui:Button Grid.Column="1"
+                          x:Name="cancelButton"
+                          Content="{x:Static properties:Languages.Cancel}"
+                          Height="36" Width="100"
+                          Appearance="Secondary"
+                          Click="CancelButton_Click"
+                          Margin="0,0,8,0"/>
+
+                <ui:Button Grid.Column="2"
+                          x:Name="saveButton"
+                          Content="{x:Static properties:Languages.Save}"
+                          Height="36" Width="100"
+                          Appearance="Primary"
+                          Icon="{ui:SymbolIcon Checkmark24}"
+                          Click="SaveButton_Click"/>
+            </Grid>
+        </ui:Card>
+    </Grid>
+</ui:FluentWindow>

@@ -829,4 +829,94 @@
   <data name="JavaFileContainsChars" xml:space="preserve">
     <value>本檔案包含 {0} 個字符，分割到多個內部類中</value>
   </data>
+  <data name="CharsetEditorTitle" xml:space="preserve">
+    <value>字符集編輯器</value>
+  </data>
+  <data name="CharsetName" xml:space="preserve">
+    <value>字符集名稱</value>
+  </data>
+  <data name="CharsetNamePlaceholder" xml:space="preserve">
+    <value>請輸入字符集名稱</value>
+  </data>
+  <data name="CharacterInput" xml:space="preserve">
+    <value>字符輸入</value>
+  </data>
+  <data name="CharCount" xml:space="preserve">
+    <value>字符數：0</value>
+  </data>
+  <data name="CharCountFormat" xml:space="preserve">
+    <value>字符數：{0}</value>
+  </data>
+  <data name="CharacterInputHint" xml:space="preserve">
+    <value>可以直接輸入或粘貼字符，支持多行文本</value>
+  </data>
+  <data name="QuickActions" xml:space="preserve">
+    <value>快捷操作</value>
+  </data>
+  <data name="AddDigits" xml:space="preserve">
+    <value>添加數字</value>
+  </data>
+  <data name="AddDigitsTooltip" xml:space="preserve">
+    <value>添加數字 0-9</value>
+  </data>
+  <data name="AddLowercase" xml:space="preserve">
+    <value>添加小寫字母</value>
+  </data>
+  <data name="AddLowercaseTooltip" xml:space="preserve">
+    <value>添加小寫字母 a-z</value>
+  </data>
+  <data name="AddUppercase" xml:space="preserve">
+    <value>添加大寫字母</value>
+  </data>
+  <data name="AddUppercaseTooltip" xml:space="preserve">
+    <value>添加大寫字母 A-Z</value>
+  </data>
+  <data name="AddPunctuation" xml:space="preserve">
+    <value>添加標點符號</value>
+  </data>
+  <data name="AddPunctuationTooltip" xml:space="preserve">
+    <value>添加常用標點符號</value>
+  </data>
+  <data name="RemoveDuplicates" xml:space="preserve">
+    <value>去重</value>
+  </data>
+  <data name="RemoveDuplicatesTooltip" xml:space="preserve">
+    <value>移除重複的字符</value>
+  </data>
+  <data name="SortCharacters" xml:space="preserve">
+    <value>排序</value>
+  </data>
+  <data name="SortCharactersTooltip" xml:space="preserve">
+    <value>按 Unicode 值排序字符</value>
+  </data>
+  <data name="ClearAll" xml:space="preserve">
+    <value>清空</value>
+  </data>
+  <data name="ClearAllTooltip" xml:space="preserve">
+    <value>清空所有字符</value>
+  </data>
+  <data name="DuplicatesRemoved" xml:space="preserve">
+    <value>已移除重複字符</value>
+  </data>
+  <data name="CharactersSorted" xml:space="preserve">
+    <value>已排序字符</value>
+  </data>
+  <data name="CharactersCleared" xml:space="preserve">
+    <value>已清空字符</value>
+  </data>
+  <data name="ClearAllConfirmMessage" xml:space="preserve">
+    <value>確定要清空所有字符嗎？</value>
+  </data>
+  <data name="ClearAllConfirmTitle" xml:space="preserve">
+    <value>確認清空</value>
+  </data>
+  <data name="CharsetNameEmptyMessage" xml:space="preserve">
+    <value>請輸入字符集名稱</value>
+  </data>
+  <data name="CharsetEmptyMessage" xml:space="preserve">
+    <value>字符集不能為空，請至少輸入一個字符</value>
+  </data>
+  <data name="ValidationError" xml:space="preserve">
+    <value>驗證錯誤</value>
+  </data>
 </root>

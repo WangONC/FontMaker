@@ -61,6 +61,78 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 添加数字 的本地化字符串。
+        /// </summary>
+        public static string AddDigits {
+            get {
+                return ResourceManager.GetString("AddDigits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 添加数字 0-9 的本地化字符串。
+        /// </summary>
+        public static string AddDigitsTooltip {
+            get {
+                return ResourceManager.GetString("AddDigitsTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 添加小写字母 的本地化字符串。
+        /// </summary>
+        public static string AddLowercase {
+            get {
+                return ResourceManager.GetString("AddLowercase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 添加小写字母 a-z 的本地化字符串。
+        /// </summary>
+        public static string AddLowercaseTooltip {
+            get {
+                return ResourceManager.GetString("AddLowercaseTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 添加标点符号 的本地化字符串。
+        /// </summary>
+        public static string AddPunctuation {
+            get {
+                return ResourceManager.GetString("AddPunctuation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 添加常用标点符号 的本地化字符串。
+        /// </summary>
+        public static string AddPunctuationTooltip {
+            get {
+                return ResourceManager.GetString("AddPunctuationTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 添加大写字母 的本地化字符串。
+        /// </summary>
+        public static string AddUppercase {
+            get {
+                return ResourceManager.GetString("AddUppercase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 添加大写字母 A-Z 的本地化字符串。
+        /// </summary>
+        public static string AddUppercaseTooltip {
+            get {
+                return ResourceManager.GetString("AddUppercaseTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 高级设置 的本地化字符串。
         /// </summary>
         public static string AdvanceSetting {
@@ -205,6 +277,60 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 字符输入 的本地化字符串。
+        /// </summary>
+        public static string CharacterInput {
+            get {
+                return ResourceManager.GetString("CharacterInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 可以直接输入或粘贴字符，支持多行文本 的本地化字符串。
+        /// </summary>
+        public static string CharacterInputHint {
+            get {
+                return ResourceManager.GetString("CharacterInputHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 已清空字符 的本地化字符串。
+        /// </summary>
+        public static string CharactersCleared {
+            get {
+                return ResourceManager.GetString("CharactersCleared", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 已排序字符 的本地化字符串。
+        /// </summary>
+        public static string CharactersSorted {
+            get {
+                return ResourceManager.GetString("CharactersSorted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 字符数：0 的本地化字符串。
+        /// </summary>
+        public static string CharCount {
+            get {
+                return ResourceManager.GetString("CharCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 字符数：{0} 的本地化字符串。
+        /// </summary>
+        public static string CharCountFormat {
+            get {
+                return ResourceManager.GetString("CharCountFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 未找到 的本地化字符串。
         /// </summary>
         public static string CharNotFound {
@@ -223,6 +349,24 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 字符集编辑器 的本地化字符串。
+        /// </summary>
+        public static string CharsetEditorTitle {
+            get {
+                return ResourceManager.GetString("CharsetEditorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 字符集不能为空，请至少输入一个字符 的本地化字符串。
+        /// </summary>
+        public static string CharsetEmptyMessage {
+            get {
+                return ResourceManager.GetString("CharsetEmptyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 字符集文件 (*.cst)|*.cst|所有文件 (*.*)|*.* 的本地化字符串。
         /// </summary>
         public static string CharSetFilter {
@@ -237,6 +381,33 @@ namespace FontMaker.Resources.Lang {
         public static string CharsetManagerCannotBeNull {
             get {
                 return ResourceManager.GetString("CharsetManagerCannotBeNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 字符集名称 的本地化字符串。
+        /// </summary>
+        public static string CharsetName {
+            get {
+                return ResourceManager.GetString("CharsetName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 请输入字符集名称 的本地化字符串。
+        /// </summary>
+        public static string CharsetNameEmptyMessage {
+            get {
+                return ResourceManager.GetString("CharsetNameEmptyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 请输入字符集名称 的本地化字符串。
+        /// </summary>
+        public static string CharsetNamePlaceholder {
+            get {
+                return ResourceManager.GetString("CharsetNamePlaceholder", resourceCulture);
             }
         }
         
@@ -273,6 +444,42 @@ namespace FontMaker.Resources.Lang {
         public static string ChineseSimplified {
             get {
                 return ResourceManager.GetString("ChineseSimplified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 清空 的本地化字符串。
+        /// </summary>
+        public static string ClearAll {
+            get {
+                return ResourceManager.GetString("ClearAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 确定要清空所有字符吗？ 的本地化字符串。
+        /// </summary>
+        public static string ClearAllConfirmMessage {
+            get {
+                return ResourceManager.GetString("ClearAllConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 确认清空 的本地化字符串。
+        /// </summary>
+        public static string ClearAllConfirmTitle {
+            get {
+                return ResourceManager.GetString("ClearAllConfirmTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 清空所有字符 的本地化字符串。
+        /// </summary>
+        public static string ClearAllTooltip {
+            get {
+                return ResourceManager.GetString("ClearAllTooltip", resourceCulture);
             }
         }
         
@@ -489,6 +696,15 @@ namespace FontMaker.Resources.Lang {
         public static string DirectoryNotFound {
             get {
                 return ResourceManager.GetString("DirectoryNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 已移除重复字符 的本地化字符串。
+        /// </summary>
+        public static string DuplicatesRemoved {
+            get {
+                return ResourceManager.GetString("DuplicatesRemoved", resourceCulture);
             }
         }
         
@@ -1690,6 +1906,15 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 快捷操作 的本地化字符串。
+        /// </summary>
+        public static string QuickActions {
+            get {
+                return ResourceManager.GetString("QuickActions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 读取高度 (小端序) 的本地化字符串。
         /// </summary>
         public static string ReadHeightLittleEndian {
@@ -1704,6 +1929,24 @@ namespace FontMaker.Resources.Lang {
         public static string ReadWidthLittleEndian {
             get {
                 return ResourceManager.GetString("ReadWidthLittleEndian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 去重 的本地化字符串。
+        /// </summary>
+        public static string RemoveDuplicates {
+            get {
+                return ResourceManager.GetString("RemoveDuplicates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 移除重复的字符 的本地化字符串。
+        /// </summary>
+        public static string RemoveDuplicatesTooltip {
+            get {
+                return ResourceManager.GetString("RemoveDuplicatesTooltip", resourceCulture);
             }
         }
         
@@ -1897,6 +2140,24 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 排序 的本地化字符串。
+        /// </summary>
+        public static string SortCharacters {
+            get {
+                return ResourceManager.GetString("SortCharacters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 按 Unicode 值排序字符 的本地化字符串。
+        /// </summary>
+        public static string SortCharactersTooltip {
+            get {
+                return ResourceManager.GetString("SortCharactersTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 标准字符集 的本地化字符串。
         /// </summary>
         public static string StandardCharSet {
@@ -2001,6 +2262,15 @@ namespace FontMaker.Resources.Lang {
         public static string UserDefined {
             get {
                 return ResourceManager.GetString("UserDefined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 验证错误 的本地化字符串。
+        /// </summary>
+        public static string ValidationError {
+            get {
+                return ResourceManager.GetString("ValidationError", resourceCulture);
             }
         }
         

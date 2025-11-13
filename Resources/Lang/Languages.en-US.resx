@@ -829,4 +829,94 @@
   <data name="JavaFileContainsChars" xml:space="preserve">
     <value>This file contains {0} characters split into multiple internal classes</value>
   </data>
+  <data name="CharsetEditorTitle" xml:space="preserve">
+    <value>Charset Editor</value>
+  </data>
+  <data name="CharsetName" xml:space="preserve">
+    <value>Charset Name</value>
+  </data>
+  <data name="CharsetNamePlaceholder" xml:space="preserve">
+    <value>Enter charset name</value>
+  </data>
+  <data name="CharacterInput" xml:space="preserve">
+    <value>Character Input</value>
+  </data>
+  <data name="CharCount" xml:space="preserve">
+    <value>Characters: 0</value>
+  </data>
+  <data name="CharCountFormat" xml:space="preserve">
+    <value>Characters: {0}</value>
+  </data>
+  <data name="CharacterInputHint" xml:space="preserve">
+    <value>You can directly input or paste characters, supports multi-line text</value>
+  </data>
+  <data name="QuickActions" xml:space="preserve">
+    <value>Quick Actions</value>
+  </data>
+  <data name="AddDigits" xml:space="preserve">
+    <value>Add Digits</value>
+  </data>
+  <data name="AddDigitsTooltip" xml:space="preserve">
+    <value>Add digits 0-9</value>
+  </data>
+  <data name="AddLowercase" xml:space="preserve">
+    <value>Add Lowercase</value>
+  </data>
+  <data name="AddLowercaseTooltip" xml:space="preserve">
+    <value>Add lowercase letters a-z</value>
+  </data>
+  <data name="AddUppercase" xml:space="preserve">
+    <value>Add Uppercase</value>
+  </data>
+  <data name="AddUppercaseTooltip" xml:space="preserve">
+    <value>Add uppercase letters A-Z</value>
+  </data>
+  <data name="AddPunctuation" xml:space="preserve">
+    <value>Add Punctuation</value>
+  </data>
+  <data name="AddPunctuationTooltip" xml:space="preserve">
+    <value>Add common punctuation marks</value>
+  </data>
+  <data name="RemoveDuplicates" xml:space="preserve">
+    <value>Remove Duplicates</value>
+  </data>
+  <data name="RemoveDuplicatesTooltip" xml:space="preserve">
+    <value>Remove duplicate characters</value>
+  </data>
+  <data name="SortCharacters" xml:space="preserve">
+    <value>Sort</value>
+  </data>
+  <data name="SortCharactersTooltip" xml:space="preserve">
+    <value>Sort characters by Unicode value</value>
+  </data>
+  <data name="ClearAll" xml:space="preserve">
+    <value>Clear All</value>
+  </data>
+  <data name="ClearAllTooltip" xml:space="preserve">
+    <value>Clear all characters</value>
+  </data>
+  <data name="DuplicatesRemoved" xml:space="preserve">
+    <value>Duplicates removed</value>
+  </data>
+  <data name="CharactersSorted" xml:space="preserve">
+    <value>Characters sorted</value>
+  </data>
+  <data name="CharactersCleared" xml:space="preserve">
+    <value>Characters cleared</value>
+  </data>
+  <data name="ClearAllConfirmMessage" xml:space="preserve">
+    <value>Are you sure you want to clear all characters?</value>
+  </data>
+  <data name="ClearAllConfirmTitle" xml:space="preserve">
+    <value>Confirm Clear</value>
+  </data>
+  <data name="CharsetNameEmptyMessage" xml:space="preserve">
+    <value>Please enter a charset name</value>
+  </data>
+  <data name="CharsetEmptyMessage" xml:space="preserve">
+    <value>Charset cannot be empty, please enter at least one character</value>
+  </data>
+  <data name="ValidationError" xml:space="preserve">
+    <value>Validation Error</value>
+  </data>
 </root>

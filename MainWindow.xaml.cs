@@ -198,6 +198,42 @@ namespace FontMaker
             }
         }
 
+        // 编辑自定义字符集事件处理
+        private void EditCustomCharsetButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // 创建字符集编辑器窗口
+                var editorWindow = new CharsetEditorWindow();
+                editorWindow.Owner = this;
+
+                if (editorWindow.ShowDialog() == true)
+                {
+                    // 用户保存了新字符集
+                    var newCharset = editorWindow.CharsetManager;
+                    if (newCharset != null)
+                    {
+                        // 添加到导入字符集列表
+                        ViewModel.CharsetVM.ImportedCharsets?.Add(newCharset);
+                        ViewModel.CharsetVM.AllCharsets?.Add(newCharset);
+
+                        // 设置为当前选中的字符集
+                        ViewModel.CharsetVM.SelectedCharset = newCharset;
+
+                        // 显示成功通知
+                        string message = $"{newCharset.Name}";
+                        NotificationUtils.showSuccessNotification(this.SnackbarPresenter,
+                            FontMaker.Resources.Lang.Languages.ImportCharSetSuccess, message, 3000, null);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                NotificationUtils.showErrorNotification(this.SnackbarPresenter,
+                    FontMaker.Resources.Lang.Languages.Error, ex.Message, 5000, null);
+            }
+        }
+
         // 浏览自定义字符集文件事件处理
         private void BrowseCustomCharsetButton_Click(object sender, RoutedEventArgs e)
         {
