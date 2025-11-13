@@ -164,7 +164,7 @@ namespace FontMaker.ViewModel
             SupportedLanguages = new ObservableCollection<LanguageInfo>(languages.OrderBy(l => l.DisplayName));
         }
 
-        partial void OnSelectedLanguageChanged(LanguageInfo value)
+        partial void OnSelectedLanguageChanged(LanguageInfo? value)
         {
             if (value != null)
             {
@@ -250,10 +250,10 @@ namespace FontMaker.ViewModel
     /// </summary>
     public class LanguageInfo
     {
-        public string? Code { get; set; }
-        public string? DisplayName { get; set; }
-        public string? NativeName { get; set; }
-        public bool? IsDefault { get; set; }
+        public string Code { get; set; } = string.Empty;
+        public string DisplayName { get; set; } = string.Empty;
+        public string NativeName { get; set; } = string.Empty;
+        public bool IsDefault { get; set; }
 
         public override string? ToString()
         {

@@ -169,13 +169,13 @@ namespace FontMaker
             // 根据扫描方式重新组织数据
             if (!IsHorizontalScan)
             {
-                pixelData = ConvertToVerticalScan(pixelData, Width, Height, BitsPerPixel);
+                pixelData = ConvertToVerticalScan(pixelData, Width, Height, BitsPerPixel) ?? pixelData;
             }
 
             // 根据位序要求调整
             if (!IsHighBitFirst)
             {
-                pixelData = ReverseBitOrder(pixelData);
+                pixelData = ReverseBitOrder(pixelData) ?? pixelData;
             }
 
             return new CharacterRenderResult
@@ -296,13 +296,13 @@ namespace FontMaker
                 }
 
                 // 处理扫描方式
-                var processedData = IsHorizontalScan ? dataToProcess : ConvertToVerticalScan(dataToProcess, dataWidth, dataHeight, BitsPerPixel);
+                var processedData = IsHorizontalScan ? dataToProcess : (ConvertToVerticalScan(dataToProcess, dataWidth, dataHeight, BitsPerPixel) ?? dataToProcess);
 
                 // 处理位序
                 if (IsHighBitFirst)
                 {
                     // 从左到右：需要反转默认的MSB存储格式
-                    processedData = ReverseBitOrder(processedData);
+                    processedData = ReverseBitOrder(processedData) ?? processedData;
                 }
                 // 从右到左：保持默认存储格式（原始MSB实际表现为从右到左）
 
@@ -630,15 +630,18 @@ namespace FontMaker
         /// <summary>
         /// 反转位序
         /// </summary>
-        private byte[] ReverseBitOrder(byte[] data)
+        private byte[]? ReverseBitOrder(byte[]? data)
         {
+            if (data == null)
+                return null;
+
             byte[] reversed = new byte[data.Length];
-            
+
             for (int i = 0; i < data.Length; i++)
             {
                 reversed[i] = ReverseByte(data[i]);
             }
-            
+
             return reversed;
         }
 

@@ -107,7 +107,7 @@ namespace FontMaker.Controls
             {
                 var previewBitmap = _renderer.RenderCharacterPreview(_currentCharacter);
                 
-                if (previewBitmap != null)
+                if (previewBitmap != null && _previewImage != null)
                 {
                     // 应用缩放
                     var scaledBitmap = CreateScaledBitmap(previewBitmap);
@@ -142,7 +142,7 @@ namespace FontMaker.Controls
         /// <summary>
         /// 获取当前字符的渲染结果
         /// </summary>
-        public CharacterRenderResult GetCurrentRenderResult()
+        public CharacterRenderResult? GetCurrentRenderResult()
         {
             return _renderer?.RenderCharacter(_currentCharacter)!;
         }
@@ -150,7 +150,7 @@ namespace FontMaker.Controls
         /// <summary>
         /// 获取当前字符的二进制数据
         /// </summary>
-        public byte[] GetCurrentCharacterData(bool includeWidthInfo = false)
+        public byte[]? GetCurrentCharacterData(bool includeWidthInfo = false)
         {
             return _renderer?.GetCharacterBinaryData(_currentCharacter, includeWidthInfo)!;
         }

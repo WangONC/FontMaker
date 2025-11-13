@@ -54,8 +54,8 @@ namespace FontMaker
 
 
         // 长按相关字段
-        private System.Windows.Threading.DispatcherTimer _longPressTimer;
-        private DateTime _mouseDownTime;
+        private System.Windows.Threading.DispatcherTimer _longPressTimer = new();
+        private DateTime _mouseDownTime = DateTime.Now;
         private bool _isLongPressing = false;
         private string _longPressDirection = ""; // "prev" 或 "next"
         // 长按参数现在使用全局配置
@@ -168,10 +168,10 @@ namespace FontMaker
         {
             string initialFontFamily = fontFamily?.Source ?? "Microsoft Sans Serif"; // 使用系统默认字体
             _fontRenderer = new BitmapFontRenderer(
-                (int)PixelSizeWidth, 
-                (int)PixelSizeHeight, 
-                initialFontFamily, 
-                CurrentFontSize, 
+                (int)PixelSizeWidth,
+                (int)PixelSizeHeight,
+                initialFontFamily,
+                CurrentFontSize,
                 System.Drawing.FontStyle.Regular);
         }
 
