@@ -6,6 +6,10 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <Version>0.1.0</Version>
+    <Authors>WangONC</Authors>
+    <Description>入式系统位图字体生成工具</Description>
+    <Copyright>Copyright © 2025 WangONC</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

@@ -108,7 +108,7 @@ namespace FontMaker.Data.Models
         /// <param name="characters">字符内容</param>
         /// <param name="filePath">文件路径（可选）</param>
         /// <returns>是否添加成功</returns>
-        public bool AddCustomCharset(string name, string characters, out CharsetManager? ocharset, string filePath = null)
+        public bool AddCustomCharset(string name, string characters, out CharsetManager? ocharset, string? filePath = null)
         {
             // 检查名称是否已存在
             if (_availableCharsetsInfo.Any(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))

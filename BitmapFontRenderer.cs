@@ -579,7 +579,7 @@ namespace FontMaker
         /// <summary>
         /// 转换为垂直扫描
         /// </summary>
-        private byte[] ConvertToVerticalScan(byte[] horizontalData, int width, int height, int bitsPerPixel)
+        private byte[]? ConvertToVerticalScan(byte[] horizontalData, int width, int height, int bitsPerPixel)
         {
             if (horizontalData == null || horizontalData.Length == 0)
                 return horizontalData;

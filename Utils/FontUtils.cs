@@ -125,7 +125,7 @@ namespace FontMaker.Utils
             return 0;
         }
 
-        public string GetFaceName(string languageCode = null)
+        public string GetFaceName(string? languageCode = null)
         {
             if (Typeface.TryGetGlyphTypeface(out GlyphTypeface glyphTypeface))
             {
@@ -150,7 +150,7 @@ namespace FontMaker.Utils
             return string.Empty;
         }
 
-        public string GetFamilyName(string languageCode = null)
+        public string GetFamilyName(string? languageCode = null)
         {
             if (Typeface.TryGetGlyphTypeface(out GlyphTypeface glyphTypeface))
             {

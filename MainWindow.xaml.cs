@@ -27,13 +27,12 @@ namespace FontMaker
     {
         public MainViewModel ViewModel { get; }
         public String fontPath { get; set; } = string.Empty; // 当前选中的字体路径
-        private bool isLocalFont = false; // 是否为本地字体
         private FontFamily? fontFamily; // 当前字体家族
         private FontStyle? fontStyle;
         private FontWeight? fontWeight;
         private FontStretch? fontStretch;
         private Typeface? typeface; // 当前字体样式
-        private int FontSize { get; set; } = 16; // 默认字体大小
+        private int CurrentFontSize { get; set; } = 16; // 默认字体大小
         private CharsetManager? charsetManager; // 当前字符集
 
         private int currentCharIndex = 0; // 当前字符索引
@@ -122,7 +121,7 @@ namespace FontMaker
             
             // 设置字体大小默认值
             fontSize.Value = Config.DefaultFontSize;
-            FontSize = Config.DefaultFontSize;
+            CurrentFontSize = Config.DefaultFontSize;
             
             // 设置扫描方式默认值
             horizontalScanRadio.IsChecked = Config.DefaultIsHorizontalScan;
@@ -172,7 +171,7 @@ namespace FontMaker
                 (int)PixelSizeWidth, 
                 (int)PixelSizeHeight, 
                 initialFontFamily, 
-                FontSize, 
+                CurrentFontSize, 
                 System.Drawing.FontStyle.Regular);
         }
 
@@ -544,7 +543,7 @@ namespace FontMaker
                     (int)PixelSizeWidth,
                     (int)PixelSizeHeight,
                     fontFamilyName,
-                    FontSize,
+                    CurrentFontSize,
                     gdiFontStyle);
 
                 _fontRenderer.HorizontalOffset = horizontalSpace;
@@ -625,7 +624,6 @@ namespace FontMaker
                     // 设置第一个导入的字体为当前选中
                     fontFamily = importedFonts.First();
                     fontPath = openFileDialog.FileNames.First();
-                    isLocalFont = true;
 
                     string message = importedFonts.Count == 1
                         ? string.Format(FontMaker.Resources.Lang.Languages.ImportedFontSingle, System.IO.Path.GetFileName(fontPath))
@@ -643,7 +641,6 @@ namespace FontMaker
                 if (importedFonts.Count == 0)
                 {
                     fontPath = string.Empty;
-                    isLocalFont = false;
                     fontFamily = null;
                 }
 
@@ -656,7 +653,7 @@ namespace FontMaker
         {
             if (fontSize.Value.HasValue)
             {
-                FontSize = (int)fontSize.Value.Value;
+                CurrentFontSize = (int)fontSize.Value.Value;
             }
             // 更新预览显示
             UpdateCharacterPreview();

@@ -24,11 +24,6 @@ namespace FontMaker.ViewModel
 
         // 导出处理器映射字典
         private readonly Dictionary<string, Func<FontBitmapData, string, string, BitmapFontRenderer, CharsetManager, string?, bool>> _exportHandlers = new();
-        
-        // 当前导出数据（供导出方法使用）
-        private FontBitmapData? _currentFontData;
-        private string? _currentFontName;
-        private string? _currentExportPath;
 
         public ExportViewModel()
         {

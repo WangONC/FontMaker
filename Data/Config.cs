@@ -210,7 +210,7 @@ namespace FontMaker.Data
         /// 默认导出文件名模板，支持变量：
         /// {FontName} - 字体名称
         /// {CharsetName} - 字符集名称
-        /// {FontSize} - 字体大小
+        /// {CurrentFontSize} - 字体大小
         /// {Width} - 像素宽度
         /// {Height} - 像素高度
         /// {Width}x{Height} - 像素尺寸
@@ -384,7 +384,7 @@ namespace FontMaker.Data
             // 基本信息
             result = result.Replace("{FontName}", fontName);
             result = result.Replace("{CharsetName}", charsetName);
-            result = result.Replace("{FontSize}", fontSize.ToString());
+            result = result.Replace("{CurrentFontSize}", fontSize.ToString());
             result = result.Replace("{Width}", width.ToString());
             result = result.Replace("{Height}", height.ToString());
             result = result.Replace("{Width}x{Height}", $"{width}x{height}");

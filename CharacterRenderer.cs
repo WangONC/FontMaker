@@ -14,11 +14,11 @@ namespace FontMaker
     /// </summary>
     public class CharacterRenderer : IDisposable
     {
-        private Graphics _graphics = null!;
-        private Bitmap _bitmap = null!;
-        private System.Drawing.Font _font = null!;
-        private SolidBrush _textBrush = null!;
-        private SolidBrush _backgroundBrush = null!;
+        private Graphics? _graphics;
+        private Bitmap? _bitmap;
+        private System.Drawing.Font? _font;
+        private SolidBrush? _textBrush;
+        private SolidBrush? _backgroundBrush;
         private readonly object _lockObject = new object();
         private FontUtils? _fontUtils; // 用于检查字符支持的工具类
 
@@ -459,8 +459,8 @@ namespace FontMaker
     /// </summary>
     public class CharacterRenderResult
     {
-        public BitmapSource PreviewImage { get; set; } = null!;
-        public byte[] PixelData { get; set; } = null!;
+        public BitmapSource? PreviewImage { get; set; }
+        public byte[]? PixelData { get; set; }
         public int ActualWidth { get; set; }
         public char Character { get; set; }
         public int CanvasWidth { get; set; }

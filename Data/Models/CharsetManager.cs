@@ -86,7 +86,7 @@ namespace FontMaker.Data.Models
         /// </summary>
         /// <param name="filePath">cst文件路径</param>
         /// <returns>加载的字符集管理器，失败返回null</returns>
-        public static CharsetManager LoadFromFile(string filePath)
+        public static CharsetManager? LoadFromFile(string filePath)
         {
             try
             {
@@ -137,7 +137,7 @@ namespace FontMaker.Data.Models
         /// <param name="characters">字符串</param>
         /// <param name="name">字符集名称</param>
         /// <returns>创建的字符集管理器</returns>
-        public static CharsetManager Create(string characters, string name = null)
+        public static CharsetManager Create(string characters, string? name = null)
         {
             var charset = new CharsetManager();
             charset._name = name ?? FontMaker.Resources.Lang.Languages.UserDefined;
@@ -163,7 +163,7 @@ namespace FontMaker.Data.Models
         /// <param name="characters">字符数组</param>
         /// <param name="name">字符集名称</param>
         /// <returns>创建的字符集管理器</returns>
-        public static CharsetManager Create(char[] characters, string name = null)
+        public static CharsetManager Create(char[] characters, string? name = null)
         {
             if (characters != null)
             {

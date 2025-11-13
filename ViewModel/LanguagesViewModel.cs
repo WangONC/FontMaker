@@ -18,24 +18,24 @@ namespace FontMaker.ViewModel
         /// <summary>
         /// 全局单例实例
         /// </summary>
-        public static LanguagesViewModel Instance { get; private set; }
+        public static LanguagesViewModel? Instance { get; private set; }
 
         /// <summary>
         /// 支持的语言列表
         /// </summary>
         [ObservableProperty]
-        private ObservableCollection<LanguageInfo> _supportedLanguages;
+        private ObservableCollection<LanguageInfo>? _supportedLanguages;
 
         /// <summary>
         /// 选中的语言
         /// </summary>
         [ObservableProperty]
-        private LanguageInfo selectedLanguage;
+        private LanguageInfo? selectedLanguage;
 
         // <summary>
         /// 语言改变事件，切换语言后调用
         /// </summary>
-        public static event EventHandler<CultureInfo> LanguageChanged;
+        public static event EventHandler<CultureInfo>? LanguageChanged;
 
         /// <summary>
         /// 当前语言
@@ -179,7 +179,7 @@ namespace FontMaker.ViewModel
         /// </summary>
         private void LoadDefaultLanguage()
         {
-            LanguageInfo selectedLanguage = null;
+            LanguageInfo? selectedLanguage = null;
 
             try
             {
@@ -218,7 +218,7 @@ namespace FontMaker.ViewModel
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // 异常情况下的最后回退
                 if (SupportedLanguages?.Any() == true)
@@ -250,17 +250,17 @@ namespace FontMaker.ViewModel
     /// </summary>
     public class LanguageInfo
     {
-        public string Code { get; set; }
-        public string DisplayName { get; set; }
-        public string NativeName { get; set; }
-        public bool IsDefault { get; set; }
+        public string? Code { get; set; }
+        public string? DisplayName { get; set; }
+        public string? NativeName { get; set; }
+        public bool? IsDefault { get; set; }
 
-        public override string ToString()
+        public override string? ToString()
         {
             return NativeName;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is LanguageInfo other && Code == other.Code;
         }

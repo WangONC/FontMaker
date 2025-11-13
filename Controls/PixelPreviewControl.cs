@@ -13,8 +13,8 @@ namespace FontMaker.Controls
     /// </summary>
     public class PixelPreviewControl : UserControl
     {
-        private Image _previewImage;
-        private BitmapFontRenderer _renderer;
+        private Image? _previewImage;
+        private BitmapFontRenderer? _renderer;
         private char _currentCharacter = 'A';
 
         // 依赖属性
@@ -144,7 +144,7 @@ namespace FontMaker.Controls
         /// </summary>
         public CharacterRenderResult GetCurrentRenderResult()
         {
-            return _renderer?.RenderCharacter(_currentCharacter);
+            return _renderer?.RenderCharacter(_currentCharacter)!;
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace FontMaker.Controls
         /// </summary>
         public byte[] GetCurrentCharacterData(bool includeWidthInfo = false)
         {
-            return _renderer?.GetCharacterBinaryData(_currentCharacter, includeWidthInfo);
+            return _renderer?.GetCharacterBinaryData(_currentCharacter, includeWidthInfo)!;
         }
 
         private static void OnZoomFactorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -189,7 +189,7 @@ namespace FontMaker.Controls
     /// </summary>
     public class GridPixelPreviewControl : Canvas
     {
-        private Rectangle[,] _pixelRects;
+        private Rectangle[,]? _pixelRects;
         private int _pixelWidth = 16;
         private int _pixelHeight = 16;
         private double _cellSize = 20;
