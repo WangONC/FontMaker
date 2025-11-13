@@ -564,7 +564,7 @@ namespace FontMaker
             var result = RenderCharacter(character);
 
             if (result.PixelData == null)
-                throw new InvalidOperationException("Character rendering failed: PixelData is null");
+                throw new InvalidOperationException(FontMaker.Resources.Lang.Languages.CharacterRenderingFailed);
 
             if (!includeWidthInfo || IsFixedWidth)
             {

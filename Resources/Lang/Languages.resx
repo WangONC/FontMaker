@@ -812,7 +812,7 @@
     <value>根据最大高度 {0} 确定</value>
   </data>
   <data name="DataCompositionBreakdown" xml:space="preserve">
-    <value>[{0}字节宽度] + [{0}字节高度] + [点阵数据]</value>
+    <value>[{0}字节宽度] + [{1}字节高度] + [点阵数据]</value>
   </data>
   <data name="FontTypeMonospacePy" xml:space="preserve">
     <value>字体类型: True=等宽字体, False=变宽字体</value>
@@ -916,7 +916,19 @@
   <data name="CharsetEmptyMessage" xml:space="preserve">
     <value>字符集不能为空，请至少输入一个字符</value>
   </data>
-  <data name="ValidationError" xml:space="preserve">
-    <value>验证错误</value>
+  <data name="CharsetNameEmptyTitle" xml:space="preserve">
+    <value>字符集名称为空</value>
+  </data>
+  <data name="CharsetEmptyTitle" xml:space="preserve">
+    <value>字符集为空</value>
+  </data>
+  <data name="GraphicsNotInitialized" xml:space="preserve">
+    <value>图形对象未初始化</value>
+  </data>
+  <data name="RendererNotInitialized" xml:space="preserve">
+    <value>渲染器未正确初始化</value>
+  </data>
+  <data name="CharacterRenderingFailed" xml:space="preserve">
+    <value>字符渲染失败：像素数据为空</value>
   </data>
 </root>

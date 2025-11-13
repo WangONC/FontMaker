@@ -170,5 +170,8 @@
                           Click="SaveButton_Click"/>
             </Grid>
         </ui:Card>
+
+        <!-- Snackbar 通知 -->
+        <ui:SnackbarPresenter x:Name="SnackbarPresenter" Grid.Row="1"/>
     </Grid>
 </ui:FluentWindow>

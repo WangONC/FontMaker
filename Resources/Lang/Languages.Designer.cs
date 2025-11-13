@@ -295,6 +295,15 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 字符渲染失败：像素数据为空 的本地化字符串。
+        /// </summary>
+        public static string CharacterRenderingFailed {
+            get {
+                return ResourceManager.GetString("CharacterRenderingFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 已清空字符 的本地化字符串。
         /// </summary>
         public static string CharactersCleared {
@@ -367,6 +376,15 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 字符集为空 的本地化字符串。
+        /// </summary>
+        public static string CharsetEmptyTitle {
+            get {
+                return ResourceManager.GetString("CharsetEmptyTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 字符集文件 (*.cst)|*.cst|所有文件 (*.*)|*.* 的本地化字符串。
         /// </summary>
         public static string CharSetFilter {
@@ -399,6 +417,15 @@ namespace FontMaker.Resources.Lang {
         public static string CharsetNameEmptyMessage {
             get {
                 return ResourceManager.GetString("CharsetNameEmptyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 字符集名称为空 的本地化字符串。
+        /// </summary>
+        public static string CharsetNameEmptyTitle {
+            get {
+                return ResourceManager.GetString("CharsetNameEmptyTitle", resourceCulture);
             }
         }
         
@@ -529,7 +556,7 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
-        ///   查找类似 [{0}字节宽度] + [{0}字节高度] + [点阵数据] 的本地化字符串。
+        ///   查找类似 [{0}字节宽度] + [{1}字节高度] + [点阵数据] 的本地化字符串。
         /// </summary>
         public static string DataCompositionBreakdown {
             get {
@@ -1339,6 +1366,15 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 图形对象未初始化 的本地化字符串。
+        /// </summary>
+        public static string GraphicsNotInitialized {
+            get {
+                return ResourceManager.GetString("GraphicsNotInitialized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 灰度级别 的本地化字符串。
         /// </summary>
         public static string GrayLevelLabel {
@@ -1960,6 +1996,15 @@ namespace FontMaker.Resources.Lang {
         }
         
         /// <summary>
+        ///   查找类似 渲染器未正确初始化 的本地化字符串。
+        /// </summary>
+        public static string RendererNotInitialized {
+            get {
+                return ResourceManager.GetString("RendererNotInitialized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 确定要恢复所有设置为默认值吗？这将覆盖当前的所有设置。 的本地化字符串。
         /// </summary>
         public static string ResetConfirmation {
@@ -2262,15 +2307,6 @@ namespace FontMaker.Resources.Lang {
         public static string UserDefined {
             get {
                 return ResourceManager.GetString("UserDefined", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 验证错误 的本地化字符串。
-        /// </summary>
-        public static string ValidationError {
-            get {
-                return ResourceManager.GetString("ValidationError", resourceCulture);
             }
         }
         

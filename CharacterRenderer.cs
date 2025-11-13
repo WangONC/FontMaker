@@ -65,7 +65,7 @@ namespace FontMaker
         private void ConfigureGraphicsSettings()
         {
             if (_graphics == null)
-                throw new InvalidOperationException("Graphics object is not initialized");
+                throw new InvalidOperationException(FontMaker.Resources.Lang.Languages.GraphicsNotInitialized);
 
             // 统一的渲染设置，适用于所有字体类型
             _graphics.SmoothingMode = SmoothingMode.None;
@@ -124,7 +124,7 @@ namespace FontMaker
             lock (_lockObject)
             {
                 if (_graphics == null || _font == null || _textBrush == null || _bitmap == null)
-                    throw new InvalidOperationException("Renderer not properly initialized");
+                    throw new InvalidOperationException(FontMaker.Resources.Lang.Languages.RendererNotInitialized);
 
                 // 清除背景
                 _graphics.Clear(Color.Black);
@@ -156,7 +156,7 @@ namespace FontMaker
             lock (_lockObject)
             {
                 if (_graphics == null || _font == null || _textBrush == null || _bitmap == null)
-                    throw new InvalidOperationException("Renderer not properly initialized");
+                    throw new InvalidOperationException(FontMaker.Resources.Lang.Languages.RendererNotInitialized);
 
                 // 清除背景
                 _graphics.Clear(Color.Black);
@@ -207,7 +207,7 @@ namespace FontMaker
             lock (_lockObject)
             {
                 if (_graphics == null || _bitmap == null)
-                    throw new InvalidOperationException("Renderer not properly initialized");
+                    throw new InvalidOperationException(FontMaker.Resources.Lang.Languages.RendererNotInitialized);
 
                 // 清除背景（显示为空白）
                 _graphics.Clear(Color.Black);
@@ -228,7 +228,7 @@ namespace FontMaker
             lock (_lockObject)
             {
                 if (_bitmap == null)
-                    throw new InvalidOperationException("Renderer not properly initialized");
+                    throw new InvalidOperationException(FontMaker.Resources.Lang.Languages.RendererNotInitialized);
 
                 // 渲染字符
                 RenderCharacter(character);
@@ -261,7 +261,7 @@ namespace FontMaker
             lock (_lockObject)
             {
                 if (_graphics == null || _font == null)
-                    throw new InvalidOperationException("Renderer not properly initialized");
+                    throw new InvalidOperationException(FontMaker.Resources.Lang.Languages.RendererNotInitialized);
 
                 SizeF charSize = _graphics.MeasureString(character.ToString(), _font);
                 return (int)Math.Ceiling(charSize.Width);

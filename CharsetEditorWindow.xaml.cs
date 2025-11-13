@@ -166,15 +166,15 @@ namespace FontMaker
         /// <summary>
         /// 清空所有字符
         /// </summary>
-        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        private async void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            var result = System.Windows.MessageBox.Show(
-                Languages.ClearAllConfirmMessage,
+            var result = await NotificationUtils.showMessageWPF(
                 Languages.ClearAllConfirmTitle,
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
+                Languages.ClearAllConfirmMessage,
+                Languages.Yes,
+                Languages.No);
 
-            if (result == MessageBoxResult.Yes)
+            if (result == Wpf.Ui.Controls.MessageBoxResult.Primary)
             {
                 characterInputBox.Text = string.Empty;
                 UpdateCharCount();
@@ -191,11 +191,11 @@ namespace FontMaker
             var name = charsetNameBox.Text?.Trim();
             if (string.IsNullOrWhiteSpace(name))
             {
-                System.Windows.MessageBox.Show(
+                NotificationUtils.showErrorNotification(
+                    SnackbarPresenter,
+                    Languages.CharsetNameEmptyTitle,
                     Languages.CharsetNameEmptyMessage,
-                    Languages.ValidationError,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
+                    3000);
                 charsetNameBox.Focus();
                 return;
             }
@@ -204,11 +204,11 @@ namespace FontMaker
             var text = characterInputBox.Text;
             if (string.IsNullOrEmpty(text))
             {
-                System.Windows.MessageBox.Show(
+                NotificationUtils.showErrorNotification(
+                    SnackbarPresenter,
+                    Languages.CharsetEmptyTitle,
                     Languages.CharsetEmptyMessage,
-                    Languages.ValidationError,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
+                    3000);
                 characterInputBox.Focus();
                 return;
             }
