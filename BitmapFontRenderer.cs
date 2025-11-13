@@ -562,7 +562,10 @@ namespace FontMaker
         public byte[] GetCharacterBinaryData(char character, bool includeWidthInfo = false)
         {
             var result = RenderCharacter(character);
-            
+
+            if (result.PixelData == null)
+                throw new InvalidOperationException("Character rendering failed: PixelData is null");
+
             if (!includeWidthInfo || IsFixedWidth)
             {
                 return result.PixelData;
@@ -572,7 +575,7 @@ namespace FontMaker
             var dataWithWidth = new List<byte>();
             dataWithWidth.Add((byte)result.ActualWidth); // 宽度信息
             dataWithWidth.AddRange(result.PixelData);
-            
+
             return dataWithWidth.ToArray();
         }
 

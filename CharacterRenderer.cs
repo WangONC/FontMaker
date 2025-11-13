@@ -64,6 +64,9 @@ namespace FontMaker
         /// </summary>
         private void ConfigureGraphicsSettings()
         {
+            if (_graphics == null)
+                throw new InvalidOperationException("Graphics object is not initialized");
+
             // 统一的渲染设置，适用于所有字体类型
             _graphics.SmoothingMode = SmoothingMode.None;
             _graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
@@ -120,13 +123,16 @@ namespace FontMaker
         {
             lock (_lockObject)
             {
+                if (_graphics == null || _font == null || _textBrush == null || _bitmap == null)
+                    throw new InvalidOperationException("Renderer not properly initialized");
+
                 // 清除背景
                 _graphics.Clear(Color.Black);
 
                 // 始终尝试渲染字符，让字符支持性检查在更高层处理
                 // 测量字符尺寸
                 SizeF charSize = _graphics.MeasureString(character.ToString(), _font);
-                
+
                 // 计算居中位置（考虑偏移）
                 float x = (Width - charSize.Width) / 2.0f + HorizontalOffset;
                 float y = (Height - charSize.Height) / 2.0f + VerticalOffset;
@@ -149,6 +155,9 @@ namespace FontMaker
         {
             lock (_lockObject)
             {
+                if (_graphics == null || _font == null || _textBrush == null || _bitmap == null)
+                    throw new InvalidOperationException("Renderer not properly initialized");
+
                 // 清除背景
                 _graphics.Clear(Color.Black);
 
@@ -164,7 +173,7 @@ namespace FontMaker
 
                 // 测量字符尺寸
                 SizeF charSize = _graphics.MeasureString(character.ToString(), _font);
-                
+
                 // 计算居中位置（考虑偏移）
                 float x = (Width - charSize.Width) / 2.0f + HorizontalOffset;
                 float y = (Height - charSize.Height) / 2.0f + VerticalOffset;
@@ -197,9 +206,12 @@ namespace FontMaker
         {
             lock (_lockObject)
             {
+                if (_graphics == null || _bitmap == null)
+                    throw new InvalidOperationException("Renderer not properly initialized");
+
                 // 清除背景（显示为空白）
                 _graphics.Clear(Color.Black);
-                
+
                 // 直接返回空白位图
                 return ConvertToBitmapSource(_bitmap);
             }
@@ -215,6 +227,9 @@ namespace FontMaker
         {
             lock (_lockObject)
             {
+                if (_bitmap == null)
+                    throw new InvalidOperationException("Renderer not properly initialized");
+
                 // 渲染字符
                 RenderCharacter(character);
 
@@ -245,6 +260,9 @@ namespace FontMaker
         {
             lock (_lockObject)
             {
+                if (_graphics == null || _font == null)
+                    throw new InvalidOperationException("Renderer not properly initialized");
+
                 SizeF charSize = _graphics.MeasureString(character.ToString(), _font);
                 return (int)Math.Ceiling(charSize.Width);
             }
